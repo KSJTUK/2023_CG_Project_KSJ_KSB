@@ -1,7 +1,8 @@
 #include "pch.h"
-#include <GL/glew.h>
+#include "Util/Engine.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char* argv[]) 
 {
-	std::cout << "hello" << std::endl;
+	engine->Init();
+	engine->Loop();
 }
