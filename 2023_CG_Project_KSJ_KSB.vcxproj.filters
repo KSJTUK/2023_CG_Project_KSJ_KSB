@@ -25,6 +25,12 @@
     <Filter Include="pch">
       <UniqueIdentifier>{c29cffb0-a219-4a14-9c18-60e73bd94748}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Graphics">
+      <UniqueIdentifier>{3e20369c-c0a2-4af5-801c-8ea49c14ab27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Graphics">
+      <UniqueIdentifier>{8a901627-eeab-4f9e-bdc8-8559b78bb00a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Util\Engine.cpp">
@@ -39,6 +45,9 @@
     <ClCompile Include="Util\Input.cpp">
       <Filter>소스 파일\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Shader.cpp">
+      <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Engine.h">
@@ -49,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Util\Input.h">
       <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Shader.h">
+      <Filter>헤더 파일\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
