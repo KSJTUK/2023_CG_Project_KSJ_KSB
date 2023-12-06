@@ -33,6 +33,10 @@
 *.out
 *.app
 
+# db, suo
+.suo
+Browse.VC.db
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
