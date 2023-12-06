@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "Engine.h"
+#include "Util/Engine.h"
+#include "Util/Input.h"
 
 Engine::Engine() { }
 
@@ -42,10 +43,17 @@ void Engine::Init() {
 	glViewport(0, 0, m_windowInfo.width, m_windowInfo.height);
 
 	glfwSwapInterval(m_swapInterver);
+
+	Input::GetInstance()->Init(m_windowInfo.window);
 }
 
 void Engine::Update() {
 	// 게임 업데이트 함수
+	for (int i = 0; i < 0xff - 1; ++i) {
+		if (Input::GetInstance()->GetKey(i) == KEY_STATE::DOWN) {
+			std::cout << (char)(i) << std::endl;
+		}
+	}
 
 	glfwPollEvents();
 }
