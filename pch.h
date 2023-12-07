@@ -17,6 +17,7 @@
 #include <unordered_map>
 #include <list>
 
+#include <stb_image.h>
 #include <Windows.h>
 
 using int8 = __int8;
@@ -66,6 +67,21 @@ struct Meterials {
 	float shininess{ };
 };
 
+struct _TAG_TEXTURE_INFO {
+	uint32 id{ };
+	int32 width{ };
+	int32 height{ };
+	int32 nrChannel{ };
+};
+
+struct _TAG_CUBEMAP_INFO {
+	enum { SIZE = 6 };
+	uint32 id{ };
+	int32 width[SIZE]{ };
+	int32 height[SIZE]{ };
+	int32 nrChannel[SIZE]{ };
+};
+
 struct _TAG_LIGHTOPTION {
 
 };
@@ -74,6 +90,9 @@ using float2 = _TAG_FLOAT2;
 using float3 = _TAG_FLOAT3;
 using float4 = _TAG_FLOAT4;
 using vertex = _TAG_VERTEX;
+
+using TextureInfo = _TAG_TEXTURE_INFO;
+using CubeMapInfo = _TAG_CUBEMAP_INFO;
 
 using LightOption = _TAG_LIGHTOPTION;
 

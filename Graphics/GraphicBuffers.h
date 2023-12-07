@@ -23,9 +23,9 @@ private:
 public:
 	void Init();
 
-	void ResetVerticies(const std::vector<Vertex>& verticies);
+	void ResetVerticies(const std::vector<vertex>& verticies);
 
-	void SetVerticies(const std::vector<Vertex>& verticies);
+	void SetVerticies(const std::vector<vertex>& verticies);
 	void SetPatchParameters(int numOfPatches);
 	void BindingTexture(const uint32& textureID);
 
