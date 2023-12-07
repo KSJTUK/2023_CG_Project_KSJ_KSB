@@ -82,6 +82,16 @@ Shader* Shader::GetInstance(){
 }
 
 
+std::shared_ptr<ShaderComponent> Shader::GetActivatedShader() const{
+
+	if (m_activatedShader == nullptr) {
+		std::cerr << "Error to get NULL Shaer" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+
+	return m_activatedShader;
+}
 
 
 void Shader::UseProgram(ShaderType type){

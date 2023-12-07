@@ -101,7 +101,7 @@ public:
 	void UnuseProgram();
 
 	
-	std::shared_ptr<ShaderComponent> GetActivatedShader() const { return m_activatedShader;  }
+	std::shared_ptr<ShaderComponent> GetActivatedShader() const;
 };
 
 #define SHADER Shader::GetInstance()
