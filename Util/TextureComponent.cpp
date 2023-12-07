@@ -102,9 +102,9 @@ std::vector<std::vector<float>> TextureComponent::LoadHeightMap(const std::strin
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	std::vector<std::vector<float>> heights{ static_cast<uint64>(texInfo.height) };
-	for (unsigned int i = 0; i < texInfo.height; i++)
+	for (auto i = 0; i < texInfo.height; i++)
 	{
-		for (unsigned int j = 0; j < texInfo.width; j++)
+		for (auto j = 0; j < texInfo.width; j++)
 		{
 			// retrieve texel for (i,j) tex coord
 			unsigned char* texel = imageData + (j + texInfo.width * i) * texInfo.nrChannel;

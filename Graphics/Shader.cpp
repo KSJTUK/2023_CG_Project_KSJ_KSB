@@ -385,10 +385,10 @@ ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 
 	m_id = glCreateProgram();
 	
+	std::cout << "=======================================================================================" << std::endl;
 
 	for (auto i = 0; i < files.size(); ++i) {
 		if (files[i] == EMPTYSTRING) continue;
-
 		switch (i){
 		case 0:
 			VertexProgramID = CreateVertexShader(files[i]);
@@ -415,6 +415,7 @@ ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 		}
 	}
 
+	std::cout << "=======================================================================================" << std::endl;
 
 	glLinkProgram(m_id);
 

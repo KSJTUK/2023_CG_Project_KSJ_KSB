@@ -54,3 +54,4 @@ public:
 
 };
 
+#define INPUT Input::GetInstance()
