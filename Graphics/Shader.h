@@ -1,38 +1,33 @@
 #pragma once
-
+	
 constexpr unsigned int INVALID = 0xFFFFFFFF;
-
 
 
 class ShaderComponent {
 public:
 	ShaderComponent() = default;
-	ShaderComponent(std::string VertexShaderPath, std::string GeometryShaderPath, std::string TesselationEvaluationShaderPath, std::string TesselationControlShaderPath, std::string FragmentShaderPath);
+	ShaderComponent(const std::string& VertexShaderPath, const std::string& GeometryShaderPath, const std::string& TesselationEvaluationShaderPath,
+						const std::string& TesselationControlShaderPath, const std::string& FragmentShaderPath);
 
 	const unsigned int Get() const { return m_id; };
 
 	void UseProgram() { glUseProgram(m_id); };
 	
-
-
 	// Uniform
 	// 모든 변수는 표준 자료형을 통해 받아올 것. 
 	
-	void SetUniformMat4(std::string valueName, GLenum transpose, const float* val);
-	void SetUniformMat3(std::string valueName, GLenum transpose, const float* val);
+	void SetUniformMat4(const std::string& valueName, GLenum transpose, const float* val);
+	void SetUniformMat3(const std::string& valueName, GLenum transpose, const float* val);
 	// MEMO:
 	// 아직은 Mat2 가 필요하다고 판단되지 않아서 추가 안함. 필요한경우 같은 포맷으로 추가하길 바람 
 
+	void SetUniformVec4(const std::string& valueName, const float* val);
+	void SetUniformVec3(const std::string& valueName, const float* val);
+	void SetUniformVec2(const std::string& valueName, const float* val);
 
-	void SetUniformVec4(std::string valueName, const float v1, const float v2, const float v3, const float v4);
-	void SetUniformVec3(std::string valueName, const float v1, const float v2, const float v3);
-	void SetUniformVec2(std::string valueName, const float v1, const float v2);
 
-	void SetUniformFloat(std::string valueName, const float value);
-	void SetUniformInt(std::string valueName, const int value);
-
-	
-
+	void SetUniformFloat(const std::string& valueName, const float value);
+	void SetUniformInt(const std::string& valueName, const int value);
 
 
 private:

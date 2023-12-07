@@ -1,9 +1,68 @@
 #include "pch.h"
 #include "Shader.h"
+
+
+const std::string shaderDir{ "./Shader/" };
+const std::string EMPTYSTRING{ };
+
+
+const std::vector<std::string> static_shader{
+	"static_vertex_shader.glsl",
+	EMPTYSTRING,
+	EMPTYSTRING,
+	EMPTYSTRING,
+	"static_fragment_shader.glsl"
+};
+
+const std::vector<std::string> animated_shader{
+	"animated_vertex_shader.glsl",
+	EMPTYSTRING,
+	EMPTYSTRING,
+	EMPTYSTRING,
+	"animated_fragment_shader.glsl"
+};
+
+const std::vector<std::string> background_shader{
+	"background_vertex_shader.glsl",
+	EMPTYSTRING,
+	EMPTYSTRING,
+	EMPTYSTRING,
+	"background_fragment_shader.glsl"
+};
+
+const std::vector<std::string> terrain_shader{
+	"terrain_vertex_shader.glsl",
+	EMPTYSTRING,
+	"terrain_tessel_control_shader.glsl",
+	"terrain_tessel_evaluation_shader.glsl",
+	"terrain_fragment_shader.glsl"
+};
+
+const std::vector<std::string> light_shader{
+	"light_object_vertex_shader.glsl",
+	EMPTYSTRING,
+	EMPTYSTRING,
+	EMPTYSTRING,
+	"light_object_fragment_shader.glsl"
+};
+
+const std::vector<std::string> particle_shader{
+	"particle_vertex_shader.glsl",
+	"particle_geometry_shader.glsl",
+	EMPTYSTRING,
+	EMPTYSTRING,
+	"particle_fragment_shader.glsl"
+};
+
+const std::vector<std::string> ui_shader{
+	"ui_vertex_shader.glsl",
+	EMPTYSTRING,
+	EMPTYSTRING,
+	EMPTYSTRING,
+	"ui_fragment_shader.glsl"
+};
+
 Shader* Shader::m_instance = nullptr;
-
-
-
 
 void Shader::Initialize(){
 
@@ -34,39 +93,40 @@ void Shader::UnuseProgram() {
 }
 
 
-int ShaderComponent::GetUniformLocation(std::string valueName){
-	int result = glGetUniformLocation(m_id, valueName.c_str());
+
+int ShaderComponent::GetUniformLocation(const std::string& valueName){
+	 
+	auto result = m_uniformLocationDict.find(valueName);
+
+	int location{};
+
+	if (result == m_uniformLocationDict.end()) {
+		location = glGetUniformLocation(m_id, valueName.c_str());
+		m_uniformLocationDict.insert(std::make_pair(valueName, location));
 #ifdef _DEBUG
-	assert(result != -1);
+		assert(location != -1);
 #else // Release
-	if (result == -1) {
+	if (location == -1) {
 		std::cerr << "Error in\nFile : " << __FILE__ << "\n" << "Line : " << __LINE__ << std::endl;
 		exit(EXIT_FAILURE);
 	}
 #endif
-
-	return result;
-}
-
-ShaderComponent::ShaderComponent(std::string VertexShaderPath, std::string GeometryShaderPath, std::string TesselationEvaluationShaderPath, std::string TesselationControlShaderPath, std::string FragmentShaderPath)
-{
-}
-
-void ShaderComponent::SetUniformMat4(std::string valueName, GLenum transpose, const float* val){
-
-	auto iter = m_uniformLocationDict.find(valueName);
-
-	if (iter == m_uniformLocationDict.end()) {
-		int Loc = GetUniformLocation(valueName);
-		glUniformMatrix4fv(Loc, 1, transpose, val);
-		m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
+		return location;
 	}
 	else {
-		glUniformMatrix4fv(iter->second, 1, transpose, val);
+		return result->second;
 	}
 }
 
-void ShaderComponent::SetUniformMat3(std::string valueName, GLenum transpose, const float* val){
+
+
+
+
+void ShaderComponent::SetUniformMat4(const std::string& valueName, GLenum transpose, const float* val){
+	glUniformMatrix4fv(GetUniformLocation(valueName), 1, transpose, val);
+}
+
+void ShaderComponent::SetUniformMat3(const std::string& valueName, GLenum transpose, const float* val){
 	auto iter = m_uniformLocationDict.find(valueName);
 
 	if (iter == m_uniformLocationDict.end()) {
@@ -79,46 +139,38 @@ void ShaderComponent::SetUniformMat3(std::string valueName, GLenum transpose, co
 	}
 }
 
-void ShaderComponent::SetUniformVec4(std::string valueName, const float v1, const float v2, const float v3, const float v4){
+void ShaderComponent::SetUniformVec4(const std::string& valueName, const float* val){
 	auto iter = m_uniformLocationDict.find(valueName);
 
 	if (iter == m_uniformLocationDict.end()) {
 		int Loc = GetUniformLocation(valueName);
-		glUniform4f(Loc , v1, v2, v3, v4);
-		m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
-	}
-	else {
-		glUniform4f(iter->second, v1, v2, v3, v4);
+		glUniform4fv(Loc, 1, val);
 	}
 }
 
-void ShaderComponent::SetUniformVec3(std::string valueName, const float v1, const float v2, const float v3){
+
+void ShaderComponent::SetUniformVec3(const std::string& valueName, const float* val) {
 	auto iter = m_uniformLocationDict.find(valueName);
 
 	if (iter == m_uniformLocationDict.end()) {
 		int Loc = GetUniformLocation(valueName);
-		glUniform3f(Loc, v1, v2, v3);
-		m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
-	}
-	else {
-		glUniform3f(iter->second, v1, v2, v3);
+		glUniform3fv(Loc, 1, val);
 	}
 }
 
-void ShaderComponent::SetUniformVec2(std::string valueName, const float v1, const float v2){
+
+void ShaderComponent::SetUniformVec2(const std::string& valueName, const float* val) {
 	auto iter = m_uniformLocationDict.find(valueName);
 
 	if (iter == m_uniformLocationDict.end()) {
 		int Loc = GetUniformLocation(valueName);
-		glUniform2f(Loc, v1, v2);
-		m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
-	}
-	else {
-		glUniform2f(iter->second, v1, v2);
+		glUniform2fv(Loc, 1, val);
 	}
 }
 
-void ShaderComponent::SetUniformFloat(std::string valueName, const float value){
+
+
+void ShaderComponent::SetUniformFloat(const std::string& valueName, const float value){
 	auto iter = m_uniformLocationDict.find(valueName);
 
 	if (iter == m_uniformLocationDict.end()) {
@@ -130,8 +182,8 @@ void ShaderComponent::SetUniformFloat(std::string valueName, const float value){
 		glUniform1f(iter->second, value);
 	}
 }
-
-void ShaderComponent::SetUniformInt(std::string valueName, const int value){
+	
+void ShaderComponent::SetUniformInt(const std::string& valueName, const int value){
 	auto iter = m_uniformLocationDict.find(valueName);
 
 	if (iter == m_uniformLocationDict.end()) {
