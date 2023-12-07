@@ -1,19 +1,18 @@
 #pragma once
-#include "Graphics/Camera.h"
-
 
 class Renderer {
 public:
-	Renderer() = default;
+	Renderer();
 	Renderer(GLFWwindow* window);
 	
-	~Renderer() = default;
+	~Renderer();
 
 	Renderer(const Renderer& other) = delete;
 	Renderer& operator=(const Renderer& other) = delete;
 
 private:
-	std::unique_ptr<FreeCamera> m_freeCamera{ nullptr };
+	std::unique_ptr<class FreeCamera> m_freeCamera{ nullptr };
+	std::unique_ptr<class Terrain> m_testTerrain{ };
 
 	GLenum m_renderMode = GL_FILL;
 

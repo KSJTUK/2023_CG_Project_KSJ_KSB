@@ -45,7 +45,7 @@ public:
 
 class FreeCamera : public Camera {
 public:
-	FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) :Camera{ window, EYE, AT } {};
+	FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT);
 
 
 	virtual void Render();

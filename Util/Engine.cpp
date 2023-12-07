@@ -57,10 +57,10 @@ void Engine::Init() {
 
 	Input::GetInstance()->Init(m_windowInfo.window);
 
+	SHADER->Initialize();
+
 	m_timer = std::make_unique<Timer>();
 	m_renderer = std::make_unique<Renderer>(m_windowInfo.window);
-
-	SHADER->Initialize();
 }
 
 
