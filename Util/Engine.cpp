@@ -2,11 +2,8 @@
 #include "Util/Engine.h"
 #include "Util/Input.h"
 
+#include "Graphics/Renderer.h"
 #include "Graphics/Shader.h"
-
-
-
-
 
 Engine::Engine() { }
 
@@ -25,7 +22,7 @@ void Engine::Init() {
 
 	// OpenGL 버전 설정
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// 윈도우 정보 초기 설정
@@ -61,6 +58,7 @@ void Engine::Init() {
 	Input::GetInstance()->Init(m_windowInfo.window);
 
 	m_timer = std::make_unique<Timer>();
+	m_renderer = std::make_unique<Renderer>();
 
 	SHADER->Initialize();
 }
@@ -73,12 +71,9 @@ void Engine::Update() {
 	glfwSetWindowTitle(m_windowInfo.window, std::string(m_windowInfo.windowTitle + std::to_string(m_timer->GetFps())).c_str());
 	Input::GetInstance()->Update();
 
+	m_deltaTime = m_timer->GetDeltaTime();
 
-
-
-
-
-	
+	m_renderer->Update(m_deltaTime);
 }
 
 void Engine::LateUpdate() {
@@ -91,6 +86,8 @@ void Engine::Render() {
 	//// 렌더링 코드
 	glClearColor(0.5f, 0.5f, 0.5f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	m_renderer->Render();
 
 	glfwSwapBuffers(m_windowInfo.window);
 }

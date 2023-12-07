@@ -95,7 +95,7 @@ void Shader::UnuseProgram() {
 
 
 
-int ShaderComponent::GetUniformLocation(const std::string& valueName){
+int ShaderComponent::GetUniformLocation(const std::string& valueName) {
 	 
 	auto result = m_uniformLocationDict.find(valueName);
 

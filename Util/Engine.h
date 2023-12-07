@@ -14,9 +14,10 @@ private:
 	// 스왑버퍼의 스왑 간격을 조정할 변수 기본은 0 느리게 하려면 큰값을 주면 됨
 	int32 m_swapInterver{ };
 
+	float m_deltaTime{ };
 
-
-	std::unique_ptr<Timer> m_timer{};
+	std::unique_ptr<class Renderer> m_renderer{ };
+	std::unique_ptr<class Timer> m_timer{ };
 
 
 public:

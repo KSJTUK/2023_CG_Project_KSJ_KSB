@@ -12,17 +12,12 @@ public:
 	Renderer(const Renderer& other) = delete;
 	Renderer& operator=(const Renderer& other) = delete;
 
-
 private:
-
-	
 	std::unique_ptr<FreeCamera> m_freeCamera{ nullptr };
 
 	GLenum m_renderMode = GL_FILL;
 
-
 public:
-
-	void Render();
 	void Update(float DeltaTime);
+	void Render();
 };
