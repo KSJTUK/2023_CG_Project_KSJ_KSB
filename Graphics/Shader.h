@@ -6,8 +6,7 @@ constexpr unsigned int INVALID = 0xFFFFFFFF;
 class ShaderComponent {
 public:
 	ShaderComponent() = default;
-	ShaderComponent(const std::string& VertexShaderPath, const std::string& GeometryShaderPath, const std::string& TesselationEvaluationShaderPath,
-						const std::string& TesselationControlShaderPath, const std::string& FragmentShaderPath);
+	ShaderComponent(const std::vector<std::string>& files);
 
 	const unsigned int Get() const { return m_id; };
 
@@ -32,7 +31,7 @@ public:
 
 private:
 	
-	int GetUniformLocation(std::string valueName);
+	int GetUniformLocation(const std::string& valName);
 
 
 

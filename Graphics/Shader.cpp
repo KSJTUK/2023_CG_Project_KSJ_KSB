@@ -120,6 +120,21 @@ int ShaderComponent::GetUniformLocation(const std::string& valueName){
 
 
 
+ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
+
+	for (const auto& filename : files) {
+
+
+
+
+
+
+	}
+
+
+
+}
+
 
 
 void ShaderComponent::SetUniformMat4(const std::string& valueName, GLenum transpose, const float* val){
