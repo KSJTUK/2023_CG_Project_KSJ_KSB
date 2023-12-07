@@ -17,6 +17,14 @@ Camera::Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) : m_window(windo
 
 }
 
+FreeCamera::FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) :Camera{ window, EYE, AT }
+{
+}
+
+FreeCamera::~FreeCamera()
+{
+}
+
 void FreeCamera::Render(){
 	
 
