@@ -118,16 +118,38 @@ int ShaderComponent::GetUniformLocation(const std::string& valueName){
 	}
 }
 
+UINT ShaderComponent::CreateVertexShader(const std::string& path){
+
+
+
+
+
+
+
+	return 0;
+}
+
+UINT ShaderComponent::CreateGeometryShader(const std::string& path){
+	return 0;
+}
+
+UINT ShaderComponent::CreateTesselationControlShader(const std::string& path){
+	return 0;
+}
+
+UINT ShaderComponent::CreateTesselationEvaluationShader(const std::string& path){
+	return 0;
+}
+
+UINT ShaderComponent::CreateFragmentShader(const std::string& path){
+	return 0;
+}
 
 
 ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 
-	for (const auto& filename : files) {
-
-
-
-
-
+	
+	for (auto i = 0; i < files.size(); ++i) {
 
 	}
 

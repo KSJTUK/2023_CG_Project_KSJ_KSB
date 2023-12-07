@@ -41,6 +41,22 @@ private:
 	std::unordered_map<std::string, UINT> m_uniformLocationDict{};
 	UINT m_id{};
 
+private:
+
+
+	UINT CreateVertexShader					(const std::string& path);
+	UINT CreateGeometryShader				(const std::string& path);
+	UINT CreateTesselationControlShader		(const std::string& path);
+	UINT CreateTesselationEvaluationShader	(const std::string& path);
+	UINT CreateFragmentShader				(const std::string& path);
+
+
+
+
+
+
+
+
 };
 
 enum class ShaderType {

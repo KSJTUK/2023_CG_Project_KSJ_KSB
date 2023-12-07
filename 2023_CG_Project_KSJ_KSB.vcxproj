@@ -157,6 +157,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Util\Engine.cpp" />
     <ClCompile Include="Util\Input.cpp" />
+    <ClCompile Include="Util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\Renderer.h" />

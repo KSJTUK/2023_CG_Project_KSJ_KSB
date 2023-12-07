@@ -2,6 +2,9 @@
 #include "Util/Engine.h"
 #include "Util/Input.h"
 
+
+
+
 Engine::Engine() { }
 
 Engine::~Engine() { }
@@ -27,7 +30,7 @@ void Engine::Init() {
 	m_windowInfo.height = 1080;
 	m_windowInfo.x = 0;
 	m_windowInfo.y = 0;
-	m_windowInfo.windowTitle = "Computer Graphics FPS: ";
+	m_windowInfo.windowTitle = "FPS: ";
 
 	// 윈도우 생성
 	m_windowInfo.window = glfwCreateWindow(m_windowInfo.width, m_windowInfo.height, m_windowInfo.windowTitle.c_str(), NULL, NULL);
@@ -50,17 +53,24 @@ void Engine::Init() {
 	glfwSwapInterval(m_swapInterver);
 
 	Input::GetInstance()->Init(m_windowInfo.window);
+
+	m_timer = std::make_unique<Timer>();
 }
+
+
 
 void Engine::Update() {
 	// 게임 업데이트 함수
-	for (int i = 0; i < 0xff - 1; ++i) {
-		if (Input::GetInstance()->GetKey(i) == KEY_STATE::DOWN) {
-			std::cout << (char)(i) << std::endl;
-		}
-	}
+	m_timer->Update();
+	glfwSetWindowTitle(m_windowInfo.window, std::string(m_windowInfo.windowTitle + std::to_string(m_timer->GetFps())).c_str());
+	Input::GetInstance()->Update();
 
-	glfwPollEvents();
+
+
+
+
+
+	
 }
 
 void Engine::LateUpdate() {
