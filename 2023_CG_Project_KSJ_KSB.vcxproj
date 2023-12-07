@@ -151,22 +151,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="external\include\stb_image.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\GraphicBuffers.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Util\Engine.cpp" />
     <ClCompile Include="Util\Input.cpp" />
+    <ClCompile Include="Util\TextureComponent.cpp" />
     <ClCompile Include="Util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="external\include\stb_image.h" />
     <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\GraphicBuffers.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Util\Engine.h" />
     <ClInclude Include="Util\Input.h" />
+    <ClInclude Include="Util\TextureComponent.h" />
     <ClInclude Include="Util\Timer.h" />
   </ItemGroup>
   <ItemGroup>
