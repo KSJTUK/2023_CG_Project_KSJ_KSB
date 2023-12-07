@@ -46,7 +46,7 @@ public:
 class FreeCamera : public Camera {
 public:
 	FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT);
-
+	~FreeCamera();
 
 	virtual void Render();
 	virtual void Update(float DeltaTime);
