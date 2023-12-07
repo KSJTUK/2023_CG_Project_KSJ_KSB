@@ -1,5 +1,4 @@
 #pragma once
-
 class Renderer {
 public:
 	Renderer();
@@ -12,7 +11,6 @@ public:
 
 private:
 	std::unique_ptr<class FreeCamera> m_freeCamera{ nullptr };
-	std::unique_ptr<class Terrain> m_testTerrain{ };
 
 	GLenum m_renderMode = GL_FILL;
 
