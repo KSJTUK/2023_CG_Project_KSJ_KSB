@@ -7,6 +7,11 @@ Engine::Engine() { }
 Engine::~Engine() { }
 
 void Engine::Init() {
+	// 이 프로그램이 1번 코어에서만 작동하도록 변경 
+	// 이 설정이 없으면 멀티코어 실행환경에서 타이머의 Frequency 를 얻어오는 프로세서와 
+	// 실제로 Update 를 수행하는 프로세서가 달라 오차가 생길 수 있다.
+	SetThreadAffinityMask(GetCurrentProcess(), 1);
+
 	// glfw 라이브러리 초기화
 	if (!glfwInit()) {
 		exit(-1);

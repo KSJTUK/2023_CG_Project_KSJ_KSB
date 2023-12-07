@@ -48,6 +48,9 @@
     <ClCompile Include="Graphics\Shader.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Renderer.cpp">
+      <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Engine.h">
@@ -61,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Graphics\Shader.h">
       <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Renderer.h">
+      <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Timer.h">
+      <Filter>소스 파일\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
