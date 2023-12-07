@@ -15,7 +15,8 @@ Renderer::Renderer(GLFWwindow* window) {
 
 Renderer::~Renderer() { }
 
-void Renderer::Update(float DeltaTime) {
+void Renderer::Update(float deltaTime) {
+	m_freeCamera->Update(deltaTime);
 }
 
 void Renderer::Render() {
