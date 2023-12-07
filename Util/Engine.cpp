@@ -49,6 +49,8 @@ void Engine::Init() {
 
 	glfwSetInputMode(m_windowInfo.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+	// 깊이 테스트 설정
+	glEnable(GL_DEPTH_TEST);
 
 	// 뷰포트 설정
 	glViewport(0, 0, m_windowInfo.width, m_windowInfo.height);
@@ -57,10 +59,10 @@ void Engine::Init() {
 
 	Input::GetInstance()->Init(m_windowInfo.window);
 
+	SHADER->Initialize();
+
 	m_timer = std::make_unique<Timer>();
 	m_renderer = std::make_unique<Renderer>(m_windowInfo.window);
-
-	SHADER->Initialize();
 }
 
 
@@ -85,7 +87,7 @@ void Engine::LateUpdate() {
 void Engine::Render() {
 	//// 렌더링 코드
 	glClearColor(0.5f, 0.5f, 0.5f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_renderer->Render();
 
