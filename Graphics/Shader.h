@@ -61,8 +61,12 @@ private:
 
 enum class ShaderType {
 	StaticShader,
-	AnimateShader,
-	SkyboxShader
+	AnimatedShader,
+	BackgroundShader,
+	TerrainShader,
+	LightobjectShader,
+	ParticleShader,
+	UIShader
 };
 
 class Shader {

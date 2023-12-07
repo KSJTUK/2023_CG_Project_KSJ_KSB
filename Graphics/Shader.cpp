@@ -66,6 +66,7 @@ Shader* Shader::m_instance = nullptr;
 
 void Shader::Initialize(){
 
+	m_shaderList[static_cast<int>(ShaderType::StaticShader)] = std::make_shared<ShaderComponent>(static_shader);
 
 }
 
@@ -120,41 +121,318 @@ int ShaderComponent::GetUniformLocation(const std::string& valueName){
 
 UINT ShaderComponent::CreateVertexShader(const std::string& path){
 
+	UINT id{};
+	
+	GLchar errorlog[512]{};
+
+
+	std::ifstream file = std::ifstream((shaderDir +  path).c_str(), std::ios::in);
+	std::stringstream ss = std::stringstream{};
+	std::string source{};
+
+	if (file.is_open()) {
+		ss << file.rdbuf();
+		source = ss.str();
+	}
+	else {
+		std::cerr << "ERROR : FAILED TO OPEN FILE " << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+
+	const char* source_cstr = source.c_str();
+
+	id = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(id, 1, &source_cstr, NULL);
+	glCompileShader(id);
+
+
+	GLint result{};
+	ZeroMemory(errorlog, 512);
+
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (!result) {
+		glGetShaderInfoLog(id, 512, NULL, errorlog);
+		std::cerr << "ERROR : VERTEX SHADER COMPILE ERROR" << std::endl;
+		std::cerr << errorlog << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	else {
+		std::cerr << "VERTEX SHADER SUCESSFULLY COMPILED!" << std::endl;
+	}
 
 
 
 
-
-
-	return 0;
+	return id;
 }
 
 UINT ShaderComponent::CreateGeometryShader(const std::string& path){
-	return 0;
+
+	UINT id{};
+
+	GLchar errorlog[512]{};
+
+
+	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
+	std::stringstream ss = std::stringstream{};
+	std::string source{};
+
+	if (file.is_open()) {
+		ss << file.rdbuf();
+		source = ss.str();
+	}
+	else {
+		std::cerr << "ERROR : FAILED TO OPEN FILE " << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+
+	const char* source_cstr = source.c_str();
+
+	id = glCreateShader(GL_GEOMETRY_SHADER);
+	glShaderSource(id, 1, &source_cstr, NULL);
+	glCompileShader(id);
+
+
+	GLint result{};
+	ZeroMemory(errorlog, 512);
+
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (!result) {
+		glGetShaderInfoLog(id, 512, NULL, errorlog);
+		std::cerr << "ERROR : GEOMETRY SHADER COMPILE ERROR" << std::endl;
+		std::cerr << errorlog << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	else {
+		std::cerr << "GEOMETRY SHADER SUCESSFULLY COMPILED!" << std::endl;
+	}
+
+
+
+
+	return id;
 }
 
 UINT ShaderComponent::CreateTesselationControlShader(const std::string& path){
-	return 0;
+	UINT id{};
+
+	GLchar errorlog[512]{};
+
+
+	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
+	std::stringstream ss = std::stringstream{};
+	std::string source{};
+
+	if (file.is_open()) {
+		ss << file.rdbuf();
+		source = ss.str();
+	}
+	else {
+		std::cerr << "ERROR : FAILED TO OPEN FILE " << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+
+	const char* source_cstr = source.c_str();
+
+	id = glCreateShader(GL_TESS_CONTROL_SHADER);
+	glShaderSource(id, 1, &source_cstr, NULL);
+	glCompileShader(id);
+
+
+	GLint result{};
+	ZeroMemory(errorlog, 512);
+
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (!result) {
+		glGetShaderInfoLog(id, 512, NULL, errorlog);
+		std::cerr << "ERROR : TESSELATION CONTROL SHADER COMPILE ERROR" << std::endl;
+		std::cerr << errorlog << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	else {
+		std::cerr << "TESSELATION CONTROL SHADER SUCESSFULLY COMPILED!" << std::endl;
+	}
+
+
+
+
+	return id;
+
+
 }
 
 UINT ShaderComponent::CreateTesselationEvaluationShader(const std::string& path){
-	return 0;
+	UINT id{};
+
+	GLchar errorlog[512]{};
+
+
+	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
+	std::stringstream ss = std::stringstream{};
+	std::string source{};
+
+	if (file.is_open()) {
+		ss << file.rdbuf();
+		source = ss.str();
+	}
+	else {
+		std::cerr << "ERROR : FAILED TO OPEN FILE " << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+
+	const char* source_cstr = source.c_str();
+
+	id = glCreateShader(GL_TESS_EVALUATION_SHADER);
+	glShaderSource(id, 1, &source_cstr, NULL);
+	glCompileShader(id);
+
+
+	GLint result{};
+	ZeroMemory(errorlog, 512);
+
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (!result) {
+		glGetShaderInfoLog(id, 512, NULL, errorlog);
+		std::cerr << "ERROR : TESSELATION EVALUATION SHADER COMPILE ERROR" << std::endl;
+		std::cerr << errorlog << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	else {
+		std::cerr << "TESSELATION EVALUATION SHADER SUCESSFULLY COMPILED!" << std::endl;
+	}
+
+
+
+
+	return id;
+
+
 }
 
 UINT ShaderComponent::CreateFragmentShader(const std::string& path){
-	return 0;
+
+	UINT id{};
+
+	GLchar errorlog[512]{};
+
+
+	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
+	std::stringstream ss = std::stringstream{};
+	std::string source{};
+
+	if (file.is_open()) {
+		ss << file.rdbuf();
+		source = ss.str();
+	}
+	else {
+		std::cerr << "ERROR : FAILED TO OPEN FILE " << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+
+	const char* source_cstr = source.c_str();
+
+	id = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(id, 1, &source_cstr, NULL);
+	glCompileShader(id);
+
+
+	GLint result{};
+	ZeroMemory(errorlog, 512);
+
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (!result) {
+		glGetShaderInfoLog(id, 512, NULL, errorlog);
+		std::cerr << "ERROR : FRAGMENT SHADER COMPILE ERROR" << std::endl;
+		std::cerr << errorlog << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	else {
+		std::cerr << "FRAGMENT SHADER SUCESSFULLY COMPILED!" << std::endl;
+	}
+
+
+
+
+	return id;
 }
 
 
 ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 
-	
-	for (auto i = 0; i < files.size(); ++i) {
+	UINT VertexProgramID{INVALID};
+	UINT GeometrtyProgramID{ INVALID };
+	UINT TesselationControlProgramID{ INVALID };
+	UINT TesselationEvaluationProgramID{ INVALID };
+	UINT FragmentProgramID{ INVALID };
 
+
+
+	m_id = glCreateProgram();
+	
+
+	for (auto i = 0; i < files.size(); ++i) {
+		if (files[i] == EMPTYSTRING) continue;
+
+		switch (i){
+		case 0:
+			VertexProgramID = CreateVertexShader(files[i]);
+			glAttachShader(m_id, VertexProgramID);
+			break;
+		case 1:
+			GeometrtyProgramID = CreateGeometryShader(files[i]);
+			glAttachShader(m_id, GeometrtyProgramID);
+			break;
+		case 2:
+			TesselationControlProgramID = CreateTesselationControlShader(files[i]);
+			glAttachShader(m_id, TesselationControlProgramID);
+			break;
+		case 3:
+			TesselationEvaluationProgramID = CreateTesselationEvaluationShader(files[i]);
+			glAttachShader(m_id, TesselationEvaluationProgramID);
+			break;
+		case 4:
+			FragmentProgramID = CreateFragmentShader(files[i]);
+			glAttachShader(m_id, FragmentProgramID);
+			break;
+		default:
+			break;
+		}
 	}
 
 
+	glLinkProgram(m_id);
 
+
+
+	if (VertexProgramID != INVALID) glDeleteProgram(VertexProgramID);
+	if (GeometrtyProgramID != INVALID) glDeleteProgram(GeometrtyProgramID);
+	if (TesselationControlProgramID != INVALID) glDeleteProgram(TesselationControlProgramID);
+	if (TesselationEvaluationProgramID != INVALID) glDeleteProgram(TesselationEvaluationProgramID);
+	if (FragmentProgramID != INVALID) glDeleteProgram(FragmentProgramID);
+
+
+
+	GLchar errorlog[512]{};
+	
+	ZeroMemory(errorlog, 512);
+	GLint result{};
+	glGetProgramiv(m_id, GL_LINK_STATUS, &result);
+
+	if (!result) {
+		ZeroMemory(errorlog, 512);
+		glGetProgramInfoLog(result, 512, NULL, errorlog);
+		std::cerr << "ERROR : SHADER LINK FAILED" << std::endl;
+		std::cerr << errorlog << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	else {
+		std::cerr << "SHADERS SUCESSFULLY CREATED" << std::endl;
+	}
 }
 
 

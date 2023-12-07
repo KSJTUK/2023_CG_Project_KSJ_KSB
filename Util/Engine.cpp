@@ -2,6 +2,9 @@
 #include "Util/Engine.h"
 #include "Util/Input.h"
 
+#include "Graphics/Shader.h"
+
+
 
 
 
@@ -21,8 +24,8 @@ void Engine::Init() {
 	}
 
 	// OpenGL 버전 설정
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// 윈도우 정보 초기 설정
@@ -47,6 +50,9 @@ void Engine::Init() {
 		exit(-1);
 	}
 
+	glfwSetInputMode(m_windowInfo.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+
 	// 뷰포트 설정
 	glViewport(0, 0, m_windowInfo.width, m_windowInfo.height);
 
@@ -55,6 +61,8 @@ void Engine::Init() {
 	Input::GetInstance()->Init(m_windowInfo.window);
 
 	m_timer = std::make_unique<Timer>();
+
+	SHADER->Initialize();
 }
 
 

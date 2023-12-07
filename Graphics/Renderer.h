@@ -1,4 +1,5 @@
 #pragma once
+#include "Graphics/Camera.h"
 
 
 class Renderer {
@@ -15,6 +16,7 @@ public:
 private:
 
 	
+	std::unique_ptr<FreeCamera> m_freeCamera{ nullptr };
 
 	GLenum m_renderMode = GL_FILL;
 
