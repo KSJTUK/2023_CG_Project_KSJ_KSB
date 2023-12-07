@@ -4,7 +4,7 @@ layout (location = 0) in vec3 in_Position;
 layout (location = 1) in vec2 in_Texture;
 layout (location = 2) in vec3 in_Normal;
 
-uniform mat4 perspective;
+uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 transform;
 
@@ -19,5 +19,5 @@ void main(void)
 	vs_out_normal = mat3(transpose(inverse(transform))) * in_Normal;
 	vs_out_tex = in_Texture;
 
-	gl_Position = perspective * view * vec4(fragPosition, 1.0f);
+	gl_Position = projection * view * vec4(fragPosition, 1.0f);
 }

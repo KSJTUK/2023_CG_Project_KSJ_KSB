@@ -81,4 +81,45 @@
       <Filter>헤더 파일\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\background_fragment_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\background_vertex_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\particle_fragment_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\particle_geometry_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\particle_vertex_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\static_fragment_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\static_vertex_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\terrain_fragment_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\terrain_tessel_control_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\terrain_tessel_evaluation_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\terrain_vertex_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\ui_fragment_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\ui_vertex_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
 </Project>

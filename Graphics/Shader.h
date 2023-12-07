@@ -87,7 +87,7 @@ private:
 
 private:
 
-	std::vector<std::shared_ptr<ShaderComponent>> m_shaderList{};
+	std::vector<std::shared_ptr<ShaderComponent>> m_shaderList{ nullptr, nullptr, nullptr, nullptr, nullptr , nullptr, nullptr };
 	std::shared_ptr<ShaderComponent> m_activatedShader{ nullptr };
 
 
