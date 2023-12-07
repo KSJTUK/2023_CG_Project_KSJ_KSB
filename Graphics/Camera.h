@@ -24,7 +24,7 @@ protected:
 	glm::vec3 m_at{};
 	glm::vec3 m_up{ 0.f,1.f,0.f };
 
-	float m_fovY = 60.f;
+	float m_fovY = 45.f;
 	float m_nearZ = 0.1f;
 	float m_farZ = 1000.f;
 
