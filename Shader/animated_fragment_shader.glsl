@@ -1,4 +1,4 @@
-#version 440 core
+#version 460 core
 
 in vec2 text_coords;
 in vec3 frag_pos;
@@ -30,6 +30,8 @@ struct PointLight
 uniform Material material;
 uniform PointLight point_light;
 uniform vec3 view_pos;
+
+out vec4 FragColor;
 
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 view_dir, vec3 frag_pos)
@@ -63,6 +65,6 @@ void main()
 	vec4 calc_color = vec4( CalcPointLight(point_light, normal, view_dir, frag_pos), 1.0);
 	calc_color.a = material.transparency;
 	
-	gl_FragColor = texture(material.texture_diffuse1,text_coords);
+	FragColor = texture(material.texture_diffuse1,text_coords);
 	//gl_FragColor = vec4(1.0);
 }
