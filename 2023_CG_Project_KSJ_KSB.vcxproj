@@ -156,8 +156,10 @@
   <ItemGroup>
     <ClCompile Include="external\include\stb_image.cpp" />
     <ClCompile Include="Graphics\AnimatedModel.cpp" />
+    <ClCompile Include="Graphics\AR15.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\GraphicBuffers.cpp" />
+    <ClCompile Include="Graphics\Object.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\SkyBox.cpp" />
@@ -172,12 +174,14 @@
   <ItemGroup>
     <ClInclude Include="external\include\stb_image.h" />
     <ClInclude Include="Graphics\AnimatedModel.h" />
+    <ClInclude Include="Graphics\AR15.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\GraphicBuffers.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\SkyBox.h" />
     <ClInclude Include="Graphics\Terrain.h" />
+    <ClInclude Include="Graphics\Object.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Util\Engine.h" />
     <ClInclude Include="Util\Input.h" />

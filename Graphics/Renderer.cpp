@@ -6,6 +6,7 @@
 #include "Graphics/SkyBox.h"
 #include "Graphics/AnimatedModel.h"
 
+#include "Graphics/AR15.h"
 
 
 #define TEST_PATCHSIZE 20
@@ -18,11 +19,13 @@ Renderer::Renderer(GLFWwindow* window) {
 	m_background = std::make_unique<SkyBox>();
 	m_testTerrain = std::make_unique<Terrain>(glm::uvec2{ TEST_PATCHSIZE, TEST_PATCHSIZE });
 
+	ar15_model = std::make_shared<Animated::Model>();
 
 
-	m1 = new Animated::Model{};
+	ar15_model->LoadModel("Resources/ar15/scene.gltf");
 
-	m1->LoadModel("Resources/ar15/scene.gltf");
+	ar15 = new Animated::AR15(ar15_model);
+	
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -35,7 +38,7 @@ void Renderer::Update(float deltaTime) {
 }
 
 void Renderer::Render() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
 	SHADER->UnuseProgram();
@@ -53,7 +56,7 @@ void Renderer::Render() {
 
 	SHADER->UseProgram(ShaderType::AnimatedShader);
 	m_freeCamera->Render();
-	m1->Render();
+	ar15->Render();
 	SHADER->UnuseProgram();
 
 }

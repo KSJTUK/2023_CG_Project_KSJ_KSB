@@ -1,5 +1,5 @@
 #pragma once
-namespace Animated { class Model; }
+namespace Animated { class Model; class AR15; }
 
 class Renderer {
 public:
@@ -19,7 +19,13 @@ private:
 	GLenum m_renderMode = GL_LINE;
 
 
-	Animated::Model* m1{ nullptr };
+
+	std::shared_ptr<Animated::Model> ar15_model{ nullptr };
+
+
+
+	Animated::AR15* ar15{ nullptr };
+
 
 
 public:
