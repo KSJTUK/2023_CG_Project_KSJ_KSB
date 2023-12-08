@@ -17,7 +17,7 @@ namespace Animated {
 	public:
 
 		void SetAnimationIndex(int val);
-		void SetPosition(glm::vec3 pos);
+		void SetPosition(const glm::vec3& pos);
 
 	};
 

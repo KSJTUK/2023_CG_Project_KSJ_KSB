@@ -1,5 +1,5 @@
 #pragma once
-namespace Animated { class Model; class AR15; }
+namespace Animated { class Object; class Model; class AR15; }
 
 class Renderer {
 public:
@@ -22,7 +22,7 @@ private:
 
 	std::shared_ptr<Animated::Model> ar15_model{ nullptr };
 
-
+	void CollisionTerrain(class Animated::Object& obj, float offset);
 
 	Animated::AR15* ar15{ nullptr };
 	Animated::AR15* ar15_1{ nullptr };

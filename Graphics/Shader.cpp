@@ -117,7 +117,7 @@ int ShaderComponent::GetUniformLocation(const std::string& valueName) {
 		location = glGetUniformLocation(m_id, valueName.c_str());
 		m_uniformLocationDict.insert(std::make_pair(valueName, location));
 #ifdef _DEBUG
-		assert(location != -1);
+		//assert(location != -1);
 #else // Release
 	if (location == -1) {
 		std::cerr << "Error in\nFile : " << __FILE__ << "\n" << "Line : " << __LINE__ << std::endl;

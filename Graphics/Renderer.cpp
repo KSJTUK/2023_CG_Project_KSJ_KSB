@@ -8,7 +8,6 @@
 
 #include "Graphics/AR15.h"
 
-
 #define TEST_PATCHSIZE 20
 
 Renderer::Renderer() { }
@@ -20,9 +19,7 @@ Renderer::Renderer(GLFWwindow* window) {
 	m_testTerrain = std::make_unique<Terrain>(glm::uvec2{ TEST_PATCHSIZE, TEST_PATCHSIZE });
 
 	ar15_model = std::make_shared<Animated::Model>();
-
-
-	ar15_model->LoadModel("Resources/ar15/scene.gltf");
+	ar15_model->LoadModel("Resources/zombie/scene.gltf");
 
 	ar15 = new Animated::AR15(ar15_model);
 	ar15->SetAnimationIndex(6);
@@ -33,7 +30,7 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	ar15_2 = new Animated::AR15(ar15_model);
 	ar15_2->SetAnimationIndex(3);
-	ar15_2->SetPosition(glm::vec3{ 0.f,0.f,-30.f });
+	ar15_2->SetPosition(glm::vec3{ 0.f,0.f,-400.f });
 
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -42,15 +39,22 @@ Renderer::Renderer(GLFWwindow* window) {
 
 Renderer::~Renderer() { }
 
+void Renderer::CollisionTerrain(Animated::Object& obj, float offset) {
+	m_testTerrain->MoveHeightPosition(obj.GetPosition(), offset);
+}
+
 void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
 	ar15->Update(deltaTime);
 	ar15_1->Update(deltaTime);
 	ar15_2->Update(deltaTime);
+
+	ar15_2->SetPosition(ar15_2->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
+	CollisionTerrain(*ar15_2, 1.f);
 }
 
 void Renderer::Render() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
 	SHADER->UnuseProgram();
