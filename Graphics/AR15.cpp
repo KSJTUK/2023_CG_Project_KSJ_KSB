@@ -35,7 +35,7 @@ void Animated::AR15::SetAnimationIndex(int val) {
 	m_animationIndex = val;
 }
 
-void Animated::AR15::SetPosition(glm::vec3 pos){
+void Animated::AR15::SetPosition(const glm::vec3& pos){
 	m_position = pos;
 
 }

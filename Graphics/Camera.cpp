@@ -25,12 +25,12 @@ void FreeCamera::Render(){
 	auto p = glm::perspective(m_fovY, m_aspect, m_nearZ, m_farZ);
 	auto v = glm::lookAt(m_eye, m_eye + m_at, m_up);
 
-	//SHADER->GetActivatedShader()->SetUniformMat4("projection", GL_FALSE, &p[0][0]);
-	//SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &v[0][0]);
+	SHADER->GetActivatedShader()->SetUniformMat4("projection", GL_FALSE, &p[0][0]);
+	SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &v[0][0]);
 
-	auto vp = p * v;
+	//auto vp = p * v;
 
-	SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &vp[0][0]);
+	//SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &vp[0][0]);
 
 }
 
