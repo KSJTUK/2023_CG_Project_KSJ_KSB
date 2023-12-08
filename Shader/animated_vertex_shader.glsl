@@ -13,7 +13,7 @@ out vec3 frag_pos;
 uniform mat4 view;
 uniform mat4 projection;
 
-//uniform mat4 VP;
+uniform mat4 VP;
 
 uniform mat4 M_matrix;
 uniform mat4 TIM_matrix;
@@ -32,11 +32,11 @@ void main()
 	vec4 boned_position = bone_transform * vec4(in_position, 1.0); // transformed by bones
 
 
-	normal = normalize(vec3( TIM_matrix * (bone_transform * vec4(in_normal, 0.0))));
+//	normal = normalize(vec3( TIM_matrix * (bone_transform * vec4(in_normal, 0.0))));
 
 	frag_pos = vec3(M_matrix * boned_position);
 	text_coords = in_text_coords;
 
-//	gl_Position = VP * M_matrix *  boned_position;
-	gl_Position = projection * view * M_matrix *  boned_position;
+
+	gl_Position = VP * M_matrix *  boned_position;
 }

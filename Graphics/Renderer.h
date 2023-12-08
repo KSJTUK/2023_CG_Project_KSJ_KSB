@@ -28,6 +28,9 @@ private:
 	Animated::AR15* ar15_1{ nullptr };
 	Animated::AR15* ar15_2{ nullptr };
 
+	std::vector<std::shared_ptr<Animated::Object>> m_animatedObjectArr{};
+
+
 
 public:
 	void Update(float deltaTime);

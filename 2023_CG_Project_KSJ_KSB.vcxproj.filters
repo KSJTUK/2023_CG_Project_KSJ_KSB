@@ -72,6 +72,15 @@
     <ClCompile Include="Graphics\AnimatedModel.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\AR15.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Object.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\SkyBox.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Engine.h">
@@ -109,6 +118,15 @@
     </ClInclude>
     <ClInclude Include="Graphics\AnimatedModel.h">
       <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\AR15.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\SkyBox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Object.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +167,12 @@
       <Filter>리소스 파일</Filter>
     </None>
     <None Include="Shader\ui_vertex_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\animated_vertex_shader.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shader\animated_fragment_shader.glsl">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
