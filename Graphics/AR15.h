@@ -12,6 +12,13 @@ namespace Animated {
 		virtual void Render() override;
 		virtual void Update(float DeltaTime) override;
 
+
+
+	public:
+
+		void SetAnimationIndex(int val);
+		void SetPosition(glm::vec3 pos);
+
 	};
 
 

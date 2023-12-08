@@ -25,7 +25,8 @@ private:
 
 
 	Animated::AR15* ar15{ nullptr };
-
+	Animated::AR15* ar15_1{ nullptr };
+	Animated::AR15* ar15_2{ nullptr };
 
 
 public:

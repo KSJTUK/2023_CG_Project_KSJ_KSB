@@ -93,9 +93,8 @@ namespace Animated {
 
 		void LoadModel(const std::string& path);
 		
-		void Update(float DeltaTime);
 
-		void Render();
+		void Render(const glm::mat4& matrix,int animationindex,float animationcounter);
 
 		
 		void ChangeAnimation(int index);
