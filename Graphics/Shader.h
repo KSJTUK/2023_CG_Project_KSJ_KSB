@@ -28,36 +28,19 @@ public:
 	void SetUniformFloat(const std::string& valueName, const float value);
 	void SetUniformInt(const std::string& valueName, const int value);
 
-
 private:
-	
 	int GetUniformLocation(const std::string& valName);
 
-
-
 private:
-
-
 	std::unordered_map<std::string, UINT> m_uniformLocationDict{};
 	UINT m_id{};
 
 private:
-
-
 	UINT CreateVertexShader					(const std::string& path);
 	UINT CreateGeometryShader				(const std::string& path);
 	UINT CreateTesselationControlShader		(const std::string& path);
 	UINT CreateTesselationEvaluationShader	(const std::string& path);
 	UINT CreateFragmentShader				(const std::string& path);
-
-
-
-
-	  
-
-
-
-
 };
 
 enum class ShaderType {
@@ -78,30 +61,21 @@ private:
 	Shader& operator=(const Shader& other) = delete;
 
 public:
-
 	static Shader* GetInstance();
 
 private:
-
 	static Shader* m_instance;
 
-
 private:
-
 	std::vector<std::shared_ptr<ShaderComponent>> m_shaderList{ nullptr, nullptr, nullptr, nullptr, nullptr , nullptr, nullptr };
 	std::shared_ptr<ShaderComponent> m_activatedShader{ nullptr };
 
 
 public:
-
-
 	void Initialize();
-
 	void UseProgram(ShaderType type);
-
 	void UnuseProgram();
 
-	
 	std::shared_ptr<ShaderComponent> GetActivatedShader() const;
 };
 

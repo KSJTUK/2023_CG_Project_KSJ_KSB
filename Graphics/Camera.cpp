@@ -3,7 +3,7 @@
 #include "Graphics/Shader.h"
 #include "Util/Input.h"
 
-Camera::Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) : m_window(window), m_eye(EYE), m_at(AT){
+Camera::Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) : m_window(window), m_eye(EYE), m_at(AT) {
 	int width, height;
 	glfwGetFramebufferSize(m_window, &width, &height);
 	m_aspect = static_cast<float>(width) / static_cast<float>(height);
@@ -15,27 +15,20 @@ Camera::Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) : m_window(windo
 
 }
 
-FreeCamera::FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) :Camera{ window, EYE, AT }
-{
+FreeCamera::FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) :Camera{ window, EYE, AT } {
 }
 
-FreeCamera::~FreeCamera()
-{
+FreeCamera::~FreeCamera() {
 }
 
 void FreeCamera::Render(){
-	
-
-
 	auto p = glm::perspective(m_fovY, m_aspect, m_nearZ, m_farZ);
 	auto v = glm::lookAt(m_eye, m_eye + m_at, m_up);
+
 	SHADER->GetActivatedShader()->SetUniformMat4("projection", GL_FALSE, &p[0][0]);
 	SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &v[0][0]);
-
-
-
-
 }
+
 constexpr auto CameraSpeed = 20.f;
 constexpr auto MOUSE_SENSITIVE = 0.1f;
 
@@ -66,7 +59,6 @@ void FreeCamera::Update(float DeltaTime){
 
 	if (Input::GetInstance()->GetKey(GLFW_KEY_Q) == KEY_STATE::PRESS) {
 		m_eye -= m_basisY * DeltaTime * CameraSpeed;
-
 	}
 
 
