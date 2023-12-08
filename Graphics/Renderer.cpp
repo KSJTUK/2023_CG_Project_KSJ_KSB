@@ -24,6 +24,7 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	m1->LoadModel("Resources/ar15/scene.gltf");
 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 }
 
