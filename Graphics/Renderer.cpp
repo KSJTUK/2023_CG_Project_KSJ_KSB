@@ -34,6 +34,7 @@ void Renderer::Update(float deltaTime) {
 }
 
 void Renderer::Render() {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
 	SHADER->UnuseProgram();
