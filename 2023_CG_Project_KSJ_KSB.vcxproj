@@ -159,6 +159,7 @@
     <ClCompile Include="Graphics\GraphicBuffers.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
+    <ClCompile Include="Graphics\SkyBox.cpp" />
     <ClCompile Include="Graphics\Terrain.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Graphics\GraphicBuffers.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
+    <ClInclude Include="Graphics\SkyBox.h" />
     <ClInclude Include="Graphics\Terrain.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Util\Engine.h" />

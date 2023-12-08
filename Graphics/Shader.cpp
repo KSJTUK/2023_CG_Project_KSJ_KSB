@@ -68,7 +68,7 @@ void Shader::Initialize(){
 
 	m_shaderList[static_cast<int>(ShaderType::StaticShader)] = std::make_shared<ShaderComponent>(static_shader);
 	m_shaderList[static_cast<int>(ShaderType::TerrainShader)] = std::make_shared<ShaderComponent>(terrain_shader);
-
+	m_shaderList[static_cast<int>(ShaderType::BackgroundShader)] = std::make_shared<ShaderComponent>(background_shader);
 }
 
 

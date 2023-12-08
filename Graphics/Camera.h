@@ -11,15 +11,11 @@ public:
 	Camera& operator=(const Camera& other) = delete;
 
 protected:
-
 	// To get aspect
 	GLFWwindow* m_window{};
 
 
-
-
-protected:
-	
+protected:	
 	glm::vec3 m_eye{};
 	glm::vec3 m_at{};
 	glm::vec3 m_up{ 0.f,1.f,0.f };
@@ -33,8 +29,6 @@ protected:
 	glm::vec3 m_basisX{ 1.f,0.f,0.f };
 	glm::vec3 m_basisY{ 0.f,1.f,0.f };
 	glm::vec3 m_basisZ{ 0.f,0.f,1.f };
-
-
 
 public:
 	virtual void Render() = 0;

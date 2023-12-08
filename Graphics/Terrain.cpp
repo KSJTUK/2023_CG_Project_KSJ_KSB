@@ -149,8 +149,8 @@ void Terrain::SetMeterials() {
 }
 
 void Terrain::Init() {
-	/*TERRAINSHADER->SetUniformFloat("yScale", m_yScale);
-	TERRAINSHADER->SetUniformFloat("yShift", m_yShift);*/
+	//TERRAINSHADER->SetUniformFloat("yScale", m_yScale);
+	//TERRAINSHADER->SetUniformFloat("yShift", m_yShift);
 }
 
 void Terrain::Update(float deltaTime) {
