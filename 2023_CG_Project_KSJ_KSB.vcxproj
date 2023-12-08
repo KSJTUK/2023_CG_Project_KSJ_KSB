@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="external\include\stb_image.cpp" />
+    <ClCompile Include="Graphics\AnimatedModel.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\GraphicBuffers.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\include\stb_image.h" />
+    <ClInclude Include="Graphics\AnimatedModel.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\GraphicBuffers.h" />
     <ClInclude Include="Graphics\Renderer.h" />
