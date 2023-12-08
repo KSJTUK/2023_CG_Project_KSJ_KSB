@@ -478,10 +478,9 @@ aiVector3D Animated::Model::CalculatePolatedPosition(float AnimationTime, const 
 
 	UINT position_index = FindPosition(AnimationTime, animnode);
 	UINT next_position_index = position_index + 1;
-	assert(next_position_index < p_node_anim->mNumPositionKeys);
 	float delta_time = (float)(animnode->mPositionKeys[next_position_index].mTime - animnode->mPositionKeys[position_index].mTime);
 	float factor = (AnimationTime - (float)animnode->mPositionKeys[position_index].mTime) / delta_time;
-	assert(factor >= 0.0f && factor <= 1.0f);
+
 	aiVector3D start = animnode->mPositionKeys[position_index].mValue;
 	aiVector3D end = animnode->mPositionKeys[next_position_index].mValue;
 	aiVector3D delta = end - start;
@@ -499,7 +498,7 @@ aiQuaternion Animated::Model::CalculatePolatedRotation(float AnimationTime, cons
 
 	UINT rotation_index = FindRotation(AnimationTime, animnode);
 	UINT next_rotation_index = rotation_index + 1;
-	assert(next_rotation_index < p_node_anim->mNumRotationKeys);
+
 	float delta_time = (float)(animnode->mRotationKeys[next_rotation_index].mTime - animnode->mRotationKeys[rotation_index].mTime);
 	float factor = (AnimationTime - (float)animnode->mRotationKeys[rotation_index].mTime) / delta_time;
 	assert(factor >= 0.0f && factor <= 1.0f);
