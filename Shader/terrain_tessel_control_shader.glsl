@@ -20,7 +20,7 @@ const int maxTesselLevel = 32;
 // 최소 테셀레이션 레벨과 최대 테셀레이션 레벨을 적용할 거리 정의
 // 최소거리 -> 최대 테셀레이션 레벨, 최대거리 -> 최소 테셀레이션 레벨
 const float minDist = 20;
-const float maxDist = 800;
+const float maxDist = 400;
 
 const int tessLevel = 64;
 

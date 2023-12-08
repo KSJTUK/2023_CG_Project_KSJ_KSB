@@ -16,7 +16,6 @@ out float heightFactor;
 
 uniform sampler2D heightMap;
 uniform mat4 projection;
-uniform mat4 view;
 
 vec4 heightNormal = vec4(0.0f, 1.0f, 0.0f, 0.0f);
 const float patchSize = 20.0f;
@@ -90,7 +89,7 @@ void main()
     vec4 p = calcPostition(u, v, height);
     tes_out_fragPosition = calcFragPos(u, v, height);
 
-    gl_Position = projection * view * p;
+    gl_Position = projection * p;
 
     tes_out_tex = texCoord;
 //    tes_out_normal = calcNormal(u, v);
