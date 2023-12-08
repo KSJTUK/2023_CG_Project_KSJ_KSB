@@ -1,12 +1,13 @@
 #pragma once
-#include <assimp/postprocess.h>
+
 #include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <assimp/anim.h>
 
 
 namespace Animated {
-#define MAX_BONES_PER_VERTEX 4
+	constexpr auto MAX_BONES_PER_VERTEX = 4;
 	constexpr UINT MAX_BONES = 100;
 
 
@@ -47,6 +48,12 @@ namespace Animated {
 		glm::vec3 rotation{ glm::radians(-90.f),0.f,0.f };
 		glm::vec3 scale{ 1.f,1.f,1.f };
 	};
+
+
+
+	glm::mat4 AimatTOGlm(aiMatrix4x4& ai_matr);
+	aiQuaternion slerp(aiQuaternion q1, aiQuaternion q2, float blend);
+
 
 	class Mesh {
 	public:
@@ -124,10 +131,27 @@ namespace Animated {
 
 	private:
 
+		void ShowNodeName(const aiNode* node);
+
 		void ProcessNode(aiNode* node);
+		Mesh ProcessMesh(aiMesh* mesh);
 
 
 
+		std::vector<Texture> LoadMaterial(aiMaterial* material, aiTextureType type, std::string Typename);
+
+		UINT FindPosition(float AnimationTime, const aiNodeAnim* animnode);
+		UINT FindRotation(float AnimationTime, const aiNodeAnim* animnode);
+		UINT FindScaling(float AnimationTime, const aiNodeAnim* animnode);
+		const aiNodeAnim* FindNodeAnimation(const aiAnimation* animation, const std::string nodename);
+
+
+		aiVector3D CalculatePolatedPosition(float AnimationTime, const aiNodeAnim* animnode);
+		aiQuaternion CalculatePolatedRotation(float AnimationTime, const aiNodeAnim* animnode);
+		aiVector3D CalculatePolatedScailing(float AnimationTime, const aiNodeAnim* animnode);
+
+		void ReadNodeHierarchy(float Animationtime, const aiNode* node ,const aiMatrix4x4 ParentTransform);
+		void UpdateBoneTransform(double Elapsed, std::vector<aiMatrix4x4>& Transforms);
 
 	};
 
