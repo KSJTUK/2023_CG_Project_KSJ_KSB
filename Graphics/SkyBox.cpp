@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "SkyBox.h"
-#include "Graphics/GraphicBuffers.h"
 #include "Graphics/Shader.h"
 #include "Util/TextureComponent.h"
 
@@ -48,7 +47,7 @@ SkyBox::SkyBox() {
 	m_verticies = temp;
 
 	m_textures = std::make_unique<CubeMapTexture>();
-	const std::string dir{ "./textures/" };
+	const std::string dir{ "./Textures/" };
 
 	m_textures->LoadCubeMapTexture(dir + "interstellar_ft.tga", dir + "interstellar_bk.tga", dir + "interstellar_up.tga",
 		dir + "interstellar_dn.tga", dir + "interstellar_rt.tga", dir + "interstellar_lf.tga", false);
@@ -64,7 +63,6 @@ SkyBox::SkyBox() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glDeleteBuffers(1, &m_VBO);
 	glBindVertexArray(0);
 
 	SHADER->UnuseProgram();
@@ -73,7 +71,6 @@ SkyBox::SkyBox() {
 SkyBox::~SkyBox() { }
 
 void SkyBox::Render() {
-	SHADER->UseProgram(ShaderType::BackgroundShader);
 	SHADER->GetActivatedShader()->SetUniformInt("cubeMapTexture", 0);
 
 
@@ -87,6 +84,4 @@ void SkyBox::Render() {
 
 	glBindVertexArray(0);
 	glDepthFunc(GL_LESS);
-
-	SHADER->UnuseProgram();
 }

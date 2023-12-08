@@ -6,7 +6,6 @@ public:
 	~SkyBox();
 
 private:
-	std::unique_ptr<class GraphicBuffers> m_buffer{ };
 	std::unique_ptr<class CubeMapTexture> m_textures{ };
 
 	std::vector<glm::vec3> m_verticies{ };
