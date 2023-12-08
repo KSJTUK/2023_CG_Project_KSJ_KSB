@@ -1,4 +1,6 @@
 #pragma once
+namespace Animated { class Model; }
+
 class Renderer {
 public:
 	Renderer();
@@ -15,6 +17,10 @@ private:
 	std::unique_ptr<class Terrain> m_testTerrain{ nullptr };
 
 	GLenum m_renderMode = GL_LINE;
+
+
+	Animated::Model* m1{ nullptr };
+
 
 public:
 	void Update(float deltaTime);

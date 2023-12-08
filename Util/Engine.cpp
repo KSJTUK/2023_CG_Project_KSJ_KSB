@@ -51,6 +51,7 @@ void Engine::Init() {
 
 	// 깊이 테스트 설정
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	// 뷰포트 설정
 	glViewport(0, 0, m_windowInfo.width, m_windowInfo.height);
