@@ -25,7 +25,16 @@ Renderer::Renderer(GLFWwindow* window) {
 	ar15_model->LoadModel("Resources/ar15/scene.gltf");
 
 	ar15 = new Animated::AR15(ar15_model);
-	
+	ar15->SetAnimationIndex(6);
+
+	ar15_1 = new Animated::AR15(ar15_model);
+	ar15_1->SetAnimationIndex(8);
+	ar15_1->SetPosition(glm::vec3{ 0.f,0.f,30.f });
+
+	ar15_2 = new Animated::AR15(ar15_model);
+	ar15_2->SetAnimationIndex(3);
+	ar15_2->SetPosition(glm::vec3{ 0.f,0.f,-30.f });
+
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -35,10 +44,13 @@ Renderer::~Renderer() { }
 
 void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
+	ar15->Update(deltaTime);
+	ar15_1->Update(deltaTime);
+	ar15_2->Update(deltaTime);
 }
 
 void Renderer::Render() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
 	SHADER->UnuseProgram();
@@ -57,6 +69,8 @@ void Renderer::Render() {
 	SHADER->UseProgram(ShaderType::AnimatedShader);
 	m_freeCamera->Render();
 	ar15->Render();
+	ar15_1->Render();
+	ar15_2->Render();
 	SHADER->UnuseProgram();
 
 }

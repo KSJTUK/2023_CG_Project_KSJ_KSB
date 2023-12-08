@@ -170,17 +170,24 @@ Animated::Model::~Model(){
 }
 
 
-void Animated::Model::Update(float DeltaTime){
 
-}
+void Animated::Model::Render(const glm::mat4& matrix, int animationindex, float animationcounter){
 
-void Animated::Model::Render(){
+	std::vector<aiMatrix4x4>().swap(m_transformBuffer);
+	m_currentAnimationID = animationindex;
 
-	glm::mat4 identity{ glm::scale(glm::mat4{1.f} , glm::vec3{0.01f,0.01f,0.01f})};
+	SHADER->GetActivatedShader()->SetUniformMat4("M_matrix", GL_FALSE, &matrix[0][0]);
+
+
 	
-	SHADER->GetActivatedShader()->SetUniformMat4("M_matrix", GL_FALSE, &identity[0][0]);
 
-	UpdateBoneTransform(0.01f, m_transformBuffer);
+	SHADER->GetActivatedShader()->SetUniformMat4("TIM_matrix", GL_TRUE, &glm::inverse(matrix)[0][0]);
+
+
+
+
+
+	UpdateBoneTransform(animationcounter, m_transformBuffer);
 
 	for (UINT i = 0; i < m_transformBuffer.size(); ++i) {
 		SHADER->GetActivatedShader()->SetUniformMat4(("bones[" + std::to_string(i) + "]"), GL_TRUE, (const float*)&m_transformBuffer[i]);
@@ -541,13 +548,13 @@ void Animated::Model::ReadNodeHierarchy(float Animationtime,const aiNode* node,c
 	if (animnode) {
 		aiVector3D scaling = CalculatePolatedScailing(Animationtime, animnode);
 		aiMatrix4x4 ScaleMatrix{};
-
 		aiMatrix4x4::Scaling(scaling, ScaleMatrix);
 
 
 
 		aiQuaternion rotate = CalculatePolatedRotation(Animationtime, animnode);
 		aiMatrix4x4 RotateMatrix{ aiMatrix4x4{rotate.GetMatrix()} };
+
 
 		aiVector3D translate = CalculatePolatedPosition(Animationtime, animnode);
 		aiMatrix4x4 TranslateMatrix{ };
@@ -580,10 +587,7 @@ void Animated::Model::UpdateBoneTransform(double Elapsed, std::vector<aiMatrix4x
 
 	double tick = Elapsed * m_ticksPerSecond;
 	float AnimationTime = static_cast<float>(std::fmod(tick, m_scene->mAnimations[m_currentAnimationID]->mDuration));
-	
-	if (tick > m_scene->mAnimations[m_currentAnimationID]->mDuration) {
-		
-	}
+
 
 	ReadNodeHierarchy(AnimationTime, m_scene->mRootNode, identity);
 

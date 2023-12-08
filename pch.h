@@ -9,6 +9,8 @@
 #include <GL/GLM/glm.hpp>
 #include <GL/GLM/ext.hpp>
 #include <GL/GLM/gtc/matrix_transform.hpp>
+#include <GL/GLM/gtx/vector_angle.hpp>
+#include <GL/GLM/gtx/euler_angles.hpp>
 
 // Add STL headers
 #include <iostream>
