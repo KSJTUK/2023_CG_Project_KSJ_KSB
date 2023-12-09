@@ -437,7 +437,6 @@ ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 	glGetProgramiv(m_id, GL_LINK_STATUS, &result);
 
 	if (!result) {
-		ZeroMemory(errorlog, 512);
 		glGetProgramInfoLog(result, 512, NULL, errorlog);
 		std::cerr << "ERROR : SHADER LINK FAILED" << std::endl;
 		std::cerr << errorlog << std::endl;

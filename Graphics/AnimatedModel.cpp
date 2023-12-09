@@ -134,12 +134,12 @@ void Animated::Mesh::SetupMesh(){
 	glBindVertexArray(m_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboVertices);
 	//vertex position
-	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
-	glEnableVertexAttribArray(1); // offsetof(Vertex, normal) = returns the byte offset of that variable from the start of the struct
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, normal));
-	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, uv));
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1); // offsetof(Vertex, normal) = returns the byte offset of that variable from the start of the struct
+	glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//bones
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboBones);
@@ -613,14 +613,14 @@ void Animated::Model::LoadModel(const std::string& path){
 	std::cout << "scene->mAnimations[0]->mTicksPerSecond 1 : " << m_scene->mAnimations[0]->mTicksPerSecond << std::endl;
 	std::cout << "m_scene->mNumAnimations : " << m_scene->mNumAnimations << std::endl << std::endl;
 
-	std::cout << "		name nodes : " ;
+	std::cout << "name nodes : " ;
 	ShowNodeName(m_scene->mRootNode);
 	std::cout << std::endl;
 
-	std::cout << "		name bones : ";
+	std::cout << "name bones : ";
 	ProcessNode(m_scene->mRootNode);
 
-	std::cout << "		name nodes animation : ";
+	std::cout << "name nodes animation : ";
 	for (UINT i = 0; i < m_scene->mAnimations[0]->mNumChannels; i++)
 	{
 		std::cout << m_scene->mAnimations[0]->mChannels[i]->mNodeName.C_Str() << std::endl;
