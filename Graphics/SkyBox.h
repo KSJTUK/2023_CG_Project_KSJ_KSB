@@ -17,6 +17,11 @@ private:
 	unsigned int m_VAO{ };
 	unsigned int m_VBO{ };
 
+	glm::vec3 m_ambient{ 1.f };
+	float m_lightDir{ 1.f };
+	float m_timeSpeed{ 0.3f };
+
 public:
+	void Update(float deltaTime);
 	void Render();
 };
