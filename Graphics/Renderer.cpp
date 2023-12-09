@@ -5,7 +5,7 @@
 #include "Graphics/Terrain.h"
 #include "Graphics/SkyBox.h"
 #include "Graphics/AnimatedModel.h"
-#include "Graphics/Model.h"
+#include "Graphics/StaticModel.h"
 
 #include "Graphics/AR15.h"
 
@@ -39,8 +39,13 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	}
 
-	m_testModel = std::make_unique<Model>("./tree02.obj", "./Textures/tree02_fall.png");
-	m_testModel->Init();
+	//m_testModel = std::make_unique<Model>("./tree02.obj", "./Textures/tree02_fall.png");
+	//m_testModel->Init();
+
+	static_model = std::make_shared<Static::Model>();
+	static_model->LoadModel("Resources/pine_tree/scene.gltf");
+
+
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -55,7 +60,7 @@ void Renderer::CollisionTerrain(Animated::Object& obj, float offset) {
 void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
 
-	//m_background->Update(deltaTime);
+	m_background->Update(deltaTime);
 
 	for (auto& zombie : m_animatedObjectArr) {
 		zombie->SetPosition(zombie->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
@@ -88,25 +93,33 @@ void Renderer::Render() {
 	}
 	SHADER->UnuseProgram();
 
+	//SHADER->UseProgram(ShaderType::StaticShader);
+	//m_freeCamera->Render();
+	//SHADER->GetActivatedShader()->SetUniformMat4("transform", GL_FALSE, &glm::mat4{ 1.f } [0] [0]);
+	//SHADER->GetActivatedShader()->SetUniformInt("meterials.diffuse", 0);
+	//SHADER->GetActivatedShader()->SetUniformInt("noTextureID", 0);
+	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.position", &glm::vec3{ 0.f, 5.f, 0.f } [0] );
+	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.ambient", &glm::vec3{ 1.f } [0] );
+	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.diffuse", &glm::vec3{ 1.f } [0] );
+	//SHADER->GetActivatedShader()->SetUniformVec3("objectColor", &glm::vec3{ 1.f } [0] );
+	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.specular", &glm::vec3{ 1.f } [0] );
+	//SHADER->GetActivatedShader()->SetUniformFloat("pointLight.constant", 1.f);
+	//SHADER->GetActivatedShader()->SetUniformVec3("meterials.specular", &glm::vec3{ 0.1f } [0] );
+	//SHADER->GetActivatedShader()->SetUniformFloat("meterials.shininess", 32.f);
+	//glEnable(GL_BLEND);
+	//glDisable(GL_CULL_FACE);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//m_testModel->BindingTexture(0);
+	//m_testModel->Render();
+	//glDisable(GL_BLEND);
+	//glEnable(GL_CULL_FACE);
+	//SHADER->UnuseProgram();
+
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
-	SHADER->GetActivatedShader()->SetUniformMat4("transform", GL_FALSE, &glm::mat4{ 1.f } [0] [0]);
-	SHADER->GetActivatedShader()->SetUniformInt("meterials.diffuse", 0);
-	SHADER->GetActivatedShader()->SetUniformInt("noTextureID", 0);
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.position", &glm::vec3{ 0.f, 5.f, 0.f } [0] );
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.ambient", &glm::vec3{ 1.f } [0] );
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.diffuse", &glm::vec3{ 1.f } [0] );
-	SHADER->GetActivatedShader()->SetUniformVec3("objectColor", &glm::vec3{ 1.f } [0] );
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.specular", &glm::vec3{ 1.f } [0] );
-	SHADER->GetActivatedShader()->SetUniformFloat("pointLight.constant", 1.f);
-	SHADER->GetActivatedShader()->SetUniformVec3("meterials.specular", &glm::vec3{ 0.1f } [0] );
-	SHADER->GetActivatedShader()->SetUniformFloat("meterials.shininess", 32.f);
-	glEnable(GL_BLEND);
-	glDisable(GL_CULL_FACE);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	m_testModel->BindingTexture(0);
-	m_testModel->Render();
-	glDisable(GL_BLEND);
-	glEnable(GL_CULL_FACE);
+
+	glm::mat4 identity{ 1.f };
+	static_model->Render(identity);
+
 	SHADER->UnuseProgram();
 }

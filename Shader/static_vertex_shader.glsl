@@ -1,23 +1,26 @@
 #version 460 core
 
 layout (location = 0) in vec3 in_Position;
-layout (location = 1) in vec2 in_Texture;
-layout (location = 2) in vec3 in_Normal;
+layout (location = 1) in vec3 in_Normal;
+layout (location = 2) in vec2 in_Texture;
 
 uniform mat4 projection;
 uniform mat4 view;
-uniform mat4 transform;
+uniform mat4 M_matrix;
+uniform mat4 TIM_matrix;
+
+uniform mat4 VP;
 
 // lighting
-out vec3 vs_out_normal;
-out vec2 vs_out_tex;
-out vec3 fragPosition;
+out vec3 normal;
+out vec2 text_coords;
+out vec3 frag_pos;
 
 void main(void)
 {
-	fragPosition = vec3(transform * vec4(in_Position, 1.0f));
-	vs_out_normal = mat3(transpose(inverse(transform))) * in_Normal;
-	vs_out_tex = in_Texture;
+	frag_pos = vec3(M_matrix * vec4(in_Position, 1.0f));
+	normal = normalize( mat3(TIM_matrix) * in_Normal);
+	text_coords = in_Texture;
 
-	gl_Position = projection * view * vec4(fragPosition, 1.0f);
+	gl_Position = VP * vec4(frag_pos, 1.0f);
 }
