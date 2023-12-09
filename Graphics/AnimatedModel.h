@@ -142,14 +142,14 @@ namespace Animated {
 		UINT FindPosition(float AnimationTime, const aiNodeAnim* animnode);
 		UINT FindRotation(float AnimationTime, const aiNodeAnim* animnode);
 		UINT FindScaling(float AnimationTime, const aiNodeAnim* animnode);
-		const aiNodeAnim* FindNodeAnimation(const aiAnimation* animation, const std::string nodename);
+		const aiNodeAnim* FindNodeAnimation(const aiAnimation* animation, const std::string& nodename);
 
 
 		aiVector3D CalculatePolatedPosition(float AnimationTime, const aiNodeAnim* animnode);
 		aiQuaternion CalculatePolatedRotation(float AnimationTime, const aiNodeAnim* animnode);
 		aiVector3D CalculatePolatedScailing(float AnimationTime, const aiNodeAnim* animnode);
 
-		void ReadNodeHierarchy(float Animationtime, const aiNode* node ,const aiMatrix4x4 ParentTransform);
+		void ReadNodeHierarchy(float Animationtime, const aiNode* node ,const aiMatrix4x4& ParentTransform);
 		void UpdateBoneTransform(double Elapsed, std::vector<aiMatrix4x4>& Transforms);
 
 	};
