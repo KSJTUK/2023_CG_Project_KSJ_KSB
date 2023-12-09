@@ -49,7 +49,9 @@ void Renderer::Update(float deltaTime) {
 	ar15_1->Update(deltaTime);
 	ar15_2->Update(deltaTime);
 
-	ar15_2->SetPosition(ar15_2->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
+	//m_background->Update(deltaTime);
+
+	//ar15_2->SetPosition(ar15_2->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
 	CollisionTerrain(*ar15_2, 1.f);
 }
 
