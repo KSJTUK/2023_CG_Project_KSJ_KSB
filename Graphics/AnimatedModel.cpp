@@ -455,19 +455,14 @@ UINT Animated::Model::FindScaling(float AnimationTime, const aiNodeAnim* animnod
 	return -1;
 }
 
-const aiNodeAnim* Animated::Model::FindNodeAnimation(const aiAnimation* animation, const std::string nodename){
-
-
-
+const aiNodeAnim* Animated::Model::FindNodeAnimation(const aiAnimation* animation, const std::string& nodename){
 	for (UINT i = 0;i <  animation->mNumChannels; ++i) {
 
 		const aiNodeAnim* animnode = animation->mChannels[i];
-		if (std::string(animnode->mNodeName.data) == nodename) {
+		if (strcmp(animnode->mNodeName.data, nodename.c_str()) == 0) {
 			return animnode;
 		}
 	}
-
-	
 
 	return nullptr;
 }
@@ -534,16 +529,11 @@ aiVector3D Animated::Model::CalculatePolatedScailing(float AnimationTime, const 
 	return start + factor * delta;
 }
 
-void Animated::Model::ReadNodeHierarchy(float Animationtime,const aiNode* node,const aiMatrix4x4 ParentTransform){
-
-	std::string nodename{ node->mName.data };
-
+void Animated::Model::ReadNodeHierarchy(float Animationtime,const aiNode* node,const aiMatrix4x4& ParentTransform){
 	const aiAnimation* animation = m_scene->mAnimations[m_currentAnimationID];
 	aiMatrix4x4 nodetransform = node->mTransformation;
 
-
-	const aiNodeAnim* animnode = FindNodeAnimation(animation, nodename);
-
+	const aiNodeAnim* animnode = FindNodeAnimation(animation, node->mName.data);
 
 	if (animnode) {
 		aiVector3D scaling = CalculatePolatedScailing(Animationtime, animnode);
@@ -569,8 +559,8 @@ void Animated::Model::ReadNodeHierarchy(float Animationtime,const aiNode* node,c
 	aiMatrix4x4 globalTransform = ParentTransform * nodetransform;
 
 
-	if (m_boneDict.find(nodename) != m_boneDict.end()) {
-		UINT boneindex = m_boneDict[nodename];
+	if (m_boneDict.find(node->mName.data) != m_boneDict.end()) {
+		UINT boneindex = m_boneDict[node->mName.data];
 		m_boneMatrices[boneindex].finalWorldTranform = m_globalInverseTransfrom * globalTransform * m_boneMatrices[boneindex].offsetMatrix;
 		
 	}
