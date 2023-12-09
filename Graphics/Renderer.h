@@ -24,9 +24,6 @@ private:
 
 	void CollisionTerrain(class Animated::Object& obj, float offset);
 
-	Animated::AR15* ar15{ nullptr };
-	Animated::AR15* ar15_1{ nullptr };
-	Animated::AR15* ar15_2{ nullptr };
 
 	std::vector<std::shared_ptr<Animated::Object>> m_animatedObjectArr{};
 
