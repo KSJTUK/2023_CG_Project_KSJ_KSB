@@ -45,9 +45,9 @@ void Renderer::CollisionTerrain(Animated::Object& obj, float offset) {
 
 void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
-	//ar15->Update(deltaTime);
-	//ar15_1->Update(deltaTime);
-	//ar15_2->Update(deltaTime);
+	ar15->Update(deltaTime);
+	ar15_1->Update(deltaTime);
+	ar15_2->Update(deltaTime);
 
 	//m_background->Update(deltaTime);
 
