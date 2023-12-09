@@ -455,71 +455,38 @@ void ShaderComponent::SetUniformMat4(const std::string& valueName, GLenum transp
 }
 
 void ShaderComponent::SetUniformMat3(const std::string& valueName, GLenum transpose, const float* val){
-	auto iter = m_uniformLocationDict.find(valueName);
-
-	if (iter == m_uniformLocationDict.end()) {
-		int Loc = GetUniformLocation(valueName);
-		glUniformMatrix3fv(Loc, 1, transpose, val);
-		m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
-	}
-	else {
-		glUniformMatrix3fv(iter->second, 1, transpose, val);
-	}
+	int Loc = GetUniformLocation(valueName);
+	glUniformMatrix3fv(Loc, 1, transpose, val);
+	m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
 }
 
 void ShaderComponent::SetUniformVec4(const std::string& valueName, const float* val){
-	auto iter = m_uniformLocationDict.find(valueName);
-
-	if (iter == m_uniformLocationDict.end()) {
-		int Loc = GetUniformLocation(valueName);
-		glUniform4fv(Loc, 1, val);
-	}
+	int Loc = GetUniformLocation(valueName);
+	glUniform4fv(Loc, 1, val);
 }
 
 
 void ShaderComponent::SetUniformVec3(const std::string& valueName, const float* val) {
-	auto iter = m_uniformLocationDict.find(valueName);
-
-	if (iter == m_uniformLocationDict.end()) {
-		int Loc = GetUniformLocation(valueName);
-		glUniform3fv(Loc, 1, val);
-	}
+	int Loc = GetUniformLocation(valueName);
+	glUniform3fv(Loc, 1, val);
 }
 
 
 void ShaderComponent::SetUniformVec2(const std::string& valueName, const float* val) {
-	auto iter = m_uniformLocationDict.find(valueName);
-
-	if (iter == m_uniformLocationDict.end()) {
-		int Loc = GetUniformLocation(valueName);
-		glUniform2fv(Loc, 1, val);
-	}
+	int Loc = GetUniformLocation(valueName);
+	glUniform2fv(Loc, 1, val);
 }
 
 
 
 void ShaderComponent::SetUniformFloat(const std::string& valueName, const float value){
-	auto iter = m_uniformLocationDict.find(valueName);
-
-	if (iter == m_uniformLocationDict.end()) {
-		int Loc = GetUniformLocation(valueName);
-		glUniform1f(Loc, value);
-		m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
-	}
-	else {
-		glUniform1f(iter->second, value);
-	}
+	int Loc = GetUniformLocation(valueName);
+	glUniform1f(Loc, value);
+	m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
 }
 	
 void ShaderComponent::SetUniformInt(const std::string& valueName, const int value){
-	auto iter = m_uniformLocationDict.find(valueName);
-
-	if (iter == m_uniformLocationDict.end()) {
-		int Loc = GetUniformLocation(valueName);
-		glUniform1i(Loc, value);
-		m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
-	}
-	else {
-		glUniform1i(iter->second, value);
-	}
+	int Loc = GetUniformLocation(valueName);
+	glUniform1i(Loc, value);
+	m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
 }
