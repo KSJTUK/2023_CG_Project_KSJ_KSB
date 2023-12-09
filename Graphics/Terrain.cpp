@@ -123,12 +123,12 @@ void Terrain::MoveHeightPosition(glm::vec3& position, float offset) {
 	int32 xPos = static_cast<int32>(position.x) + m_terrainScale.x / 2;
 	int32 zPos = static_cast<int32>(position.z) + m_terrainScale.y / 2;
 
-	if (xPos < 0 or xPos > m_textureHeight[0].size()) {
+	if (xPos < 0 or xPos > m_textureHeight[0].size() - 1) {
 		position.y = 0.f;
 		return;
 	}
 
-	if (zPos < 0 or zPos > m_textureHeight.size()) {
+	if (zPos < 0 or zPos > m_textureHeight.size() - 1) {
 		position.y = 0.f;
 		return;
 	}
