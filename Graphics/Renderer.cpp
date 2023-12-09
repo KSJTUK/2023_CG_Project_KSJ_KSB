@@ -5,6 +5,7 @@
 #include "Graphics/Terrain.h"
 #include "Graphics/SkyBox.h"
 #include "Graphics/AnimatedModel.h"
+#include "Graphics/Model.h"
 
 #include "Graphics/AR15.h"
 
@@ -30,7 +31,7 @@ Renderer::Renderer(GLFWwindow* window) {
 		obj->SetPosition(glm::vec3{
 			glm::linearRand(0.f,100.f),
 			0.f,
-			glm::linearRand(0.f,100.f)
+			glm::linearRand(-500.f ,-600.f)
 		});
 
 
@@ -38,6 +39,8 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	}
 
+	m_testModel = std::make_unique<Model>("./tree02.obj", "./Textures/tree02_fall.png");
+	m_testModel->Init();
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -54,22 +57,19 @@ void Renderer::Update(float deltaTime) {
 
 	//m_background->Update(deltaTime);
 
-	//ar15_2->SetPosition(ar15_2->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
-	//CollisionTerrain(*ar15_2, 1.f);
+	for (auto& zombie : m_animatedObjectArr) {
+		zombie->SetPosition(zombie->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
+		CollisionTerrain(*zombie, 1.f);
+	}
 
 
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
-
 	}
 }
 
 void Renderer::Render() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	SHADER->UseProgram(ShaderType::StaticShader);
-	m_freeCamera->Render();
-	SHADER->UnuseProgram();
-
 	SHADER->UseProgram(ShaderType::BackgroundShader);
 	m_freeCamera->Render();
 	m_background->Render();
@@ -85,8 +85,28 @@ void Renderer::Render() {
 	m_freeCamera->Render();
 	for (auto& o : m_animatedObjectArr) {
 		o->Render();
-
 	}
 	SHADER->UnuseProgram();
 
+	SHADER->UseProgram(ShaderType::StaticShader);
+	m_freeCamera->Render();
+	SHADER->GetActivatedShader()->SetUniformMat4("transform", GL_FALSE, &glm::mat4{ 1.f } [0] [0]);
+	SHADER->GetActivatedShader()->SetUniformInt("meterials.diffuse", 0);
+	SHADER->GetActivatedShader()->SetUniformInt("noTextureID", 0);
+	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.position", &glm::vec3{ 0.f, 5.f, 0.f } [0] );
+	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.ambient", &glm::vec3{ 1.f } [0] );
+	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.diffuse", &glm::vec3{ 1.f } [0] );
+	SHADER->GetActivatedShader()->SetUniformVec3("objectColor", &glm::vec3{ 1.f } [0] );
+	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.specular", &glm::vec3{ 1.f } [0] );
+	SHADER->GetActivatedShader()->SetUniformFloat("pointLight.constant", 1.f);
+	SHADER->GetActivatedShader()->SetUniformVec3("meterials.specular", &glm::vec3{ 0.1f } [0] );
+	SHADER->GetActivatedShader()->SetUniformFloat("meterials.shininess", 32.f);
+	glEnable(GL_BLEND);
+	glDisable(GL_CULL_FACE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	m_testModel->BindingTexture(0);
+	m_testModel->Render();
+	glDisable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
+	SHADER->UnuseProgram();
 }

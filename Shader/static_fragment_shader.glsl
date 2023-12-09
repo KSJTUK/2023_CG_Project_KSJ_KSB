@@ -194,6 +194,7 @@ void main(void)
 	}
 
 	resultColor += calcFlashLighting(spotLight, vs_out_normal, viewPosition, fragPosition);
+	float texAlpha = texture(meterials.diffuse, vs_out_tex).w;
 
-	FragColor = vec4 (resultColor * objectColor, 1.0f);
+	FragColor = vec4(resultColor * objectColor, texAlpha);
 }

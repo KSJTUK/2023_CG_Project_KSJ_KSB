@@ -81,6 +81,9 @@
     <ClCompile Include="Graphics\SkyBox.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Model.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Engine.h">
@@ -128,6 +131,9 @@
     <ClInclude Include="Graphics\Object.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Model.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\background_fragment_shader.glsl">
@@ -169,11 +175,7 @@
     <None Include="Shader\ui_vertex_shader.glsl">
       <Filter>리소스 파일</Filter>
     </None>
-    <None Include="Shader\animated_vertex_shader.glsl">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="Shader\animated_fragment_shader.glsl">
-      <Filter>리소스 파일</Filter>
-    </None>
+    <None Include="Shader\animated_fragment_shader.glsl" />
+    <None Include="Shader\animated_vertex_shader.glsl" />
   </ItemGroup>
 </Project>
