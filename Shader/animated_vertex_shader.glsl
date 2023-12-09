@@ -13,7 +13,7 @@ out vec3 frag_pos;
 uniform mat4 view;
 uniform mat4 projection;
 
-//uniform mat4 VP;
+uniform mat4 VP;
 
 uniform mat4 M_matrix;
 uniform mat4 TIM_matrix;
@@ -37,6 +37,6 @@ void main()
 	frag_pos = vec3(M_matrix * boned_position);
 	text_coords = in_text_coords;
 
-//	gl_Position = VP * M_matrix *  boned_position;
-	gl_Position = projection * view * M_matrix *  boned_position;
+
+	gl_Position = VP * M_matrix *  boned_position;
 }

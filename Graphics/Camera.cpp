@@ -28,9 +28,9 @@ void FreeCamera::Render(){
 	SHADER->GetActivatedShader()->SetUniformMat4("projection", GL_FALSE, &p[0][0]);
 	SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &v[0][0]);
 
-	//auto vp = p * v;
+	auto vp = p * v;
 
-	//SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &vp[0][0]);
+	SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &vp[0][0]);
 
 }
 

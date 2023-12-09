@@ -4,7 +4,7 @@
 
 glm::mat4 Animated::AimatTOGlm(aiMatrix4x4& ai_matr){
 
-	glm::mat4 result;
+	glm::mat4 result{};
 	result[0].x = ai_matr.a1; result[0].y = ai_matr.b1; result[0].z = ai_matr.c1; result[0].w = ai_matr.d1;
 	result[1].x = ai_matr.a2; result[1].y = ai_matr.b2; result[1].z = ai_matr.c2; result[1].w = ai_matr.d2;
 	result[2].x = ai_matr.a3; result[2].y = ai_matr.b3; result[2].z = ai_matr.c3; result[2].w = ai_matr.d3;
@@ -246,7 +246,7 @@ Animated::Mesh Animated::Model::ProcessMesh(aiMesh* mesh) {
 	for (UINT i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
-		glm::vec3 vector;
+		glm::vec3 vector{};
 		vector.x = mesh->mVertices[i].x;
 		vector.y = mesh->mVertices[i].y;
 		vector.z = mesh->mVertices[i].z;

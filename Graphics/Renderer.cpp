@@ -20,17 +20,23 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	ar15_model = std::make_shared<Animated::Model>();
 	ar15_model->LoadModel("Resources/zombie/scene.gltf");
+	
 
-	ar15 = new Animated::AR15(ar15_model);
-	ar15->SetAnimationIndex(6);
+	for (auto i = 0; i < 50; ++i) {
+		std::shared_ptr<Animated::AR15> obj = std::make_shared<Animated::AR15>(ar15_model);
 
-	ar15_1 = new Animated::AR15(ar15_model);
-	ar15_1->SetAnimationIndex(8);
-	ar15_1->SetPosition(glm::vec3{ 0.f,0.f,30.f });
 
-	ar15_2 = new Animated::AR15(ar15_model);
-	ar15_2->SetAnimationIndex(3);
-	ar15_2->SetPosition(glm::vec3{ 0.f,0.f,-400.f });
+		obj->SetAnimationIndex(glm::linearRand(0, 9));
+		obj->SetPosition(glm::vec3{
+			glm::linearRand(0.f,100.f),
+			0.f,
+			glm::linearRand(0.f,100.f)
+		});
+
+
+		m_animatedObjectArr.push_back(obj);
+
+	}
 
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -45,14 +51,17 @@ void Renderer::CollisionTerrain(Animated::Object& obj, float offset) {
 
 void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
-	ar15->Update(deltaTime);
-	ar15_1->Update(deltaTime);
-	ar15_2->Update(deltaTime);
 
 	//m_background->Update(deltaTime);
 
 	//ar15_2->SetPosition(ar15_2->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
-	CollisionTerrain(*ar15_2, 1.f);
+	//CollisionTerrain(*ar15_2, 1.f);
+
+
+	for (auto& o : m_animatedObjectArr) {
+		o->Update(deltaTime);
+
+	}
 }
 
 void Renderer::Render() {
@@ -74,9 +83,10 @@ void Renderer::Render() {
 
 	SHADER->UseProgram(ShaderType::AnimatedShader);
 	m_freeCamera->Render();
-	ar15->Render();
-	ar15_1->Render();
-	ar15_2->Render();
+	for (auto& o : m_animatedObjectArr) {
+		o->Render();
+
+	}
 	SHADER->UnuseProgram();
 
 }
