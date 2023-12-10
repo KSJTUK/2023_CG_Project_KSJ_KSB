@@ -166,8 +166,6 @@ bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& Ray
 
 	glm::vec3 v0, v1, v2;
 
-	glm::vec3 to{ 0.f,0.f,0.f };
-	glm::vec3 td{ 0.f,0.f,1.f };
 
 	
 
@@ -178,7 +176,7 @@ bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& Ray
 		v2 = World * glm::vec4(m_vertexarray[i+2], 1.f);
 
 		
-		if (TriangleRayCasting(to, td, v0, v1, v2)) {
+		if (TriangleRayCasting(RayOrigin, RayDirection, v0, v1, v2)) {
 			return true;
 		}
 

@@ -59,6 +59,9 @@ void Renderer::CollisionTerrain(Animated::Object& obj, float offset) {
 	m_testTerrain->MoveHeightPosition(obj.GetPosition(), offset);
 }
 
+constexpr glm::vec3 RayPos = glm::vec3{ 0.f,0.f,0.f };
+constexpr glm::vec3 RayDir = glm::vec3{ 0.f,0.f,1.f };
+
 void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
 
@@ -68,8 +71,8 @@ void Renderer::Update(float deltaTime) {
 		//zombie->SetPosition(zombie->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
 		CollisionTerrain(*zombie, 1.f);
 	}
-
-	if (m_animatedObjectArr[0]->RayCasting(m_freeCamera->GetCameraPosition(), m_freeCamera->GetCameraInversedBasisZ(), m_freeCamera->GetView(), m_freeCamera->GetProjection())) {
+	
+	if (m_animatedObjectArr[0]->RayCasting(RayPos, RayDir , m_freeCamera->GetView(), m_freeCamera->GetProjection())) {
 		printf("Hit!\n");
 	}
 
