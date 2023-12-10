@@ -11,7 +11,7 @@ namespace Animated {
 
 		virtual void Render() override;
 		virtual void Update(float DeltaTime) override;
-
+		virtual bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::mat4& View, const glm::mat4& Projection ) const override;
 
 
 	public:

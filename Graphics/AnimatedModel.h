@@ -53,7 +53,7 @@ namespace Animated {
 
 	glm::mat4 AimatTOGlm(aiMatrix4x4& ai_matr);
 	aiQuaternion slerp(aiQuaternion q1, aiQuaternion q2, float blend);
-
+	bool TriangleRayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2);
 
 	class Mesh {
 	public:
@@ -62,12 +62,17 @@ namespace Animated {
 		~Mesh();
 
 		void Draw();
+
+		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const;
 	private:
 
 		std::vector<Vertex> m_vertices{};
 		std::vector<UINT> m_indices{};
 		std::vector<Texture> m_textures{};
 		std::vector<VertexBoneData> m_bonesID_Weights_eachVertex{};
+
+		glm::vec3* m_vertexarray{ nullptr };
+
 
 		UINT m_vao{};
 		UINT m_vboVertices{};
@@ -98,6 +103,9 @@ namespace Animated {
 
 		
 		void ChangeAnimation(int index);
+
+
+		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const;
 
 	private:
 
