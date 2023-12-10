@@ -50,6 +50,19 @@ Animated::Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices
 	m_textures = textures;
 	m_bonesID_Weights_eachVertex = boneIDWieghts;
 
+
+	m_vertexarray = new glm::vec3[m_indices.size()];
+
+
+	for (UINT i = 0; i < m_indices.size(); ++i) {
+		m_vertexarray[i] = m_vertices[m_indices[i]].position;
+	}
+
+	if (m_indices.size() % 3 !=  0) {
+		std::cerr << "ERROR : POLYGON FAIL!" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
 	SetupMesh();
 }
 
@@ -107,6 +120,45 @@ void Animated::Mesh::Draw(){
 		glBindTexture(GL_TEXTURE_2D,0);
 	}
 
+}
+
+bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3 RayDirection){
+	
+	for (UINT i = 0; i < m_indices.size() / 3; ++i) {
+		glm::vec3 v0 = m_vertexarray[i];
+		glm::vec3 v1 = m_vertexarray[i + 1];
+		glm::vec3 v2 = m_vertexarray[i + 2];
+		
+		// Compute vectors along two edges of the triangle
+		glm::vec3 edge1 = v1- v0;
+		glm::vec3 edge2 = v2 - v0;
+
+		// Compute the determinant
+		glm::vec3 pvec = glm::cross(RayDirection, edge2);
+
+		float det = glm::dot(edge1, pvec);
+
+		// If the determinant is near zero, the ray lies in the plane of the triangle
+		if (fabs(det) < FLT_EPSILON) return false;
+
+		float invDet = 1 / det;
+
+		// Compute the u parameter of the intersection point
+		glm::vec3 tvec = RayOrigin - v0;
+		float u = glm::dot(tvec, pvec) * invDet;
+		if (u < 0 || u > 1) return false;
+
+		// Compute the v parameter of the intersection point
+		glm::vec3 qvec = glm::cross(tvec, edge1);
+		float v = glm::dot(RayDirection, qvec) * invDet;
+		if (v < 0 || u + v > 1) return false;
+
+	}
+
+
+	
+
+	return true;
 }
 
 void Animated::Mesh::SetupMesh(){
@@ -202,6 +254,12 @@ void Animated::Model::Render(const glm::mat4& matrix, int animationindex, float 
 }
 
 void Animated::Model::ChangeAnimation(int index){
+}
+
+bool Animated::Model::RayCasting(const glm::vec3& RayOrigin, const glm::vec3 RayDirection){
+
+
+
 }
 
 void Animated::Model::ShowNodeName(const aiNode* node){

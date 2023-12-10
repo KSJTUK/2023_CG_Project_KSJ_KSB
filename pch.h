@@ -113,3 +113,4 @@ using LightOption = _TAG_LIGHTOPTION;
 using WindowInformation = _TAG_WINDOWINFORMATION;
 
 extern std::unique_ptr<class Engine> engine;
+

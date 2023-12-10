@@ -93,27 +93,7 @@ void Renderer::Render() {
 	}
 	SHADER->UnuseProgram();
 
-	//SHADER->UseProgram(ShaderType::StaticShader);
-	//m_freeCamera->Render();
-	//SHADER->GetActivatedShader()->SetUniformMat4("transform", GL_FALSE, &glm::mat4{ 1.f } [0] [0]);
-	//SHADER->GetActivatedShader()->SetUniformInt("meterials.diffuse", 0);
-	//SHADER->GetActivatedShader()->SetUniformInt("noTextureID", 0);
-	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.position", &glm::vec3{ 0.f, 5.f, 0.f } [0] );
-	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.ambient", &glm::vec3{ 1.f } [0] );
-	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.diffuse", &glm::vec3{ 1.f } [0] );
-	//SHADER->GetActivatedShader()->SetUniformVec3("objectColor", &glm::vec3{ 1.f } [0] );
-	//SHADER->GetActivatedShader()->SetUniformVec3("pointLight.specular", &glm::vec3{ 1.f } [0] );
-	//SHADER->GetActivatedShader()->SetUniformFloat("pointLight.constant", 1.f);
-	//SHADER->GetActivatedShader()->SetUniformVec3("meterials.specular", &glm::vec3{ 0.1f } [0] );
-	//SHADER->GetActivatedShader()->SetUniformFloat("meterials.shininess", 32.f);
-	//glEnable(GL_BLEND);
-	//glDisable(GL_CULL_FACE);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//m_testModel->BindingTexture(0);
-	//m_testModel->Render();
-	//glDisable(GL_BLEND);
-	//glEnable(GL_CULL_FACE);
-	//SHADER->UnuseProgram();
+
 
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();

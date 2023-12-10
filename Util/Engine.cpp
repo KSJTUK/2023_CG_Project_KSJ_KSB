@@ -14,6 +14,7 @@ extern "C" {
 	_declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 
+
 void Engine::Init() {
 	// 이 프로그램이 1번 코어에서만 작동하도록 변경 
 	// 이 설정이 없으면 멀티코어 실행환경에서 타이머의 Frequency 를 얻어오는 프로세서와 
@@ -69,6 +70,10 @@ void Engine::Init() {
 
 	m_timer = std::make_unique<Timer>();
 	m_renderer = std::make_unique<Renderer>(m_windowInfo.window);
+
+
+	std::cout << "\nThis Program Use This GPU : " << glGetString(GL_RENDERER) << std::endl;
+	std::cout << "======================================END INITIALIZATION======================================" << std::endl;
 }
 
 
