@@ -41,6 +41,45 @@ aiQuaternion Animated::slerp(aiQuaternion q1, aiQuaternion q2, float blend){
 	return result.Normalize();
 }
 
+bool Animated::TriangleRayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2)
+{
+
+	glm::vec3 edge1, edge2;
+	glm::vec3 pvec, tvec, qvec;
+	float det, invDet;
+
+	float u, v, t;
+
+	// Compute vectors along two edges of the triangle
+	edge1 = v1 - v0;
+	edge2 = v2 - v0;
+
+	// Compute the determinant
+	pvec = glm::cross(RayDirection, edge2);
+	det = glm::dot(edge1, pvec);
+
+
+	// If the determinant is near zero, the ray lies in the plane of the triangle
+	if (fabs(det) < FLT_EPSILON) return false;
+
+	invDet = 1 / det;
+
+	// Compute the u parameter of the intersection point
+	tvec = RayOrigin - v0;
+	u = glm::dot(tvec, pvec) * invDet;
+	if (u < 0.f or u > 1.f) return false;
+
+	// Compute the v parameter of the intersection point
+	qvec = glm::cross(tvec, edge1);
+	v = glm::dot(RayDirection, qvec) * invDet;
+	if (v < 0.f or u + v > 1.f) return false;
+
+
+
+	return true;
+
+}
+
 
 
 
@@ -51,7 +90,7 @@ Animated::Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices
 	m_bonesID_Weights_eachVertex = boneIDWieghts;
 
 
-	m_vertexarray = new glm::vec3[m_indices.size()];
+	m_vertexarray = new glm::vec3[m_indices.size()+1];
 
 
 	for (UINT i = 0; i < m_indices.size(); ++i) {
@@ -122,43 +161,33 @@ void Animated::Mesh::Draw(){
 
 }
 
-bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3 RayDirection){
+bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const {
 	
+
+	glm::vec3 v0, v1, v2;
+
+	glm::vec3 to{ 0.f,0.f,0.f };
+	glm::vec3 td{ 0.f,0.f,1.f };
+
+	
+
 	for (UINT i = 0; i < m_indices.size() / 3; ++i) {
-		glm::vec3 v0 = m_vertexarray[i];
-		glm::vec3 v1 = m_vertexarray[i + 1];
-		glm::vec3 v2 = m_vertexarray[i + 2];
+
+		v0 = World * glm::vec4(m_vertexarray[i],1.f);
+		v1 = World * glm::vec4(m_vertexarray[i+1], 1.f);
+		v2 = World * glm::vec4(m_vertexarray[i+2], 1.f);
+
 		
-		// Compute vectors along two edges of the triangle
-		glm::vec3 edge1 = v1- v0;
-		glm::vec3 edge2 = v2 - v0;
-
-		// Compute the determinant
-		glm::vec3 pvec = glm::cross(RayDirection, edge2);
-
-		float det = glm::dot(edge1, pvec);
-
-		// If the determinant is near zero, the ray lies in the plane of the triangle
-		if (fabs(det) < FLT_EPSILON) return false;
-
-		float invDet = 1 / det;
-
-		// Compute the u parameter of the intersection point
-		glm::vec3 tvec = RayOrigin - v0;
-		float u = glm::dot(tvec, pvec) * invDet;
-		if (u < 0 || u > 1) return false;
-
-		// Compute the v parameter of the intersection point
-		glm::vec3 qvec = glm::cross(tvec, edge1);
-		float v = glm::dot(RayDirection, qvec) * invDet;
-		if (v < 0 || u + v > 1) return false;
+		if (TriangleRayCasting(to, td, v0, v1, v2)) {
+			return true;
+		}
 
 	}
 
 
 	
 
-	return true;
+	return false;
 }
 
 void Animated::Mesh::SetupMesh(){
@@ -256,10 +285,14 @@ void Animated::Model::Render(const glm::mat4& matrix, int animationindex, float 
 void Animated::Model::ChangeAnimation(int index){
 }
 
-bool Animated::Model::RayCasting(const glm::vec3& RayOrigin, const glm::vec3 RayDirection){
+bool Animated::Model::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::mat4& World) const {
 
-
-
+	for (const auto& mesh : m_meshes) {
+		if (mesh.RayCasting(RayOrigin, RayDirection,World)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void Animated::Model::ShowNodeName(const aiNode* node){

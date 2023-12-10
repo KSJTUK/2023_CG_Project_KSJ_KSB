@@ -38,5 +38,5 @@ void main()
 	text_coords = in_text_coords;
 
 
-	gl_Position = VP * M_matrix *  boned_position;
+	gl_Position = VP * M_matrix * vec4(in_position, 1.0);
 }

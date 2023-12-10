@@ -15,7 +15,7 @@ Renderer::Renderer() { }
 
 
 Renderer::Renderer(GLFWwindow* window) {
-	m_freeCamera = std::make_unique<FreeCamera>(window, glm::vec3{ 10.f,10.f,10.f }, glm::vec3{ -1.f,0.f,0.f });
+	m_freeCamera = std::make_unique<FreeCamera>(window, glm::vec3{ 0.f,0.f,0.f }, glm::vec3{ -1.f,0.f,0.f });
 	m_background = std::make_unique<SkyBox>();
 	m_testTerrain = std::make_unique<Terrain>(glm::uvec2{ TEST_PATCHSIZE, TEST_PATCHSIZE });
 
@@ -23,15 +23,17 @@ Renderer::Renderer(GLFWwindow* window) {
 	ar15_model->LoadModel("Resources/zombie/scene.gltf");
 	
 
-	for (auto i = 0; i < 50; ++i) {
+	for (auto i = 0; i < 1; ++i) {
 		std::shared_ptr<Animated::AR15> obj = std::make_shared<Animated::AR15>(ar15_model);
 
 
 		obj->SetAnimationIndex(glm::linearRand(0, 9));
 		obj->SetPosition(glm::vec3{
-			glm::linearRand(0.f,100.f),
-			0.f,
-			glm::linearRand(-500.f ,-600.f)
+			//glm::linearRand(0.f,100.f),
+			//0.f,
+			//glm::linearRand(-500.f ,-600.f)
+			0.f,0.f,0.f
+			
 		});
 
 
@@ -63,13 +65,18 @@ void Renderer::Update(float deltaTime) {
 	m_background->Update(deltaTime);
 
 	for (auto& zombie : m_animatedObjectArr) {
-		zombie->SetPosition(zombie->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
+		//zombie->SetPosition(zombie->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
 		CollisionTerrain(*zombie, 1.f);
+	}
+
+	if (m_animatedObjectArr[0]->RayCasting(m_freeCamera->GetCameraPosition(), m_freeCamera->GetCameraInversedBasisZ(), m_freeCamera->GetView(), m_freeCamera->GetProjection())) {
+		printf("Hit!\n");
 	}
 
 
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
+	
 	}
 }
 

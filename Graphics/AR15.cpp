@@ -11,23 +11,34 @@ Animated::AR15::AR15(){
 }
 
 Animated::AR15::AR15(std::shared_ptr<Model> model) : Object{ model } {
-	m_scale = glm::vec3{ 0.1f,0.1f,0.1f };
+	m_scale = glm::vec3{ 0.5f,0.5f,0.5f };
 	m_rotate = glm::radians(glm::vec3{ -90.f,0.f,0.f });
 }
 
 void Animated::AR15::Render(){
 
-	glm::mat4 WorldMatrix{ 
-		glm::translate(m_position) * 
-		glm::yawPitchRoll(m_rotate.y,m_rotate.x,m_rotate.z) *
-		glm::scale(m_scale)
-	};
 
-	m_model->Render(WorldMatrix,m_animationIndex,m_animationCounter);
+	m_transform =
+		glm::translate(m_position) *
+		glm::yawPitchRoll(m_rotate.y, m_rotate.x, m_rotate.z) *
+		glm::scale(m_scale);
+
+
+	m_model->Render(m_transform,m_animationIndex,m_animationCounter);
 }
 
 void Animated::AR15::Update(float DeltaTime){
 	m_animationCounter += DeltaTime;
+}
+
+bool Animated::AR15::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::mat4& View, const glm::mat4& Projection) const{
+	
+	glm::mat4 WorldMatrix = Projection * View * m_transform;
+
+	if (m_model->RayCasting(RayOrigin, RayDirection,WorldMatrix)) {
+		return true;
+	}
+	return false;
 }
 
 

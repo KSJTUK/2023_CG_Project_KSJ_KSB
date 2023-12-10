@@ -19,6 +19,8 @@ namespace Animated {
 		glm::vec3 m_scale{ 1.f };
 		glm::vec3 m_rotate{ 0.f };
 
+		glm::mat4 m_transform{1.f};
+
 	public:
 		glm::vec3& GetPosition() { return m_position; }
 		glm::vec3 GetPositionConst() { return m_position; }
@@ -27,6 +29,7 @@ namespace Animated {
 	public:
 		virtual void Render() = 0;
 		virtual void Update(float DeltaTime) = 0;
+		virtual bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::mat4& View, const glm::mat4& Projection) const = 0;
 	};
 
 }
