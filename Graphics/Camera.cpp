@@ -13,6 +13,7 @@ Camera::Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) : m_window(windo
 	m_basisX = glm::normalize(glm::cross(m_up, m_basisZ));
 	m_basisY = glm::cross(m_basisZ, m_basisX);
 
+	m_projection = glm::perspective(m_fovY, m_aspect, m_nearZ, m_farZ);
 }
 
 FreeCamera::FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) :Camera{ window, EYE, AT } {
@@ -22,16 +23,9 @@ FreeCamera::~FreeCamera() {
 }
 
 void FreeCamera::Render(){
-	auto p = glm::perspective(m_fovY, m_aspect, m_nearZ, m_farZ);
-	auto v = glm::lookAt(m_eye, m_eye + m_at, m_up);
-
-	SHADER->GetActivatedShader()->SetUniformMat4("projection", GL_FALSE, &p[0][0]);
-	SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &v[0][0]);
-
-	auto vp = p * v;
-
-	SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &vp[0][0]);
-
+	SHADER->GetActivatedShader()->SetUniformMat4("projection", GL_FALSE, &m_projection[0][0]);
+	SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &m_view[0][0]);
+	SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &(m_projection * m_view)[0][0]);
 }
 
 constexpr auto CameraSpeed = 20.f;
@@ -89,10 +83,7 @@ void FreeCamera::Update(float DeltaTime){
 		m_basisZ = glm::normalize(-m_at);
 		m_basisX = glm::normalize(glm::cross(m_up, m_basisZ));
 		m_basisY = glm::cross(m_basisZ, m_basisX);
-
-
-
 	}
 
-
+	m_view = glm::lookAt(m_eye, m_eye + m_at, m_up);
 }
