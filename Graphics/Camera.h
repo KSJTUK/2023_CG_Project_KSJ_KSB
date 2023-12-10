@@ -14,6 +14,8 @@ protected:
 	// To get aspect
 	GLFWwindow* m_window{};
 
+	glm::mat4 m_projection{ };
+	glm::mat4 m_view{ };
 
 protected:	
 	glm::vec3 m_eye{};
