@@ -137,11 +137,6 @@ void Terrain::MoveHeightPosition(glm::vec3& position, float offset) {
 }
 
 void Terrain::SetMeterials() {
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.position", &glm::vec3{ 5.f, 3.f, 5.f }[0]);
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.ambient", &glm::vec3{ 0.1f }[0]);
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.diffuse", &glm::vec3{ 1.f }[0]);
-	SHADER->GetActivatedShader()->SetUniformVec3("pointLight.specular", &glm::vec3{ 1.f }[0]);
-	SHADER->GetActivatedShader()->SetUniformFloat("pointLight.constant", 1.f);
 	SHADER->GetActivatedShader()->SetUniformInt("heightMap", 0);
 	SHADER->GetActivatedShader()->SetUniformInt("meterials.heightMapTexture", 1);
 	SHADER->GetActivatedShader()->SetUniformVec3("meterials.specular", &glm::vec3{ 0.f }[0]);
