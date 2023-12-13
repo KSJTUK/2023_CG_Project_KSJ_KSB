@@ -63,7 +63,7 @@ namespace Animated {
 
 		void Draw();
 
-		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const;
+		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World, const std::vector<aiMatrix4x4>& BoneMat) const;
 	private:
 
 		std::vector<Vertex> m_vertices{};
@@ -72,6 +72,7 @@ namespace Animated {
 		std::vector<VertexBoneData> m_bonesID_Weights_eachVertex{};
 
 		glm::vec3* m_vertexarray{ nullptr };
+		VertexBoneData* m_boneDataArray{ nullptr };
 
 
 		UINT m_vao{};

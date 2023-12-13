@@ -91,10 +91,13 @@ Animated::Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices
 
 
 	m_vertexarray = new glm::vec3[m_indices.size()+1];
+	m_boneDataArray = new VertexBoneData[m_indices.size() + 1];
+
 
 
 	for (UINT i = 0; i < m_indices.size(); ++i) {
 		m_vertexarray[i] = m_vertices[m_indices[i]].position;
+		m_boneDataArray[i] = m_bonesID_Weights_eachVertex[m_indices[i]];
 	}
 
 	if (m_indices.size() % 3 !=  0) {
@@ -161,21 +164,56 @@ void Animated::Mesh::Draw(){
 
 }
 
-bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const {
+bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World, const std::vector<aiMatrix4x4>& BoneMat) const {
 	
 
 	glm::vec3 v0, v1, v2;
 
 
-	
+	aiMatrix4x4 BoneTransform{};
+	glm::mat4 Bt{};
+
 
 	for (UINT i = 0; i < m_indices.size() / 3; ++i) {
 
-		v0 = World * glm::vec4(m_vertexarray[i],1.f);
-		v1 = World * glm::vec4(m_vertexarray[i+1], 1.f);
-		v2 = World * glm::vec4(m_vertexarray[i+2], 1.f);
 
-		
+	
+
+		BoneTransform =					BoneMat[m_boneDataArray[i].ids[0]] * m_boneDataArray[i].weights[0];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i].ids[1]] * m_boneDataArray[i].weights[1];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i].ids[2]] * m_boneDataArray[i].weights[2];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i].ids[3]] * m_boneDataArray[i].weights[3];
+
+		Bt = AimatTOGlm(BoneTransform);
+		v0 = World * Bt * glm::vec4(m_vertexarray[i],   1.f);
+
+
+
+
+
+		BoneTransform = BoneMat[m_boneDataArray[i+1].ids[0]] * m_boneDataArray[i+1].weights[0];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+1].ids[1]] * m_boneDataArray[i+1].weights[1];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+1].ids[2]] * m_boneDataArray[i+1].weights[2];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+1].ids[3]] * m_boneDataArray[i+1].weights[3];
+
+		Bt = AimatTOGlm(BoneTransform);
+		v1 = World * Bt * glm::vec4(m_vertexarray[i + 1], 1.f);
+
+
+
+
+
+
+		BoneTransform = BoneMat[m_boneDataArray[i + 2].ids[0]] * m_boneDataArray[i + 2].weights[0];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+2].ids[1]] * m_boneDataArray[i + 2].weights[1];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+2].ids[2]] * m_boneDataArray[i + 2].weights[2];
+		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+2].ids[3]] * m_boneDataArray[i + 2].weights[3];
+
+		Bt = AimatTOGlm(BoneTransform);
+		v2 = World * Bt * glm::vec4(m_vertexarray[i+2], 1.f);
+
+
+		//
 		if (TriangleRayCasting(RayOrigin, RayDirection, v0, v1, v2)) {
 			return true;
 		}
@@ -252,14 +290,9 @@ Animated::Model::~Model(){
 
 void Animated::Model::Render(const glm::mat4& matrix, int animationindex, float animationcounter){
 
-	std::vector<aiMatrix4x4>().swap(m_transformBuffer);
 	m_currentAnimationID = animationindex;
 
 	SHADER->GetActivatedShader()->SetUniformMat4("M_matrix", GL_FALSE, &matrix[0][0]);
-
-
-	
-
 	SHADER->GetActivatedShader()->SetUniformMat4("TIM_matrix", GL_TRUE, &glm::inverse(matrix)[0][0]);
 
 
@@ -286,7 +319,11 @@ void Animated::Model::ChangeAnimation(int index){
 bool Animated::Model::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::mat4& World) const {
 
 	for (const auto& mesh : m_meshes) {
-		if (mesh.RayCasting(RayOrigin, RayDirection,World)) {
+
+		if (m_transformBuffer.size() == 0) return false;
+
+
+		if (mesh.RayCasting(RayOrigin, RayDirection,World,m_transformBuffer)) {
 			return true;
 		}
 	}

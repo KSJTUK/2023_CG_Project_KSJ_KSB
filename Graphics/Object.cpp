@@ -10,3 +10,8 @@ namespace Animated {
 	}
 }
 
+namespace Static {
+
+
+
+}
