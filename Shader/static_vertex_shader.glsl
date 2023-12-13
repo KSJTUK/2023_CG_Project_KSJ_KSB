@@ -13,14 +13,14 @@ uniform mat4 VP;
 
 // lighting
 out vec3 normal;
-out vec2 text_coords;
-out vec3 frag_pos;
+out vec2 texCoords;
+out vec3 fragPos;
 
 void main(void)
 {
-	frag_pos = vec3(M_matrix * vec4(in_Position, 1.0f));
+	fragPos = vec3(M_matrix * vec4(in_Position, 1.0f));
 	normal = normalize( mat3(TIM_matrix) * in_Normal);
-	text_coords = in_Texture;
+	texCoords = in_Texture;
 
-	gl_Position = VP * vec4(frag_pos, 1.0f);
+	gl_Position = VP * vec4(fragPos, 1.0f);
 }

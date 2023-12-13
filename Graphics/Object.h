@@ -26,6 +26,8 @@ namespace Animated {
 		glm::vec3 GetPositionConst() { return m_position; }
 		void SetPosition(const glm::vec3& position) { m_position = position; }
 
+		void SetAnimation(const int& index);
+
 	public:
 		virtual void Render() = 0;
 		virtual void Update(float DeltaTime) = 0;

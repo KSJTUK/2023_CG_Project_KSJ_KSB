@@ -11,7 +11,7 @@ Animated::AR15::AR15(){
 }
 
 Animated::AR15::AR15(std::shared_ptr<Model> model) : Object{ model } {
-	m_scale = glm::vec3{ 0.5f,0.5f,0.5f };
+	m_scale = glm::vec3{ 0.1f };
 	m_rotate = glm::radians(glm::vec3{ -90.f,0.f,0.f });
 }
 
