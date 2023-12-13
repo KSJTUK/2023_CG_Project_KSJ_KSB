@@ -220,7 +220,7 @@ Static::Mesh Static::Model::ProcessMesh(aiMesh* mesh) {
 	{
 		//all pointers created in assimp will be deleted automaticaly when we call import.FreeScene();
 		aiMaterial* material = m_scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<Texture> diffuse_maps = LoadMaterial(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<Texture> diffuse_maps = LoadMaterial(material, aiTextureType_DIFFUSE, "textureDiffuse");
 		bool exist = false;
 		for (int i = 0; (i < textures.size()) && (diffuse_maps.size() != 0); i++)
 		{
@@ -233,7 +233,7 @@ Static::Mesh Static::Model::ProcessMesh(aiMesh* mesh) {
 		if (!exist && diffuse_maps.size() != 0) textures.push_back(diffuse_maps[0]);
 		//textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-		std::vector<Texture> specular_maps = LoadMaterial(material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<Texture> specular_maps = LoadMaterial(material, aiTextureType_SPECULAR, "textureSpecular");
 		exist = false;
 		for (int i = 0; (i < textures.size()) && (specular_maps.size() != 0); i++)
 		{

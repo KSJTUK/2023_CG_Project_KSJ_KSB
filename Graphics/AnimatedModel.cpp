@@ -162,28 +162,17 @@ void Animated::Mesh::Draw(){
 }
 
 bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const {
-	
-
 	glm::vec3 v0, v1, v2;
 
-
-	
-
 	for (UINT i = 0; i < m_indices.size() / 3; ++i) {
-
 		v0 = World * glm::vec4(m_vertexarray[i],1.f);
 		v1 = World * glm::vec4(m_vertexarray[i+1], 1.f);
 		v2 = World * glm::vec4(m_vertexarray[i+2], 1.f);
 
-		
 		if (TriangleRayCasting(RayOrigin, RayDirection, v0, v1, v2)) {
 			return true;
 		}
-
 	}
-
-
-	
 
 	return false;
 }
@@ -251,33 +240,21 @@ Animated::Model::~Model(){
 
 
 void Animated::Model::Render(const glm::mat4& matrix, int animationindex, float animationcounter){
-
 	std::vector<aiMatrix4x4>().swap(m_transformBuffer);
 	m_currentAnimationID = animationindex;
 
 	SHADER->GetActivatedShader()->SetUniformMat4("M_matrix", GL_FALSE, &matrix[0][0]);
-
-
-	
-
 	SHADER->GetActivatedShader()->SetUniformMat4("TIM_matrix", GL_TRUE, &glm::inverse(matrix)[0][0]);
-
-
-
-
 
 	UpdateBoneTransform(animationcounter, m_transformBuffer);
 
 	for (UINT i = 0; i < m_transformBuffer.size(); ++i) {
 		SHADER->GetActivatedShader()->SetUniformMat4(("bones[" + std::to_string(i) + "]"), GL_TRUE, (const float*)&m_transformBuffer[i]);
 	}
-	
 
 	for (int i = 0; i < m_meshes.size(); ++i) {
 		m_meshes[i].Draw();
 	}
-
-
 }
 
 void Animated::Model::ChangeAnimation(int index){
@@ -310,9 +287,6 @@ void Animated::Model::ProcessNode(aiNode* node){
 		mesh = ProcessMesh(aimesh);
 		m_meshes.push_back(mesh);
 	}
-
-
-
 }
 
 Animated::Mesh Animated::Model::ProcessMesh(aiMesh* mesh) {
@@ -562,8 +536,7 @@ const aiNodeAnim* Animated::Model::FindNodeAnimation(const aiAnimation* animatio
 
 aiVector3D Animated::Model::CalculatePolatedPosition(float AnimationTime, const aiNodeAnim* animnode){
 
-	if (animnode->mNumPositionKeys == 1)
-	{
+	if (animnode->mNumPositionKeys == 1) {
 		return animnode->mPositionKeys[0].mValue;
 	}
 
@@ -580,11 +553,8 @@ aiVector3D Animated::Model::CalculatePolatedPosition(float AnimationTime, const 
 }
 
 aiQuaternion Animated::Model::CalculatePolatedRotation(float AnimationTime, const aiNodeAnim* animnode){
-	if (animnode->mNumRotationKeys == 1)
-	{
+	if (animnode->mNumRotationKeys == 1) {
 		return animnode->mRotationKeys[0].mValue;
-
-
 	}
 
 	UINT rotation_index = FindRotation(AnimationTime, animnode);
