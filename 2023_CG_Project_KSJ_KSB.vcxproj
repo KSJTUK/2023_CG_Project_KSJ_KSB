@@ -166,6 +166,7 @@
     <ClCompile Include="Graphics\SkyBox.cpp" />
     <ClCompile Include="Graphics\StaticModel.cpp" />
     <ClCompile Include="Graphics\Terrain.cpp" />
+    <ClCompile Include="Graphics\Zombie.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Util\Engine.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Graphics\StaticModel.h" />
     <ClInclude Include="Graphics\Terrain.h" />
     <ClInclude Include="Graphics\Object.h" />
+    <ClInclude Include="Graphics\Zombie.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Util\Engine.h" />
     <ClInclude Include="Util\Input.h" />
