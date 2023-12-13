@@ -18,6 +18,8 @@ private:
 	std::unique_ptr<class SkyBox> m_background{ nullptr };
 	std::unique_ptr<class Terrain> m_testTerrain{ nullptr };
 
+	std::unique_ptr<class PointLight> m_testLight{ nullptr };
+
 
 	GLenum m_renderMode = GL_LINE;
 

@@ -9,6 +9,7 @@
 #include "Util/Input.h"
 
 #include "Graphics/AR15.h"
+#include "Graphics/Lighting.h"
 
 #define TEST_PATCHSIZE 20
 
@@ -27,7 +28,6 @@ Renderer::Renderer(GLFWwindow* window) {
 	for (auto i = 0; i < 1; ++i) {
 		std::shared_ptr<Animated::AR15> obj = std::make_shared<Animated::AR15>(ar15_model);
 
-
 		obj->SetAnimationIndex(1);
 		obj->SetPosition(glm::vec3{
 			10.f, 0.f, 10.f
@@ -40,6 +40,9 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	static_model = std::make_shared<Static::Model>();
 	static_model->LoadModel("Resources/pine_tree/scene.gltf");
+
+	m_testLight = std::make_unique<PointLight>();
+	m_testLight->SetPosition(glm::vec3{ 20.f, 20.f, 20.f });
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -78,22 +81,24 @@ void Renderer::Render() {
 
 	SHADER->UseProgram(ShaderType::TerrainShader);
 	m_freeCamera->Render();
+	m_testLight->SetPosition(glm::vec3{ 20.f, 20.f, 20.f });
+	m_testLight->Render();
 	m_testTerrain->Render();
 	SHADER->UnuseProgram();
 
 
 	SHADER->UseProgram(ShaderType::AnimatedShader);
 	m_freeCamera->Render();
+	m_testLight->Render();
 	for (auto& o : m_animatedObjectArr) {
 		o->Render();
 	}
 	SHADER->UnuseProgram();
 
-
-
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
 
+	m_testLight->Render();
 	glm::mat4 identity{ 1.f };
 	static_model->Render(identity);
 

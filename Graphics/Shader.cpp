@@ -481,11 +481,9 @@ void ShaderComponent::SetUniformVec2(const std::string& valueName, const float* 
 void ShaderComponent::SetUniformFloat(const std::string& valueName, const float value){
 	int Loc = GetUniformLocation(valueName);
 	glUniform1f(Loc, value);
-	m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
 }
 	
 void ShaderComponent::SetUniformInt(const std::string& valueName, const int value){
 	int Loc = GetUniformLocation(valueName);
 	glUniform1i(Loc, value);
-	m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
 }
