@@ -159,6 +159,7 @@
     <ClCompile Include="Graphics\AR15.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\GraphicBuffers.cpp" />
+    <ClCompile Include="Graphics\Lighting.cpp" />
     <ClCompile Include="Graphics\Model.cpp" />
     <ClCompile Include="Graphics\Object.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Graphics\AR15.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\GraphicBuffers.h" />
+    <ClInclude Include="Graphics\Lighting.h" />
     <ClInclude Include="Graphics\Model.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
