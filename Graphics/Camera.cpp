@@ -3,6 +3,9 @@
 #include "Graphics/Shader.h"
 #include "Util/Input.h"
 
+constexpr auto CameraSpeed = 20.f;
+constexpr auto MOUSE_SENSITIVE = 0.1f;
+
 Camera::Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) : m_window(window), m_eye(EYE), m_at(AT) {
 	int width, height;
 	glfwGetFramebufferSize(m_window, &width, &height);
@@ -27,10 +30,6 @@ void FreeCamera::Render(){
 	SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &m_view[0][0]);
 	SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &(m_projection * m_view)[0][0]);
 }
-
-constexpr auto CameraSpeed = 20.f;
-constexpr auto MOUSE_SENSITIVE = 0.1f;
-
 
 void FreeCamera::Update(float DeltaTime){
 	int width, height;

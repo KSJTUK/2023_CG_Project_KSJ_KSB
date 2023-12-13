@@ -6,6 +6,7 @@
 #include "Graphics/SkyBox.h"
 #include "Graphics/AnimatedModel.h"
 #include "Graphics/StaticModel.h"
+#include "Util/Input.h"
 
 #include "Graphics/AR15.h"
 
@@ -27,13 +28,9 @@ Renderer::Renderer(GLFWwindow* window) {
 		std::shared_ptr<Animated::AR15> obj = std::make_shared<Animated::AR15>(ar15_model);
 
 
-		obj->SetAnimationIndex(glm::linearRand(0, 9));
+		obj->SetAnimationIndex(1);
 		obj->SetPosition(glm::vec3{
-			//glm::linearRand(0.f,100.f),
-			//0.f,
-			//glm::linearRand(-500.f ,-600.f)
-			0.f,0.f,0.f
-			
+			10.f, 0.f, 10.f
 		});
 
 
@@ -41,13 +38,8 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	}
 
-	//m_testModel = std::make_unique<Model>("./tree02.obj", "./Textures/tree02_fall.png");
-	//m_testModel->Init();
-
 	static_model = std::make_shared<Static::Model>();
 	static_model->LoadModel("Resources/pine_tree/scene.gltf");
-
-
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -66,20 +58,14 @@ void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
 
 	m_background->Update(deltaTime);
-
-	for (auto& zombie : m_animatedObjectArr) {
-		//zombie->SetPosition(zombie->GetPosition() + glm::vec3{ 0.f, 0.f, 30.f * deltaTime });
-		CollisionTerrain(*zombie, 1.f);
-	}
 	
 	if (m_animatedObjectArr[0]->RayCasting(RayPos, RayDir , m_freeCamera->GetView(), m_freeCamera->GetProjection())) {
 		printf("Hit!\n");
 	}
 
-
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
-	
+		CollisionTerrain(*o, 1.f);
 	}
 }
 

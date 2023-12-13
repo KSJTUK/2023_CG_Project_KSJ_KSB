@@ -8,5 +8,9 @@ namespace Animated {
 
 	Object::Object(std::shared_ptr<Model> model): m_model(model) {
 	}
+
+	void Object::SetAnimation(const int& index) {
+		m_animationIndex = index;
+	}
 }
 
