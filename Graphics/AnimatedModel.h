@@ -1,9 +1,5 @@
 #pragma once
 
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include <assimp/scene.h>
-#include <assimp/anim.h>
 
 
 namespace Animated {
@@ -51,10 +47,6 @@ namespace Animated {
 
 
 
-	glm::mat4 AimatTOGlm(aiMatrix4x4& ai_matr);
-	aiQuaternion slerp(aiQuaternion q1, aiQuaternion q2, float blend);
-	bool TriangleRayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2);
-
 	class Mesh {
 	public:
 		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture> textures, std::vector<VertexBoneData> boneIDWieghts);
@@ -63,7 +55,7 @@ namespace Animated {
 
 		void Draw();
 
-		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const;
+		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World, const std::vector<aiMatrix4x4>& BoneMat) const;
 	private:
 
 		std::vector<Vertex> m_vertices{};
@@ -72,6 +64,7 @@ namespace Animated {
 		std::vector<VertexBoneData> m_bonesID_Weights_eachVertex{};
 
 		glm::vec3* m_vertexarray{ nullptr };
+		VertexBoneData* m_boneDataArray{ nullptr };
 
 
 		UINT m_vao{};

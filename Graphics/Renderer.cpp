@@ -9,7 +9,9 @@
 #include "Util/Input.h"
 
 #include "Graphics/AR15.h"
+#include "Graphics/Zombie.h"
 #include "Graphics/Lighting.h"
+#include "Graphics/PineTree.h"
 
 #define TEST_PATCHSIZE 20
 
@@ -22,27 +24,38 @@ Renderer::Renderer(GLFWwindow* window) {
 	m_testTerrain = std::make_unique<Terrain>(glm::uvec2{ TEST_PATCHSIZE, TEST_PATCHSIZE });
 
 	ar15_model = std::make_shared<Animated::Model>();
-	ar15_model->LoadModel("Resources/zombie/scene.gltf");
-	
+	ar15_model->LoadModel("Resources/ar15/scene.gltf");
 
-	for (auto i = 0; i < 1; ++i) {
-		std::shared_ptr<Animated::AR15> obj = std::make_shared<Animated::AR15>(ar15_model);
-
-		obj->SetAnimationIndex(1);
-		obj->SetPosition(glm::vec3{
-			10.f, 0.f, 10.f
-		});
-
-
-		m_animatedObjectArr.push_back(obj);
-
-	}
+	zombie_model = std::make_shared<Animated::Model>();
+	zombie_model->LoadModel("Resources/zombie/scene.gltf");
 
 	static_model = std::make_shared<Static::Model>();
 	static_model->LoadModel("Resources/pine_tree/scene.gltf");
 
+	
+
+	for (auto i = 0; i < 20; ++i) {
+		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(), m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr());
+		obj->SetPosition(glm::vec3{
+			glm::linearRand(-100.f,100.f),0.f,glm::linearRand(-100.f,100.f)
+		});
+		obj->SetAnimation(glm::linearRand(0, 9));
+		m_animatedObjectArr.push_back(obj);
+
+	}
+
+
+	for (auto i = 0; i < 100; ++i) {
+		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(static_model, glm::vec3{glm::linearRand(-100.f,100.f),0.f,glm::linearRand(-100.f,100.f)});
+		m_staticObjectArr.push_back(obj);
+
+	}
+
 	m_testLight = std::make_unique<PointLight>();
 	m_testLight->SetPosition(glm::vec3{ 20.f, 20.f, 20.f });
+
+
+
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -61,10 +74,9 @@ void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
 
 	m_background->Update(deltaTime);
-	
-	if (m_animatedObjectArr[0]->RayCasting(RayPos, RayDir , m_freeCamera->GetView(), m_freeCamera->GetProjection())) {
-		printf("Hit!\n");
-	}
+
+
+
 
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
@@ -93,14 +105,17 @@ void Renderer::Render() {
 	for (auto& o : m_animatedObjectArr) {
 		o->Render();
 	}
+
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
 
 	m_testLight->Render();
-	glm::mat4 identity{ 1.f };
-	static_model->Render(identity);
+	
+	for (auto& o : m_staticObjectArr) {
+		o->Render();
+	}
 
 	SHADER->UnuseProgram();
 }

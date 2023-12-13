@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Object.h"
 #include "Graphics/AnimatedModel.h"
+#include "Graphics/StaticModel.h"
+
 
 namespace Animated {
 	Object::Object(){
@@ -14,3 +16,12 @@ namespace Animated {
 	}
 }
 
+namespace Static {
+
+	Object::Object() {
+	}
+
+	Object::Object(std::shared_ptr<Model> model) : m_model(model) {
+	}
+
+}

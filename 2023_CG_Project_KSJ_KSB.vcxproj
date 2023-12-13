@@ -162,15 +162,18 @@
     <ClCompile Include="Graphics\Lighting.cpp" />
     <ClCompile Include="Graphics\Model.cpp" />
     <ClCompile Include="Graphics\Object.cpp" />
+    <ClCompile Include="Graphics\PineTree.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\SkyBox.cpp" />
     <ClCompile Include="Graphics\StaticModel.cpp" />
     <ClCompile Include="Graphics\Terrain.cpp" />
+    <ClCompile Include="Graphics\Zombie.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Util\Engine.cpp" />
     <ClCompile Include="Util\Input.cpp" />
+    <ClCompile Include="Util\Math.cpp" />
     <ClCompile Include="Util\TextureComponent.cpp" />
     <ClCompile Include="Util\Timer.cpp" />
   </ItemGroup>
@@ -182,15 +185,18 @@
     <ClInclude Include="Graphics\GraphicBuffers.h" />
     <ClInclude Include="Graphics\Lighting.h" />
     <ClInclude Include="Graphics\Model.h" />
+    <ClInclude Include="Graphics\PineTree.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\SkyBox.h" />
     <ClInclude Include="Graphics\StaticModel.h" />
     <ClInclude Include="Graphics\Terrain.h" />
     <ClInclude Include="Graphics\Object.h" />
+    <ClInclude Include="Graphics\Zombie.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Util\Engine.h" />
     <ClInclude Include="Util\Input.h" />
+    <ClInclude Include="Util\Math.h" />
     <ClInclude Include="Util\TextureComponent.h" />
     <ClInclude Include="Util\Timer.h" />
   </ItemGroup>

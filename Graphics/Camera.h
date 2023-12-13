@@ -35,11 +35,11 @@ protected:
 public:
 	virtual void Render() = 0;
 	virtual void Update(float DeltaTime) = 0;
+	
 
-	const glm::vec3 GetCameraPosition() const { return m_eye; };
-	const glm::vec3 GetCameraInversedBasisZ() const { return -1.f * m_basisZ; };
-	const glm::mat4 GetView() const { return m_view; };
-	const glm::mat4 GetProjection() const { return m_projection; }
+	const glm::mat4* GetViewPtr() { return &m_view; };
+	const glm::mat4* GetProjectionPtr() { return &m_projection; };
+	const glm::vec3* GetPositionPtr() { return &m_eye; };
 };
 
 
