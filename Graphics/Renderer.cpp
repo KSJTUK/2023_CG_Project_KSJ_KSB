@@ -9,6 +9,7 @@
 #include "Util/Input.h"
 
 #include "Graphics/AR15.h"
+#include "Graphics/Zombie.h"
 #include "Graphics/Lighting.h"
 
 #define TEST_PATCHSIZE 20
@@ -44,6 +45,10 @@ Renderer::Renderer(GLFWwindow* window) {
 	m_testLight = std::make_unique<PointLight>();
 	m_testLight->SetPosition(glm::vec3{ 20.f, 20.f, 20.f });
 
+
+
+	m_zombie = std::make_shared<Animated::Zombie>(ar15_model, m_freeCamera->GetViewPtr(), m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr());
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 }
@@ -61,10 +66,10 @@ void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
 
 	m_background->Update(deltaTime);
+
+	m_zombie->Update(deltaTime);
 	
-	if (m_animatedObjectArr[0]->RayCasting(RayPos, RayDir , m_freeCamera->GetView(), m_freeCamera->GetProjection())) {
-		printf("Hit!\n");
-	}
+
 
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
@@ -91,8 +96,10 @@ void Renderer::Render() {
 	m_freeCamera->Render();
 	m_testLight->Render();
 	for (auto& o : m_animatedObjectArr) {
-		o->Render();
+		//o->Render();
 	}
+
+	m_zombie->Render();
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::StaticShader);

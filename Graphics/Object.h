@@ -31,7 +31,6 @@ namespace Animated {
 	public:
 		virtual void Render() = 0;
 		virtual void Update(float DeltaTime) = 0;
-		virtual bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::mat4& View, const glm::mat4& Projection) const = 0;
 	};
 
 }

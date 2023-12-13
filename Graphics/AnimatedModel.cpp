@@ -1,84 +1,8 @@
 #include "pch.h"
 #include "AnimatedModel.h"
 #include "Graphics/Shader.h"
+#include "Util/Math.h"
 
-glm::mat4 Animated::AimatTOGlm(aiMatrix4x4& ai_matr){
-
-	glm::mat4 result{};
-	result[0].x = ai_matr.a1; result[0].y = ai_matr.b1; result[0].z = ai_matr.c1; result[0].w = ai_matr.d1;
-	result[1].x = ai_matr.a2; result[1].y = ai_matr.b2; result[1].z = ai_matr.c2; result[1].w = ai_matr.d2;
-	result[2].x = ai_matr.a3; result[2].y = ai_matr.b3; result[2].z = ai_matr.c3; result[2].w = ai_matr.d3;
-	result[3].x = ai_matr.a4; result[3].y = ai_matr.b4; result[3].z = ai_matr.c4; result[3].w = ai_matr.d4;
-
-
-	return result;
-}
-
-aiQuaternion Animated::slerp(aiQuaternion q1, aiQuaternion q2, float blend){
-	//cout << a.w + a.x + a.y + a.z << endl;
-	q1.Normalize();
-	q2.Normalize();
-
-	aiQuaternion result;
-	float dot_product = q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w;
-	float one_minus_blend = 1.0f - blend;
-
-	if (dot_product < 0.0f)
-	{
-		result.x = q1.x * one_minus_blend + blend * -q2.x;
-		result.y = q1.y * one_minus_blend + blend * -q2.y;
-		result.z = q1.z * one_minus_blend + blend * -q2.z;
-		result.w = q1.w * one_minus_blend + blend * -q2.w;
-	}
-	else
-	{
-		result.x = q1.x * one_minus_blend + blend * q2.x;
-		result.y = q1.y * one_minus_blend + blend * q2.y;
-		result.z = q1.z * one_minus_blend + blend * q2.z;
-		result.w = q1.w * one_minus_blend + blend * q2.w;
-	}
-
-	return result.Normalize();
-}
-
-bool Animated::TriangleRayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2)
-{
-
-	glm::vec3 edge1, edge2;
-	glm::vec3 pvec, tvec, qvec;
-	float det, invDet;
-
-	float u, v, t;
-
-	// Compute vectors along two edges of the triangle
-	edge1 = v1 - v0;
-	edge2 = v2 - v0;
-
-	// Compute the determinant
-	pvec = glm::cross(RayDirection, edge2);
-	det = glm::dot(edge1, pvec);
-
-
-	// If the determinant is near zero, the ray lies in the plane of the triangle
-	if (fabs(det) < FLT_EPSILON) return false;
-
-	invDet = 1 / det;
-
-	// Compute the u parameter of the intersection point
-	tvec = RayOrigin - v0;
-	u = glm::dot(tvec, pvec) * invDet;
-	if (u < 0.f or u > 1.f) return false;
-
-	// Compute the v parameter of the intersection point
-	qvec = glm::cross(tvec, edge1);
-	v = glm::dot(RayDirection, qvec) * invDet;
-	if (v < 0.f or u + v > 1.f) return false;
-
-
-
-	return true;
-
-}
 
 
 
@@ -138,10 +62,10 @@ void Animated::Mesh::Draw(){
 		std::string name{m_textures[i].type};
 
 
-		if (name == "texture_diffuse") {
+		if (name == "textureDiffuse") {
 			number = std::to_string(diffuse++);
 		}
-		else if (name == "texture_specular") {
+		else if (name == "textureSpecular") {
 			number = std::to_string(specular++);
 		}
 
@@ -191,7 +115,7 @@ bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& Ray
 
 
 
-		BoneTransform = BoneMat[m_boneDataArray[i+1].ids[0]] * m_boneDataArray[i+1].weights[0];
+		BoneTransform =					BoneMat[m_boneDataArray[i+1].ids[0]] * m_boneDataArray[i+1].weights[0];
 		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+1].ids[1]] * m_boneDataArray[i+1].weights[1];
 		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+1].ids[2]] * m_boneDataArray[i+1].weights[2];
 		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+1].ids[3]] * m_boneDataArray[i+1].weights[3];
@@ -204,7 +128,7 @@ bool Animated::Mesh::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& Ray
 
 
 
-		BoneTransform = BoneMat[m_boneDataArray[i + 2].ids[0]] * m_boneDataArray[i + 2].weights[0];
+		BoneTransform =					BoneMat[m_boneDataArray[i + 2].ids[0]] * m_boneDataArray[i + 2].weights[0];
 		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+2].ids[1]] * m_boneDataArray[i + 2].weights[1];
 		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+2].ids[2]] * m_boneDataArray[i + 2].weights[2];
 		BoneTransform = BoneTransform + BoneMat[m_boneDataArray[i+2].ids[3]] * m_boneDataArray[i + 2].weights[3];
@@ -450,15 +374,13 @@ Animated::Mesh Animated::Model::ProcessMesh(aiMesh* mesh) {
 	}
 
 	// load bones
-	for (UINT i = 0; i < mesh->mNumBones; i++)
-	{
+	for (UINT i = 0; i < mesh->mNumBones; i++){
 		UINT bone_index = 0;
 		std::string bone_name(mesh->mBones[i]->mName.data);
 
 		std::cout << mesh->mBones[i]->mName.data << std::endl;
 
-		if (m_boneDict.find(bone_name) == m_boneDict.end())
-		{
+		if (m_boneDict.find(bone_name) == m_boneDict.end()){
 			// Allocate an index for a new bone
 			bone_index = m_boneNumber;
 			m_boneNumber++;
@@ -626,14 +548,13 @@ aiQuaternion Animated::Model::CalculatePolatedRotation(float AnimationTime, cons
 
 	UINT rotation_index = FindRotation(AnimationTime, animnode);
 	UINT next_rotation_index = rotation_index + 1;
-
 	float delta_time = (float)(animnode->mRotationKeys[next_rotation_index].mTime - animnode->mRotationKeys[rotation_index].mTime);
 	float factor = (AnimationTime - (float)animnode->mRotationKeys[rotation_index].mTime) / delta_time;
 	assert(factor >= 0.0f && factor <= 1.0f);
 	aiQuaternion start_quat = animnode->mRotationKeys[rotation_index].mValue;
 	aiQuaternion end_quat = animnode->mRotationKeys[next_rotation_index].mValue;
 
-	return slerp(start_quat, end_quat, factor);
+	return nlerp(start_quat, end_quat, factor);
 }
 
 aiVector3D Animated::Model::CalculatePolatedScailing(float AnimationTime, const aiNodeAnim* animnode){
@@ -644,10 +565,8 @@ aiVector3D Animated::Model::CalculatePolatedScailing(float AnimationTime, const 
 
 	UINT scaling_index = FindScaling(AnimationTime, animnode);
 	UINT next_scaling_index = scaling_index + 1;
-	assert(next_scaling_index < animnode->mNumScalingKeys);
 	float delta_time = (float)(animnode->mScalingKeys[next_scaling_index].mTime - animnode->mScalingKeys[scaling_index].mTime);
 	float  factor = (AnimationTime - (float)animnode->mScalingKeys[scaling_index].mTime) / delta_time;
-	assert(factor >= 0.0f && factor <= 1.0f);
 	aiVector3D start = animnode->mScalingKeys[scaling_index].mValue;
 	aiVector3D end = animnode->mScalingKeys[next_scaling_index].mValue;
 	aiVector3D delta = end - start;

@@ -40,7 +40,7 @@ namespace glm
 	///
 	/// @see gtx_rotate_vector
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL vec<3, T, Q> slerp(
+	GLM_FUNC_DECL vec<3, T, Q> nlerp(
 		vec<3, T, Q> const& x,
 		vec<3, T, Q> const& y,
 		T const& a);

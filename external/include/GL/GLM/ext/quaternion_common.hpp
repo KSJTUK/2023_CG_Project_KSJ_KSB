@@ -74,7 +74,7 @@ namespace glm
 	/// @tparam T A floating-point scalar type
 	/// @tparam Q A value from qualifier enum
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL qua<T, Q> slerp(qua<T, Q> const& x, qua<T, Q> const& y, T a);
+	GLM_FUNC_DECL qua<T, Q> nlerp(qua<T, Q> const& x, qua<T, Q> const& y, T a);
 
 	/// Returns the q conjugate.
 	///

@@ -172,6 +172,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Util\Engine.cpp" />
     <ClCompile Include="Util\Input.cpp" />
+    <ClCompile Include="Util\Math.cpp" />
     <ClCompile Include="Util\TextureComponent.cpp" />
     <ClCompile Include="Util\Timer.cpp" />
   </ItemGroup>
@@ -193,6 +194,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Util\Engine.h" />
     <ClInclude Include="Util\Input.h" />
+    <ClInclude Include="Util\Math.h" />
     <ClInclude Include="Util\TextureComponent.h" />
     <ClInclude Include="Util\Timer.h" />
   </ItemGroup>

@@ -7,7 +7,7 @@
 
 Animated::AR15::AR15(){
 	m_scale = glm::vec3{ 0.1f,0.1f,0.1f };
-	m_rotate = glm::radians(glm::vec3{ -90.f,0.f,0.f });
+	m_rotate = glm::radians(glm::vec3{ 0.f,0.f,0.f });
 }
 
 Animated::AR15::AR15(std::shared_ptr<Model> model) : Object{ model } {
@@ -31,15 +31,6 @@ void Animated::AR15::Update(float DeltaTime){
 	m_animationCounter += DeltaTime;
 }
 
-bool Animated::AR15::RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::mat4& View, const glm::mat4& Projection) const{
-	
-	glm::mat4 WorldMatrix = Projection * View * m_transform;
-
-	if (m_model->RayCasting(RayOrigin, RayDirection,WorldMatrix)) {
-		return true;
-	}
-	return false;
-}
 
 
 void Animated::AR15::SetAnimationIndex(int val) {

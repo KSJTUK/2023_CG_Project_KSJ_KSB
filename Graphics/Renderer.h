@@ -1,5 +1,5 @@
 #pragma once
-namespace Animated { class Object; class Model; class AR15; }
+namespace Animated { class Object; class Model; class AR15; class Zombie; }
 namespace Static { class Model; }
 
 
@@ -36,7 +36,7 @@ private:
 	std::vector<std::shared_ptr<Animated::Object>> m_animatedObjectArr{};
 
 
-	
+	std::shared_ptr<Animated::Zombie> m_zombie{};
 
 
 public:
