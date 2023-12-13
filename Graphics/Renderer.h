@@ -33,11 +33,9 @@ private:
 
 
 	std::vector<std::shared_ptr<Animated::Object>> m_animatedObjectArr{};
-
 	std::vector<std::shared_ptr<Static::Object>> m_staticObjectArr{};
 
 
-	std::shared_ptr<Animated::Zombie> m_zombie{};
 
 
 public:

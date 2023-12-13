@@ -92,9 +92,9 @@ void Animated::Wander::Enter(Zombie& zombie){
 Animated::ZombieState* Animated::Wander::Update(float DeltaTime, Zombie& zombie){
 	zombie.m_animationCounter += DeltaTime;
 
-	if (zombie.nRayCasting()) {
-		std::cout << "Hit" << std::endl;
-	}
+	//if (zombie.nRayCasting()) {
+	//	std::cout << "Hit" << std::endl;
+	//}
 
 	return nullptr;
 }
