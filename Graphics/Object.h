@@ -45,12 +45,14 @@ namespace Static {
 		Object(std::shared_ptr<Model> model);
 
 	protected:
-		std::shared_ptr<Model> model{ nullptr };
+		std::shared_ptr<Model> m_model{ nullptr };
 
 
 		glm::vec3 m_position{};
 		glm::vec3 m_scale{};
 		glm::vec3 m_rotate{};
+
+		glm::mat4 m_transform{ 1.f };
 
 	public:
 		
@@ -59,7 +61,7 @@ namespace Static {
 	public:
 
 		virtual void Render() = 0;
-		virtual void Update() = 0;
+		virtual void Update(float DeltaTime) = 0;
 		
 	};
 }

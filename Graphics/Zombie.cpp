@@ -45,6 +45,8 @@ void Animated::Zombie::Update(float DeltaTime){
 constexpr glm::vec3 RayDirection_ = glm::vec3{ 0.f,0.f,1.f };
 constexpr glm::vec3 RayOrigin_ = glm::vec3{ 0.f };
 
+
+// NOTE : Optimize Failed... 
 bool Animated::Zombie::nRayCasting(){
 
 
@@ -58,7 +60,7 @@ bool Animated::Zombie::nRayCasting(){
 	}
 	
 	// phase 2. Bounding volume 
-
+	// if code flow reached here, Ray Direction Directed target, so pretend Ray Complete Line is OK( not half Line ) 
 	glm::vec3 VolumeCenter{ m_position.x,m_position.y + 5.f, m_position.z };
 
 	if (DistanceRayBetweenPoint(*m_cameraptr, RayDirection_, VolumeCenter) > 10.f) {
@@ -74,10 +76,11 @@ bool Animated::Zombie::nRayCasting(){
 	}
 
 	std::cout << "false phase 3" << std::endl;
+	return false;
 
 }
 
-
+// State : Wander =====================================================================
 
 
 void Animated::Wander::Enter(Zombie& zombie){
@@ -126,7 +129,7 @@ void Animated::Wander::Exit(Zombie& zombie){
 
 
 
-
+// State : Chase =====================================================================
 
 void Animated::Chase::Enter(Zombie& zombie)
 {

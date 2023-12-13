@@ -11,6 +11,7 @@
 #include "Graphics/AR15.h"
 #include "Graphics/Zombie.h"
 #include "Graphics/Lighting.h"
+#include "Graphics/PineTree.h"
 
 #define TEST_PATCHSIZE 20
 
@@ -23,7 +24,14 @@ Renderer::Renderer(GLFWwindow* window) {
 	m_testTerrain = std::make_unique<Terrain>(glm::uvec2{ TEST_PATCHSIZE, TEST_PATCHSIZE });
 
 	ar15_model = std::make_shared<Animated::Model>();
-	ar15_model->LoadModel("Resources/zombie/scene.gltf");
+	ar15_model->LoadModel("Resources/ar15/scene.gltf");
+
+	zombie_model = std::make_shared<Animated::Model>();
+	zombie_model->LoadModel("Resources/zombie/scene.gltf");
+
+	static_model = std::make_shared<Static::Model>();
+	static_model->LoadModel("Resources/pine_tree/scene.gltf");
+
 	
 
 	for (auto i = 0; i < 1; ++i) {
@@ -39,15 +47,19 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	}
 
-	static_model = std::make_shared<Static::Model>();
-	static_model->LoadModel("Resources/pine_tree/scene.gltf");
+
+	for (auto i = 0; i < 100; ++i) {
+		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(static_model, glm::vec3{glm::linearRand(-100.f,100.f),0.f,glm::linearRand(-100.f,100.f)});
+		m_staticObjectArr.push_back(obj);
+
+	}
 
 	m_testLight = std::make_unique<PointLight>();
 	m_testLight->SetPosition(glm::vec3{ 20.f, 20.f, 20.f });
 
 
 
-	m_zombie = std::make_shared<Animated::Zombie>(ar15_model, m_freeCamera->GetViewPtr(), m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr());
+	m_zombie = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(), m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr());
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -106,8 +118,10 @@ void Renderer::Render() {
 	m_freeCamera->Render();
 
 	m_testLight->Render();
-	glm::mat4 identity{ 1.f };
-	static_model->Render(identity);
+	
+	for (auto& o : m_staticObjectArr) {
+		o->Render();
+	}
 
 	SHADER->UnuseProgram();
 }

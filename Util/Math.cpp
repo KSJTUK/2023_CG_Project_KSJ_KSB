@@ -85,7 +85,7 @@ float DistanceRayBetweenPoint(const glm::vec3& RayOrigin, const glm::vec3& RayDi
 	return
 		std::fabs((Point.x - RayOrigin.x) * RayDirection.y - (Point.y - RayOrigin.y) * RayDirection.x + (Point.z - RayOrigin.z) * RayDirection.z)
 		/
-		glm::length(RayDirection);
+		glm::length(RayDirection) * 0.1f;
 
 }
 
