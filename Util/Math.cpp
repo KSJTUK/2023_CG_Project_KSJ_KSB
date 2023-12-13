@@ -80,12 +80,10 @@ bool TriangleRayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirectio
 
 }
 
+
+// TODO...
 float DistanceRayBetweenPoint(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::vec3& Point){
-	
-	return
-		std::fabs((Point.x - RayOrigin.x) * RayDirection.y - (Point.y - RayOrigin.y) * RayDirection.x + (Point.z - RayOrigin.z) * RayDirection.z)
-		/
-		glm::length(RayDirection) * 0.1f;
+	return 0.f;
 
 }
 
