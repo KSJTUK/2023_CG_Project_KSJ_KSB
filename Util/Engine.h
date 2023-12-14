@@ -19,7 +19,6 @@ private:
 	std::unique_ptr<class Renderer> m_renderer{ };
 	std::unique_ptr<class Timer> m_timer{ };
 
-
 public:
 	void Init();
 	void Update();

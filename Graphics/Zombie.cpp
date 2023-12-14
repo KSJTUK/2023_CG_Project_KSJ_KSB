@@ -66,7 +66,6 @@ bool Animated::Zombie::nRayCasting(){
 
 	float d = DistanceRayBetweenPoint(*m_cameraPosition, *(m_cameraBasisz), VolumeCenter);
 	if (d > 50.f) {
-		printf("False Phase 2\n");
 		return false;
 	}
 
