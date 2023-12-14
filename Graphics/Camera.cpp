@@ -12,7 +12,6 @@ Camera::Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT) : m_window(windo
 	glfwGetFramebufferSize(m_window, &width, &height);
 	m_aspect = static_cast<float>(width) / static_cast<float>(height);
 
-
 	m_basisZ = glm::normalize(-m_at);
 	m_basisX = glm::normalize(glm::cross(m_up, m_basisZ));
 	m_basisY = glm::cross(m_basisZ, m_basisX);
@@ -123,22 +122,22 @@ void FreeCamera::Update(float deltaTime){
 	float2 deltaMouse = Input::GetInstance()->GetDeltaMouse();
 
 	if (!(deltaMouse.x == 0 and deltaMouse.y == 0)) {
-
 		glm::mat4 cameraRotate{ 1.f };
-
 
 		cameraRotate = glm::rotate(cameraRotate, glm::radians(-deltaMouse.y * MOUSE_SENSITIVE), m_basisX);
 		cameraRotate = glm::rotate(cameraRotate, glm::radians(-deltaMouse.x * MOUSE_SENSITIVE), m_basisY);
 
 		m_rotate = cameraRotate;
-
+		m_deltaRotate.y = glm::radians(-deltaMouse.x * MOUSE_SENSITIVE);
+		m_deltaRotate.x = glm::radians(-deltaMouse.y * MOUSE_SENSITIVE);
 
 		m_at = glm::normalize(glm::vec3(cameraRotate * glm::vec4(m_at, 1.f)));
-
-
 		m_basisZ = glm::normalize(-m_at);
 		m_basisX = glm::normalize(glm::cross(m_up, m_basisZ));
 		m_basisY = glm::cross(m_basisZ, m_basisX);
+	}
+	else {
+		m_deltaRotate = glm::vec3{ };
 	}
 
 	m_view = glm::lookAt(m_eye, m_eye + m_at, m_up);

@@ -39,18 +39,20 @@ protected:
 	glm::vec3 m_basisZ{ 0.f,0.f,1.f };
 
 	glm::mat4 m_rotate{ 0.f };
-
+	glm::vec3 m_deltaRotate{ 0.f };
 
 public:
 	virtual void Render() = 0;
 	virtual void Update(float DeltaTime) = 0;
-
 
 	const glm::mat4* GetViewPtr() { return &m_view; };
 	const glm::mat4* GetProjectionPtr() { return &m_projection; };
 	const glm::mat4* GetRotateMatPtr() { return &m_rotate; };
 	const glm::vec3* GetPositionPtr() { return &m_eye; };
 	const glm::vec3* GetBasisZPtr() { return &m_basisZ; };
+	const glm::vec3* GetBasisYPtr() { return &m_basisY; };
+	const glm::vec3* GetBasisXPtr() { return &m_basisX; };
+	glm::vec3 GetDeltaAngle() { return m_deltaRotate; }
 	glm::vec3 GetViewPoint() const { return m_at; }
 	glm::vec3& GetPosition() { return m_eye; }
 };

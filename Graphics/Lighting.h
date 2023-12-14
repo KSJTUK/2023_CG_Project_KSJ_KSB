@@ -73,7 +73,7 @@ public:
 	~DirectionLight();
 
 private:
-	glm::vec3 m_ambient{ 0.0f };
+	glm::vec3 m_ambient{ 0.f };
 	glm::vec3 m_lightColor{ 1.f };
 	glm::vec3 m_lightDirection{ -1.f, 0.f, 0.f };
 	float m_directionAngle{ 0.f };

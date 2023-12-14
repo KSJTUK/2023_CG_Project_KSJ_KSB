@@ -25,6 +25,8 @@ namespace Animated {
 		glm::vec3& GetPosition() { return m_position; }
 		glm::vec3 GetPositionConst() { return m_position; }
 		void SetPosition(const glm::vec3& position) { m_position = position; }
+		void SetRotateAngle(const glm::vec3& angle) { m_rotate = angle; }
+		glm::vec3 GetRotateAngle() const { return m_rotate; }
 		std::pair<glm::vec3, glm::vec3> GetBoundingBox() { return m_boundingBox; }
 
 		void SetAnimation(const int& index);

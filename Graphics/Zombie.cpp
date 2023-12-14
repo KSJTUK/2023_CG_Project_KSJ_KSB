@@ -27,17 +27,14 @@ void Animated::Zombie::Render(){
 
 
 void Animated::Zombie::Update(float DeltaTime){
-
 	ZombieState* state_ = m_curstate->Update(DeltaTime,*this);
 
-	if (state_ != nullptr) {
-		m_curstate->Exit(*this);
-		delete m_curstate;
-		m_curstate = state_;
-		m_curstate->Enter(*this);
-	}
-
-
+	//if (state_ != nullptr) {
+	//	m_curstate->Exit(*this);
+	//	delete m_curstate;
+	//	m_curstate = state_;
+	//	m_curstate->Enter(*this);
+	//}
 }
 
 
@@ -49,17 +46,6 @@ constexpr glm::vec3 RayOrigin_ = glm::vec3{ 0.f };
 
 // NOTE : Optimize Failed... 
 bool Animated::Zombie::nRayCasting(){
-
-
-	// phase 1. direction 
-	//glm::vec3 TargetDir =  m_position;
-
-
-	//if (glm::dot(TargetDir,RayDirection_ ) <= 0.f) {
-	//	std::cout << "false phase 1" << std::endl;
-	//	return false;
-	//}
-	
 	// phase 2. Bounding volume 
 	// if code flow reached here, Ray Direction Directed target, so pretend Ray Complete Line is OK( not half Line ) 
 	glm::vec3 VolumeCenter{ m_position.x,m_position.y + 1.f, m_position.z };
@@ -82,62 +68,47 @@ bool Animated::Zombie::nRayCasting(){
 }
 
 // State : Wander =====================================================================
-
-
 void Animated::Wander::Enter(Zombie& zombie){
-
-	zombie.m_animationIndex = 1;
-
+	zombie.m_animationIndex = 2;
 }
 
-Animated::ZombieState* Animated::Wander::Update(float DeltaTime, Zombie& zombie){
-	zombie.m_animationCounter += DeltaTime;
+Animated::ZombieState* Animated::Wander::Update(float deltaTime, Zombie& zombie){
+	m_timeCount += deltaTime;
+	zombie.m_animationCounter += deltaTime;
 
-	if (zombie.nRayCasting()) {
-		std::cout << "Hit" << std::endl;
+	zombie.m_position += m_moveSpeed * deltaTime;
+	zombie.m_position = glm::clamp(zombie.m_position, -1000.f, 1000.f);
+	if (m_timeCount > m_randomMoveTime) {
+		m_timeCount = 0.f;
+		m_moveSpeed = glm::linearRand(glm::vec3{ m_minSpeed, 0.f, m_minSpeed }, glm::vec3{ m_maxSpeed, 0.f, m_maxSpeed });
+		zombie.m_rotate.y += glm::orientedAngle(m_prevDirection, glm::normalize(m_moveSpeed), glm::vec3{ 0.f, 1.f, 0.f });
+		m_prevDirection = glm::normalize(m_moveSpeed);
 	}
-
-	return nullptr;
+	
+	if (zombie.nRayCasting()) { 
+		return nullptr;
+	}
 }
 
 void Animated::Wander::Render(Zombie& zombie){
-
-
 	zombie.m_transform =
 		glm::translate(zombie.m_position) *
 		glm::yawPitchRoll(zombie.m_rotate.y, zombie.m_rotate.x, zombie.m_rotate.z) *
 		glm::scale(zombie.m_scale);
 
-
-
-
 	zombie.m_model->Render(zombie.m_transform, zombie.m_animationIndex, zombie.m_animationCounter);
-
-
 }
-
-
 
 void Animated::Wander::Exit(Zombie& zombie){
-
-		
 }
-
-
-
-
-
-
 
 
 // State : Chase =====================================================================
 
-void Animated::Chase::Enter(Zombie& zombie)
-{
+void Animated::Chase::Enter(Zombie& zombie) {
 }
 
-Animated::ZombieState* Animated::Chase::Update(float DeltaTime, Zombie& zombie)
-{
+Animated::ZombieState* Animated::Chase::Update(float DeltaTime, Zombie& zombie) {
 	return nullptr;
 }
 
