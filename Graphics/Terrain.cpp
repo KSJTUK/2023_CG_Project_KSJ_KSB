@@ -140,7 +140,7 @@ void Terrain::SetMeterials() {
 	SHADER->GetActivatedShader()->SetUniformInt("heightMap", 0);
 	SHADER->GetActivatedShader()->SetUniformInt("meterials.heightMapTexture", 1);
 	SHADER->GetActivatedShader()->SetUniformVec3("meterials.specular", &glm::vec3{ 0.f }[0]);
-	SHADER->GetActivatedShader()->SetUniformFloat("meterials.shininess", 32.f);
+	SHADER->GetActivatedShader()->SetUniformFloat("meterials.shininess", 128.f);
 }
 
 void Terrain::Init() {

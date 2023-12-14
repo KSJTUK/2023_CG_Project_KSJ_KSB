@@ -17,8 +17,6 @@ Animated::Zombie::Zombie(std::shared_ptr<Model> model,const glm::mat4* ViewPoint
 	m_position = glm::vec3{ 10.f,0.f,10.f };
 	m_scale = glm::vec3{ 0.1f,0.1f,0.1f };
 	m_rotate = glm::radians( glm::vec3{ -90.f,0.f,0.f } ) ;
-
-
 }
 
 void Animated::Zombie::Render(){
@@ -35,8 +33,6 @@ void Animated::Zombie::Update(float DeltaTime){
 		m_curstate = state_;
 		m_curstate->Enter(*this);
 	}
-
-
 }
 
 
@@ -55,7 +51,7 @@ bool Animated::Zombie::nRayCasting(){
 
 
 	if (glm::dot(TargetDir,RayDirection_ ) <= 0.f) {
-		std::cout << "false phase 1" << std::endl;
+		//std::cout << "false phase 1" << std::endl;
 		return false;
 	}
 	
@@ -64,7 +60,7 @@ bool Animated::Zombie::nRayCasting(){
 	glm::vec3 VolumeCenter{ m_position.x,m_position.y + 5.f, m_position.z };
 
 	if (DistanceRayBetweenPoint(*m_cameraptr, RayDirection_, VolumeCenter) > 10.f) {
-		std::cout << "false phase 2" << std::endl;
+		//std::cout << "false phase 2" << std::endl;
 		return false;
 	}
 
@@ -75,7 +71,7 @@ bool Animated::Zombie::nRayCasting(){
 		return true;
 	}
 
-	std::cout << "false phase 3" << std::endl;
+	//std::cout << "false phase 3" << std::endl;
 	return false;
 
 }
@@ -92,9 +88,9 @@ void Animated::Wander::Enter(Zombie& zombie){
 Animated::ZombieState* Animated::Wander::Update(float DeltaTime, Zombie& zombie){
 	zombie.m_animationCounter += DeltaTime;
 
-	//if (zombie.nRayCasting()) {
-	//	std::cout << "Hit" << std::endl;
-	//}
+	if (zombie.nRayCasting()) {
+		std::cout << "Hit" << std::endl;
+	}
 
 	return nullptr;
 }

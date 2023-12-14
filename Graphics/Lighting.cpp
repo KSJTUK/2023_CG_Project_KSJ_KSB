@@ -80,3 +80,42 @@ void SpotLight::Render() {
 	SHADER->GetActivatedShader()->SetUniformFloat("spotLight.linear", m_linear);
 	SHADER->GetActivatedShader()->SetUniformFloat("spotLight.quadratic", m_quadratic);
 }
+
+DirectionLight::DirectionLight() { }
+
+DirectionLight::~DirectionLight() { }
+
+void DirectionLight::DayUpdate(float deltaTime) {
+	m_directionAngle += DAYTIME_SPEED * m_angleDir * deltaTime;
+	if (m_directionAngle > DIRECTION_MAXANGLE) {
+		m_directionAngle = DIRECTION_MAXANGLE;
+		m_angleDir = -1.f;
+	}
+	else if (m_directionAngle < DIRECTION_MINANGLE) {
+		m_directionAngle = DIRECTION_MINANGLE;
+		m_angleDir = 1.f;
+	}
+	m_lightDirection = glm::rotate(m_lightDirection, glm::radians(m_directionAngle), ROTATE_AXIS_Z);
+	m_lightColor = glm::vec3{ std::sinf(m_directionAngle) };
+	m_ambient = glm::vec3{ glm::clamp(std::sinf(m_directionAngle) - (1.f - DAY_LIGHT_MAX_AMBIENT), 0.f, DAY_LIGHT_MAX_AMBIENT) };
+}
+
+void DirectionLight::ChangeDirection(const glm::vec3& direction) {
+	m_lightDirection = direction;
+}
+
+void DirectionLight::ChangeAmbient(const glm::vec3& ambient) {
+	m_ambient = ambient;
+}
+
+void DirectionLight::ChangeLightColor(const glm::vec3& color) {
+	m_lightColor = color;
+}
+
+void DirectionLight::Render() {
+	SHADER->GetActivatedShader()->SetUniformVec3("dirLight.direction", &m_lightDirection[0]);
+
+	SHADER->GetActivatedShader()->SetUniformVec3("dirLight.ambient", &m_ambient[0]);
+	SHADER->GetActivatedShader()->SetUniformVec3("dirLight.diffuse", &m_lightColor[0]);
+	SHADER->GetActivatedShader()->SetUniformVec3("dirLight.specular", &m_lightColor[0]);
+}

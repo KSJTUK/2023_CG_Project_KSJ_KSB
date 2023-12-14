@@ -72,7 +72,7 @@ vec3 calcDirectionLighting(DirectionLight light, vec3 normal, vec3 viewDir, vec3
 	float spec = pow(max(dot(viewDir, reflectDirection), 0.0f), material.shininess);
 	vec3 specular = spec * (light.specular * vec3(texture(material.textureSpecular, texCoords)));
 
-	return (ambient + diffuse + specular);
+	return (ambient + diffuse);
 }
 
 vec3 calcPointLight(PointLight light, vec3 normal, vec3 viewDir, vec3 fragPosition)
@@ -137,16 +137,18 @@ vec3 calcSpotLight(SpotLight light, vec3 normal, vec3 viewDir,  vec3 fragPos)
 
 void main()
 {
-	vec3 viewDir = normalize(viewPos - fragPos);
-
-//	vec3 resultColor = calcDirectionLighting(dirLight, normal, viewDir, fragPos);
-	vec3 resultColor = calcPointLight(pointLight, normal, viewDir, fragPos);
-	resultColor += calcSpotLight(spotLight, normal, viewDir, fragPos);
-
 	float texAlpha = texture(material.textureDiffuse, texCoords).a;
 
-	if(texAlpha < discardAlpha)
+	if(texAlpha < discardAlpha) {
 		discard;
+		return;
+	}
+
+	vec3 viewDir = normalize(viewPos - fragPos);
+
+	vec3 resultColor = calcDirectionLighting(dirLight, normal, viewDir, fragPos);
+	resultColor += calcPointLight(pointLight, normal, viewDir, fragPos);
+	resultColor += calcSpotLight(spotLight, normal, viewDir, fragPos);
 
 	FragColor = vec4(resultColor, 1.f);
 }
