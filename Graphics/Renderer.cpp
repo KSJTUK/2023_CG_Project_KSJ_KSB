@@ -7,6 +7,7 @@
 #include "Graphics/AnimatedModel.h"
 #include "Graphics/StaticModel.h"
 #include "Util/Input.h"
+#include "UI.h"
 
 #include "Graphics/AR15.h"
 #include "Graphics/Zombie.h"
@@ -59,6 +60,8 @@ Renderer::Renderer(GLFWwindow* window) {
 	
 	m_testSpotLight = std::make_unique<SpotLight>();
 	m_testDirLight = std::make_unique<DirectionLight>();
+
+	m_testReticle = std::make_unique<Reticle>(window);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -127,6 +130,9 @@ void Renderer::Render() {
 	for (auto& o : m_staticObjectArr) {
 		o->Render();
 	}
+	SHADER->UnuseProgram();
 
+	SHADER->UseProgram(ShaderType::UIShader);
+	m_testReticle->Render();
 	SHADER->UnuseProgram();
 }
