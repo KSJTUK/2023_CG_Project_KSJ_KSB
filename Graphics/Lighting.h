@@ -28,26 +28,6 @@ public:
 	void Render();
 };
 
-class DirLight {
-public:
-	DirLight();
-	~DirLight();
-
-private:
-	glm::vec3 m_ambient{ 0.f };
-	glm::vec3 m_lightColor{ 1.f };
-	glm::vec3 m_lightDirection{ };
-
-public:
-	void ChangeDirection(const glm::vec3& direction);
-
-	void ChangeAmbient(const glm::vec3& ambient);
-	void ChangeLightColor(const glm::vec3& color);
-
-public:
-	void Render();
-};
-
 class SpotLight {
 public:
 	SpotLight();
@@ -76,6 +56,32 @@ public:
 
 	void SetLinearQuadrant(float linear, float quadrant);
 	void SetOutterCutOff(float cutOff, float outterCutoff);
+
+public:
+	void Render();
+};
+
+class DirectionLight {
+public:
+	DirectionLight();
+	~DirectionLight();
+
+private:
+	glm::vec3 m_ambient{ 0.0f };
+	glm::vec3 m_lightColor{ 1.f };
+	glm::vec3 m_lightDirection{ -1.f, 0.f, 0.f };
+	float m_directionAngle{ 0.f };
+	float m_angleDir{ 1.f };
+
+public:
+	void DayUpdate(float deltaTime);
+	glm::vec3& GetDirLightAmbient() { return m_ambient; }
+	glm::vec3& GetDirLightColor() { return m_lightColor; }
+
+	void ChangeDirection(const glm::vec3& direction);
+
+	void ChangeAmbient(const glm::vec3& ambient);
+	void ChangeLightColor(const glm::vec3& color);
 
 public:
 	void Render();

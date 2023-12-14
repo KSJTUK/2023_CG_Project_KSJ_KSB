@@ -70,20 +70,14 @@ SkyBox::SkyBox() {
 
 SkyBox::~SkyBox() { }
 
-void SkyBox::Update(float deltaTime) {
+void SkyBox::SetAmbient(const glm::vec3& ambient) {
 	SHADER->UseProgram(ShaderType::BackgroundShader);
-	if (m_ambient.x < 0.0f) {
-		m_lightDir = 1.f;
-		m_ambient = glm::vec3{ 0.f };
-	}
-	else if (m_ambient.x > 1.f) {
-		m_lightDir = -1.f;
-		m_ambient = glm::vec3{ 1.f };
-	}
-
-	m_ambient += glm::vec3{ m_lightDir * m_timeSpeed * deltaTime };
+	m_ambient = ambient;
 	SHADER->GetActivatedShader()->SetUniformVec3("ambient", &m_ambient[0]);
 	SHADER->UnuseProgram();
+}
+
+void SkyBox::Update(float deltaTime) {
 }
 
 void SkyBox::Render() {

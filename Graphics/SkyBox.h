@@ -22,6 +22,7 @@ private:
 	float m_timeSpeed{ 0.001f };
 
 public:
+	void SetAmbient(const glm::vec3& ambient);
 	void Update(float deltaTime);
 	void Render();
 };
