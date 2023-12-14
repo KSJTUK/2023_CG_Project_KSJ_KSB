@@ -66,12 +66,11 @@ bool Animated::Zombie::nRayCasting(){
 
 	float d = DistanceRayBetweenPoint(*m_cameraPosition, *(m_cameraBasisz), VolumeCenter);
 	if (d > 50.f) {
-		printf("False Phase 2\n");
 		return false;
 	}
 
 
-	glm::mat4 WorldMatrix = *m_perspectiveptr * *m_viewptr * m_transform;
+	glm::mat4 WorldMatrix = (*m_perspectiveptr) * (*m_viewptr) * m_transform;
 
 	if (m_model->RayCasting(RayOrigin_, RayDirection_, WorldMatrix)) {
 		return true;

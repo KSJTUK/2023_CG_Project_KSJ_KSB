@@ -19,7 +19,7 @@ Renderer::Renderer() { }
 
 
 Renderer::Renderer(GLFWwindow* window) {
-	m_freeCamera = std::make_unique<FreeCamera>(window, glm::vec3{ 0.f,0.f,0.f }, glm::vec3{ -1.f,0.f,0.f });
+	m_mainCamera = std::make_unique<FreeCamera>(window, glm::vec3{ 0.f,0.f,0.f }, glm::vec3{ -1.f,0.f,0.f });
 	m_background = std::make_unique<SkyBox>();
 	m_testTerrain = std::make_unique<Terrain>(glm::uvec2{ PATCH_SIZE, PATCH_SIZE });
 
@@ -34,9 +34,9 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	
 
-	for (auto i = 0; i < 30; ++i) {
-		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(),
-			m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr(), m_freeCamera->GetBasisZPtr());
+	for (auto i = 0; i < 10; ++i) {
+		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_mainCamera->GetViewPtr(),
+			m_mainCamera->GetProjectionPtr(), m_mainCamera->GetPositionPtr(), m_mainCamera->GetBasisZPtr());
 
 		obj->SetPosition(glm::vec3{
 			glm::linearRand(-100.f,100.f),0.f,glm::linearRand(-100.f,100.f)
@@ -78,10 +78,10 @@ constexpr glm::vec3 RayPos = glm::vec3{ 0.f,0.f,0.f };
 constexpr glm::vec3 RayDir = glm::vec3{ 0.f,0.f,1.f };
 
 void Renderer::Update(float deltaTime) {
-	m_freeCamera->Update(deltaTime);
-	m_testTerrain->MoveHeightPosition(m_freeCamera->GetPosition(), 17.f);
-	m_testSpotLight->SetPosition(m_freeCamera->GetPosition());
-	m_testSpotLight->SetDirection(m_freeCamera->GetViewPoint());
+	m_mainCamera->Update(deltaTime);
+	m_testTerrain->MoveHeightPosition(m_mainCamera->GetPosition(), 17.f);
+	m_testSpotLight->SetPosition(m_mainCamera->GetPosition());
+	m_testSpotLight->SetDirection(m_mainCamera->GetViewPoint());
 
 	m_testDirLight->DayUpdate(deltaTime);
 	m_background->SetAmbient(m_testDirLight->GetDirLightColor());
@@ -95,12 +95,12 @@ void Renderer::Update(float deltaTime) {
 void Renderer::Render() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	SHADER->UseProgram(ShaderType::BackgroundShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 	m_background->Render();
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::TerrainShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 	m_testLight->Render();
 	m_testDirLight->Render();
 	m_testSpotLight->Render();
@@ -108,7 +108,7 @@ void Renderer::Render() {
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::AnimatedShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 	m_testLight->Render();
 	m_testDirLight->Render();
 	m_testSpotLight->Render();
@@ -118,7 +118,7 @@ void Renderer::Render() {
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::StaticShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 
 	m_testLight->Render();
 	m_testSpotLight->Render();
