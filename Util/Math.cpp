@@ -80,10 +80,35 @@ bool TriangleRayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirectio
 
 }
 
+// Projection A into B 
+
+glm::vec3 VectorProcection(const glm::vec3& A, const glm::vec3& B){
+
+	return  (glm::dot(A, B) / glm::dot(B, B)) * B;
+
+
+
+}
+
+
+
 
 // TODO...
 float DistanceRayBetweenPoint(const glm::vec3& RayOrigin, const glm::vec3& RayDirection, const glm::vec3& Point){
-	return 0.f;
+	
+	
+	glm::vec3 v{ Point - RayOrigin };
+	
+
+	glm::vec3 vp{ VectorProcection(v,RayDirection) };
+
+
+	float d = glm::length(v - vp);
+
+//	printf("%lf %lf : %lf\n",glm::length(v), glm::length(vp), d);
+
+	return d;
+
 
 }
 

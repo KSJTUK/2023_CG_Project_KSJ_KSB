@@ -40,6 +40,7 @@ public:
 	const glm::mat4* GetViewPtr() { return &m_view; };
 	const glm::mat4* GetProjectionPtr() { return &m_projection; };
 	const glm::vec3* GetPositionPtr() { return &m_eye; };
+	const glm::vec3* GetBasisZPtr() { return &m_basisZ; };
 	glm::vec3 GetViewPoint() const { return m_at; }
 	glm::vec3& GetPosition() { return m_eye; }
 };

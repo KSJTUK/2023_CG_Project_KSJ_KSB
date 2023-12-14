@@ -8,8 +8,8 @@
 Animated::Zombie::Zombie(){
 }
 
-Animated::Zombie::Zombie(std::shared_ptr<Model> model,const glm::mat4* ViewPointer, const glm::mat4* PerspectivePointer, const glm::vec3* CameraPositionPointer) :
-	Object{model}, m_viewptr(ViewPointer), m_perspectiveptr(PerspectivePointer) , m_cameraptr(CameraPositionPointer){
+Animated::Zombie::Zombie(std::shared_ptr<Model> model,const glm::mat4* ViewPointer, const glm::mat4* PerspectivePointer, const glm::vec3* CameraPositionPointer, const glm::vec3* CameraBasisZ) :
+	Object{model}, m_viewptr(ViewPointer), m_perspectiveptr(PerspectivePointer) , m_cameraPosition(CameraPositionPointer), m_cameraBasisz(CameraBasisZ) {
 
 	m_curstate = new Wander();
 	m_curstate->Enter(*this);
@@ -17,6 +17,8 @@ Animated::Zombie::Zombie(std::shared_ptr<Model> model,const glm::mat4* ViewPoint
 	m_position = glm::vec3{ 10.f,0.f,10.f };
 	m_scale = glm::vec3{ 0.1f,0.1f,0.1f };
 	m_rotate = glm::radians( glm::vec3{ -90.f,0.f,0.f } ) ;
+
+
 }
 
 void Animated::Zombie::Render(){
@@ -29,10 +31,13 @@ void Animated::Zombie::Update(float DeltaTime){
 	ZombieState* state_ = m_curstate->Update(DeltaTime,*this);
 
 	if (state_ != nullptr) {
+		m_curstate->Exit(*this);
 		delete m_curstate;
 		m_curstate = state_;
 		m_curstate->Enter(*this);
 	}
+
+
 }
 
 
@@ -47,20 +52,21 @@ bool Animated::Zombie::nRayCasting(){
 
 
 	// phase 1. direction 
-	glm::vec3 TargetDir =  m_position;
+	//glm::vec3 TargetDir =  m_position;
 
 
-	if (glm::dot(TargetDir,RayDirection_ ) <= 0.f) {
-		//std::cout << "false phase 1" << std::endl;
-		return false;
-	}
+	//if (glm::dot(TargetDir,RayDirection_ ) <= 0.f) {
+	//	std::cout << "false phase 1" << std::endl;
+	//	return false;
+	//}
 	
 	// phase 2. Bounding volume 
 	// if code flow reached here, Ray Direction Directed target, so pretend Ray Complete Line is OK( not half Line ) 
-	glm::vec3 VolumeCenter{ m_position.x,m_position.y + 5.f, m_position.z };
+	glm::vec3 VolumeCenter{ m_position.x,m_position.y + 1.f, m_position.z };
 
-	if (DistanceRayBetweenPoint(*m_cameraptr, RayDirection_, VolumeCenter) > 10.f) {
-		//std::cout << "false phase 2" << std::endl;
+	float d = DistanceRayBetweenPoint(*m_cameraPosition, *(m_cameraBasisz), VolumeCenter);
+	if (d > 50.f) {
+		printf("False Phase 2\n");
 		return false;
 	}
 
