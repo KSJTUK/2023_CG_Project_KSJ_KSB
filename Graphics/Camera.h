@@ -1,5 +1,11 @@
 #pragma once
 
+namespace Animated {
+	class Object;
+};
+namespace Static {
+	class Object;
+};
 
 class Camera abstract {
 public:
@@ -56,6 +62,18 @@ public:
 	FreeCamera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT);
 	~FreeCamera();
 
+private:
+	float m_deltaTime{ };
+	std::pair<glm::vec3, glm::vec3> m_boxSize{ };
+	std::pair<glm::vec3, glm::vec3> m_boundingBox{ };
+	glm::vec3 m_moveVec{ };
+	bool m_cancelMove{ false };
+
+public:
+	bool CollisionObject(Animated::Object& obj);
+	bool CollisionObject(Static::Object& obj);
+
+public:
 	virtual void Render();
 	virtual void Update(float DeltaTime);
 };

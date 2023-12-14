@@ -36,9 +36,10 @@ Renderer::Renderer(GLFWwindow* window) {
 	
 	m_ar15 = new Animated::AR15(ar15_model, m_mainCamera->GetPositionPtr(), m_mainCamera->GetRotateMatPtr());
 
-	for (auto i = 0; i < 10; ++i) {
-		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_mainCamera->GetViewPtr(),
-			m_mainCamera->GetProjectionPtr(), m_mainCamera->GetPositionPtr(), m_mainCamera->GetBasisZPtr());
+
+	for (auto i = 0; i < 1; ++i) {
+		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(),
+			m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr(), m_freeCamera->GetBasisZPtr());
 
 		obj->SetPosition(glm::vec3{
 			glm::linearRand(-100.f,100.f),0.f,glm::linearRand(-100.f,100.f)
@@ -89,6 +90,7 @@ void Renderer::Update(float deltaTime) {
 	std::cout << "C: " << m_mainCamera->GetPosition().y << std::endl;
 	m_testSpotLight->SetPosition(m_mainCamera->GetPosition());
 	m_testSpotLight->SetDirection(m_mainCamera->GetViewPoint());
+
 
 	m_testDirLight->DayUpdate(deltaTime);
 	m_background->SetAmbient(m_testDirLight->GetDirLightColor());

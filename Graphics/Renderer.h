@@ -34,9 +34,9 @@ private:
 	std::vector<std::shared_ptr<Animated::Object>> m_animatedObjectArr{};
 	std::vector<std::shared_ptr<Static::Object>> m_staticObjectArr{};
 
-
-	Animated::Object* m_ar15{ nullptr };
-
+private:
+	bool CameraCollisionObject(Static::Object& obj);
+	bool CameraCollisionObject(Animated::Object& obj);
 
 public:
 	void Update(float deltaTime);
