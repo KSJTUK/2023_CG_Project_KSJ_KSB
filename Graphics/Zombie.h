@@ -58,7 +58,7 @@ namespace Animated {
 	public:
 
 		Zombie();
-		Zombie(std::shared_ptr<Model> model,const glm::mat4* ViewPointer,const glm::mat4* PerspectivePointer,const glm::vec3* CameraPositionPointer);
+		Zombie(std::shared_ptr<Model> model,const glm::mat4* ViewPointer,const glm::mat4* PerspectivePointer,const glm::vec3* CameraPositionPointer, const glm::vec3* CameraBasisZ);
 	public:
 
 		virtual void Render() override;
@@ -73,17 +73,23 @@ namespace Animated {
 
 		const glm::mat4* m_viewptr{ nullptr };
 		const glm::mat4* m_perspectiveptr{ nullptr };
-		const glm::vec3* m_cameraptr{ nullptr };
+		const glm::vec3* m_cameraPosition{ nullptr };
+		const glm::vec3* m_cameraBasisz{ nullptr };
 
 
 		bool nRayCasting();
 
 
 	};
-
+	
 
 
 
 
 }
 
+/*
+a->b 
+b-a 
+
+*/

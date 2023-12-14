@@ -34,8 +34,8 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	
 
-	for (auto i = 0; i < 30; ++i) {
-		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(), m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr());
+	for (auto i = 0; i < 1; ++i) {
+		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(), m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr(), m_freeCamera->GetBasisZPtr());
 		obj->SetPosition(glm::vec3{
 			glm::linearRand(-100.f,100.f),0.f,glm::linearRand(-100.f,100.f)
 		});
@@ -45,7 +45,7 @@ Renderer::Renderer(GLFWwindow* window) {
 	}
 
 
-	for (auto i = 0; i < 500; ++i) {
+	for (auto i = 0; i < 300; ++i) {
 		glm::vec3 randPosition{ glm::linearRand(-1000.f,1000.f),0.f,glm::linearRand(-1000.f,1000.f) };
 		randPosition.y = m_testTerrain->GetHeight(randPosition, -1.f);
 		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(static_model, randPosition);

@@ -8,7 +8,7 @@ Static::PineTree::PineTree(){
 
 Static::PineTree::PineTree(std::shared_ptr<Model> model,const glm::vec3& Position) : Object{ model } {
 	m_position = Position;
-	m_scale = glm::vec3{ 0.1f,0.1f,0.1f };
+	m_scale = glm::vec3{ 0.5f,0.5f,0.5f };
 }
 
 void Static::PineTree::Render(){
