@@ -19,7 +19,7 @@ private:
 
 	glm::vec3 m_ambient{ 1.f };
 	float m_lightDir{ 1.f };
-	float m_timeSpeed{ 0.3f };
+	float m_timeSpeed{ 0.001f };
 
 public:
 	void Update(float deltaTime);

@@ -45,8 +45,10 @@ Renderer::Renderer(GLFWwindow* window) {
 	}
 
 
-	for (auto i = 0; i < 100; ++i) {
-		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(static_model, glm::vec3{glm::linearRand(-100.f,100.f),0.f,glm::linearRand(-100.f,100.f)});
+	for (auto i = 0; i < 500; ++i) {
+		glm::vec3 randPosition{ glm::linearRand(-1000.f,1000.f),0.f,glm::linearRand(-1000.f,1000.f) };
+		randPosition.y = m_testTerrain->GetHeight(randPosition, -1.f);
+		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(static_model, randPosition);
 		m_staticObjectArr.push_back(obj);
 
 	}
@@ -54,8 +56,7 @@ Renderer::Renderer(GLFWwindow* window) {
 	m_testLight = std::make_unique<PointLight>();
 	m_testLight->SetPosition(glm::vec3{ 20.f, 20.f, 20.f });
 
-
-
+	m_testSpotLight = std::make_unique<SpotLight>();
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -67,16 +68,20 @@ void Renderer::CollisionTerrain(Animated::Object& obj, float offset) {
 	m_testTerrain->MoveHeightPosition(obj.GetPosition(), offset);
 }
 
+void Renderer::CollisionTerrain(Static::Object& obj, float offset) {
+	m_testTerrain->MoveHeightPosition(obj.GetPosition(), offset);
+}
+
 constexpr glm::vec3 RayPos = glm::vec3{ 0.f,0.f,0.f };
 constexpr glm::vec3 RayDir = glm::vec3{ 0.f,0.f,1.f };
 
 void Renderer::Update(float deltaTime) {
 	m_freeCamera->Update(deltaTime);
+	m_testSpotLight->SetPosition(m_freeCamera->GetPosition());
+	m_testSpotLight->SetDirection(m_freeCamera->GetViewPoint());
+
 
 	m_background->Update(deltaTime);
-
-
-
 
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
@@ -93,25 +98,25 @@ void Renderer::Render() {
 
 	SHADER->UseProgram(ShaderType::TerrainShader);
 	m_freeCamera->Render();
-	m_testLight->SetPosition(glm::vec3{ 20.f, 20.f, 20.f });
 	m_testLight->Render();
+	m_testSpotLight->Render();
 	m_testTerrain->Render();
 	SHADER->UnuseProgram();
-
 
 	SHADER->UseProgram(ShaderType::AnimatedShader);
 	m_freeCamera->Render();
 	m_testLight->Render();
+	m_testSpotLight->Render();
 	for (auto& o : m_animatedObjectArr) {
 		o->Render();
 	}
-
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::StaticShader);
 	m_freeCamera->Render();
 
 	m_testLight->Render();
+	m_testSpotLight->Render();
 	
 	for (auto& o : m_staticObjectArr) {
 		o->Render();

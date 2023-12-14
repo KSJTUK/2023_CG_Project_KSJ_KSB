@@ -33,7 +33,7 @@ struct FlashLight {
 	vec3 position;
 	vec3 direction;
 	float cutOff; // cutOff -> value of result cos(theta) oper
-	float outerCutOff;
+	float outterCutOff;
 
 	vec3 ambient;
 	vec3 diffuse;
@@ -112,8 +112,8 @@ vec3 calcFlashLighting(FlashLight light, vec3 normal, vec3 viewPos,  vec3 fragPo
 {
 	vec3 lightDirection = normalize(light.position - fragPos);
 	float theta = dot(lightDirection, normalize(-light.direction));
-	float epsilon = light.cutOff - light.outerCutOff;
-	float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0f, 1.0f);
+	float epsilon = light.cutOff - light.outterCutOff;
+	float intensity = clamp((theta - light.outterCutOff) / epsilon, 0.0f, 1.0f);
 
 	vec3 resultColor = vec3(0.0f);
 	vec3 ambient = light.ambient * vec3(texture(meterials.heightMapTexture, tes_out_tex));

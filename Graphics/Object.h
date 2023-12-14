@@ -57,6 +57,7 @@ namespace Static {
 	public:
 		
 		void SetPosition(const glm::vec3& position) { m_position = position; };
+		glm::vec3& GetPosition() { return m_position; }
 
 	public:
 
