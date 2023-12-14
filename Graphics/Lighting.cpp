@@ -86,18 +86,18 @@ DirectionLight::DirectionLight() { }
 DirectionLight::~DirectionLight() { }
 
 void DirectionLight::DayUpdate(float deltaTime) {
-	m_directionAngle += 0.001f * m_angleDir * deltaTime;
-	if (m_directionAngle > 180.f) {
-		m_directionAngle = 180.f;
+	m_directionAngle += DAYTIME_SPEED * m_angleDir * deltaTime;
+	if (m_directionAngle > DIRECTION_MAXANGLE) {
+		m_directionAngle = DIRECTION_MAXANGLE;
 		m_angleDir = -1.f;
 	}
-	else if (m_directionAngle < 0.f) {
-		m_directionAngle = 0.f;
+	else if (m_directionAngle < DIRECTION_MINANGLE) {
+		m_directionAngle = DIRECTION_MINANGLE;
 		m_angleDir = 1.f;
 	}
-	m_lightDirection = glm::rotate(m_lightDirection, glm::radians(m_directionAngle), glm::vec3{ 0.f, 0.f, 1.f });
+	m_lightDirection = glm::rotate(m_lightDirection, glm::radians(m_directionAngle), ROTATE_AXIS_Z);
 	m_lightColor = glm::vec3{ std::sinf(m_directionAngle) };
-	m_ambient = glm::vec3{ glm::clamp(std::sinf(m_directionAngle) - 0.5f, 0.f, 0.5f) };
+	m_ambient = glm::vec3{ glm::clamp(std::sinf(m_directionAngle) - (1.f - DAY_LIGHT_MAX_AMBIENT), 0.f, DAY_LIGHT_MAX_AMBIENT) };
 }
 
 void DirectionLight::ChangeDirection(const glm::vec3& direction) {
