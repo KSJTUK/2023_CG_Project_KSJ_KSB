@@ -1,5 +1,11 @@
 #pragma once
 
+constexpr float DIRECTION_MINANGLE = 0.f;
+constexpr float DIRECTION_MAXANGLE = 180.f;
+constexpr float DAYTIME_SPEED = 0.001f;
+constexpr float DAY_LIGHT_MAX_AMBIENT = 0.5f;
+constexpr glm::vec3 ROTATE_AXIS_Z = { 0.f, 0.f, 1.f };
+
 class PointLight {
 public:
 	PointLight();
@@ -23,26 +29,6 @@ public:
 	void ChangeLightColor(const glm::vec3& color);
 
 	void SetLinearQuadrant(float linear, float quadrant);
-
-public:
-	void Render();
-};
-
-class DirLight {
-public:
-	DirLight();
-	~DirLight();
-
-private:
-	glm::vec3 m_ambient{ 0.f };
-	glm::vec3 m_lightColor{ 1.f };
-	glm::vec3 m_lightDirection{ };
-
-public:
-	void ChangeDirection(const glm::vec3& direction);
-
-	void ChangeAmbient(const glm::vec3& ambient);
-	void ChangeLightColor(const glm::vec3& color);
 
 public:
 	void Render();
@@ -76,6 +62,32 @@ public:
 
 	void SetLinearQuadrant(float linear, float quadrant);
 	void SetOutterCutOff(float cutOff, float outterCutoff);
+
+public:
+	void Render();
+};
+
+class DirectionLight {
+public:
+	DirectionLight();
+	~DirectionLight();
+
+private:
+	glm::vec3 m_ambient{ 0.0f };
+	glm::vec3 m_lightColor{ 1.f };
+	glm::vec3 m_lightDirection{ -1.f, 0.f, 0.f };
+	float m_directionAngle{ 0.f };
+	float m_angleDir{ 1.f };
+
+public:
+	void DayUpdate(float deltaTime);
+	glm::vec3& GetDirLightAmbient() { return m_ambient; }
+	glm::vec3& GetDirLightColor() { return m_lightColor; }
+
+	void ChangeDirection(const glm::vec3& direction);
+
+	void ChangeAmbient(const glm::vec3& ambient);
+	void ChangeLightColor(const glm::vec3& color);
 
 public:
 	void Render();

@@ -42,7 +42,7 @@ public:
 	const glm::vec3* GetPositionPtr() { return &m_eye; };
 	const glm::vec3* GetBasisZPtr() { return &m_basisZ; };
 	glm::vec3 GetViewPoint() const { return m_at; }
-	glm::vec3 GetPosition() const { return m_eye; }
+	glm::vec3& GetPosition() { return m_eye; }
 };
 
 

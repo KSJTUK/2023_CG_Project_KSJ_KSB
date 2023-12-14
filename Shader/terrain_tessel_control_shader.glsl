@@ -15,7 +15,7 @@ out vec3 tcs_out_fragPosition[];
 
 // 최소 테셀레이션 레벨과 최대 테셀레이션 레벨을 정의
 const int minTesselLevel = 2;
-const int maxTesselLevel = 128;
+const int maxTesselLevel = 32;
 
 // 최소 테셀레이션 레벨과 최대 테셀레이션 레벨을 적용할 거리 정의
 // 최소거리 -> 최대 테셀레이션 레벨, 최대거리 -> 최소 테셀레이션 레벨
