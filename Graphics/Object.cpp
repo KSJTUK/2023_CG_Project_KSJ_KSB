@@ -5,11 +5,9 @@
 
 
 namespace Animated {
-	Object::Object(){
-	}
+	Object::Object(){ }
 
-	Object::Object(std::shared_ptr<Model> model): m_model(model) {
-	}
+	Object::Object(std::shared_ptr<Model> model): m_model(model) { }
 
 	void Object::SetAnimation(const int& index) {
 		m_animationIndex = index;
@@ -17,11 +15,7 @@ namespace Animated {
 }
 
 namespace Static {
+	Object::Object() { }
 
-	Object::Object() {
-	}
-
-	Object::Object(std::shared_ptr<Model> model) : m_model(model) {
-	}
-
+	Object::Object(std::shared_ptr<Model> model) : m_model(model) { }
 }

@@ -35,7 +35,7 @@ Renderer::Renderer(GLFWwindow* window) {
 
 	
 
-	for (auto i = 0; i < 30; ++i) {
+	for (auto i = 0; i < 1; ++i) {
 		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(),
 			m_freeCamera->GetProjectionPtr(), m_freeCamera->GetPositionPtr(), m_freeCamera->GetBasisZPtr());
 
@@ -81,6 +81,10 @@ constexpr glm::vec3 RayPos = glm::vec3{ 0.f,0.f,0.f };
 constexpr glm::vec3 RayDir = glm::vec3{ 0.f,0.f,1.f };
 
 void Renderer::Update(float deltaTime) {
+	for (auto& obj : m_staticObjectArr) {
+		m_freeCamera->CollisionObject(*obj);
+	}
+
 	m_freeCamera->Update(deltaTime);
 	m_testTerrain->MoveHeightPosition(m_freeCamera->GetPosition(), 17.f);
 	m_testSpotLight->SetPosition(m_freeCamera->GetPosition());
