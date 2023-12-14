@@ -46,8 +46,8 @@ private:
 	glm::vec3 m_lightPosition{ };
 	glm::vec3 m_lightDirection{ };
 
-	float m_cutOff{ std::cosf(glm::radians(17.5f)) };
-	float m_outterCutOff{ std::cosf(glm::radians(22.5)) };
+	float m_cutOff{ std::cosf(glm::radians(12.5f)) };
+	float m_outterCutOff{ std::cosf(glm::radians(17.5f)) };
 
 	float m_linear{ 0.27f };
 	float m_quadratic{ 0.014f };

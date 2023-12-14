@@ -20,7 +20,7 @@ Renderer::Renderer() { }
 
 
 Renderer::Renderer(GLFWwindow* window) {
-	m_freeCamera = std::make_unique<FreeCamera>(window, glm::vec3{ 0.f,0.f,0.f }, glm::vec3{ -1.f,0.f,0.f });
+	m_mainCamera = std::make_unique<FreeCamera>(window, glm::vec3{ 0.f,0.f,0.f }, glm::vec3{ -1.f,0.f,0.f });
 	m_background = std::make_unique<SkyBox>();
 	m_testTerrain = std::make_unique<Terrain>(glm::uvec2{ PATCH_SIZE, PATCH_SIZE });
 
@@ -30,10 +30,12 @@ Renderer::Renderer(GLFWwindow* window) {
 	zombie_model = std::make_shared<Animated::Model>();
 	zombie_model->LoadModel("Resources/zombie/scene.gltf");
 
-	static_model = std::make_shared<Static::Model>();
-	static_model->LoadModel("Resources/pine_tree/scene.gltf");
+	pineTree_model = std::make_shared<Static::Model>();
+	pineTree_model->LoadModel("Resources/pine_tree/scene.gltf");
 
 	
+	m_ar15 = new Animated::AR15(ar15_model, m_mainCamera->GetPositionPtr(), m_mainCamera->GetRotateMatPtr());
+
 
 	for (auto i = 0; i < 1; ++i) {
 		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_freeCamera->GetViewPtr(),
@@ -51,7 +53,7 @@ Renderer::Renderer(GLFWwindow* window) {
 	for (auto i = 0; i < 1000; ++i) {
 		glm::vec3 randPosition{ glm::linearRand(-1000.f,1000.f),0.f,glm::linearRand(-1000.f,1000.f) };
 		randPosition.y = m_testTerrain->GetHeight(randPosition, -1.f);
-		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(static_model, randPosition);
+		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(pineTree_model, randPosition);
 		m_staticObjectArr.push_back(obj);
 	}
 
@@ -81,17 +83,18 @@ constexpr glm::vec3 RayPos = glm::vec3{ 0.f,0.f,0.f };
 constexpr glm::vec3 RayDir = glm::vec3{ 0.f,0.f,1.f };
 
 void Renderer::Update(float deltaTime) {
-	for (auto& obj : m_staticObjectArr) {
-		m_freeCamera->CollisionObject(*obj);
-	}
+	m_mainCamera->Update(deltaTime);
+	m_ar15->Update(deltaTime);
+	m_testTerrain->MoveHeightPosition(m_mainCamera->GetPosition(), 17.f);
+	
+	std::cout << "C: " << m_mainCamera->GetPosition().y << std::endl;
+	m_testSpotLight->SetPosition(m_mainCamera->GetPosition());
+	m_testSpotLight->SetDirection(m_mainCamera->GetViewPoint());
 
-	m_freeCamera->Update(deltaTime);
-	m_testTerrain->MoveHeightPosition(m_freeCamera->GetPosition(), 17.f);
-	m_testSpotLight->SetPosition(m_freeCamera->GetPosition());
-	m_testSpotLight->SetDirection(m_freeCamera->GetViewPoint());
 
 	m_testDirLight->DayUpdate(deltaTime);
 	m_background->SetAmbient(m_testDirLight->GetDirLightColor());
+
 
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
@@ -102,12 +105,12 @@ void Renderer::Update(float deltaTime) {
 void Renderer::Render() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	SHADER->UseProgram(ShaderType::BackgroundShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 	m_background->Render();
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::TerrainShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 	m_testLight->Render();
 	m_testDirLight->Render();
 	m_testSpotLight->Render();
@@ -115,17 +118,19 @@ void Renderer::Render() {
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::AnimatedShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 	m_testLight->Render();
 	m_testDirLight->Render();
 	m_testSpotLight->Render();
+	m_ar15->Render();
 	for (auto& o : m_animatedObjectArr) {
 		o->Render();
 	}
+
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::StaticShader);
-	m_freeCamera->Render();
+	m_mainCamera->Render();
 
 	m_testLight->Render();
 	m_testSpotLight->Render();

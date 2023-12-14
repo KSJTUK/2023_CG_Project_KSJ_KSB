@@ -7,7 +7,7 @@ namespace Static {
 	class Object;
 };
 
-class Camera abstract{
+class Camera abstract {
 public:
 	Camera() = default;
 	Camera(GLFWwindow* window, glm::vec3 EYE, glm::vec3 AT);
@@ -23,7 +23,7 @@ protected:
 	glm::mat4 m_projection{ };
 	glm::mat4 m_view{ };
 
-protected:	
+protected:
 	glm::vec3 m_eye{};
 	glm::vec3 m_at{};
 	glm::vec3 m_up{ 0.f,1.f,0.f };
@@ -38,13 +38,17 @@ protected:
 	glm::vec3 m_basisY{ 0.f,1.f,0.f };
 	glm::vec3 m_basisZ{ 0.f,0.f,1.f };
 
+	glm::mat4 m_rotate{ 0.f };
+
+
 public:
 	virtual void Render() = 0;
 	virtual void Update(float DeltaTime) = 0;
-	
+
 
 	const glm::mat4* GetViewPtr() { return &m_view; };
 	const glm::mat4* GetProjectionPtr() { return &m_projection; };
+	const glm::mat4* GetRotateMatPtr() { return &m_rotate; };
 	const glm::vec3* GetPositionPtr() { return &m_eye; };
 	const glm::vec3* GetBasisZPtr() { return &m_basisZ; };
 	glm::vec3 GetViewPoint() const { return m_at; }

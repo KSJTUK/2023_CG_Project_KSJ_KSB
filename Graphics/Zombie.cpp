@@ -70,7 +70,7 @@ bool Animated::Zombie::nRayCasting(){
 	}
 
 
-	glm::mat4 WorldMatrix = *m_perspectiveptr * *m_viewptr * m_transform;
+	glm::mat4 WorldMatrix = (*m_perspectiveptr) * (*m_viewptr) * m_transform;
 
 	if (m_model->RayCasting(RayOrigin_, RayDirection_, WorldMatrix)) {
 		return true;
