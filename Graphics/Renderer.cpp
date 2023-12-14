@@ -30,10 +30,11 @@ Renderer::Renderer(GLFWwindow* window) {
 	zombie_model = std::make_shared<Animated::Model>();
 	zombie_model->LoadModel("Resources/zombie/scene.gltf");
 
-	static_model = std::make_shared<Static::Model>();
-	static_model->LoadModel("Resources/pine_tree/scene.gltf");
+	pineTree_model = std::make_shared<Static::Model>();
+	pineTree_model->LoadModel("Resources/pine_tree/scene.gltf");
 
 	
+	m_ar15 = new Animated::AR15(ar15_model, m_mainCamera->GetPositionPtr(), m_mainCamera->GetRotateMatPtr());
 
 	for (auto i = 0; i < 10; ++i) {
 		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_mainCamera->GetViewPtr(),
@@ -51,7 +52,7 @@ Renderer::Renderer(GLFWwindow* window) {
 	for (auto i = 0; i < 1000; ++i) {
 		glm::vec3 randPosition{ glm::linearRand(-1000.f,1000.f),0.f,glm::linearRand(-1000.f,1000.f) };
 		randPosition.y = m_testTerrain->GetHeight(randPosition, -1.f);
-		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(static_model, randPosition);
+		std::shared_ptr<Static::PineTree> obj = std::make_shared<Static::PineTree>(pineTree_model, randPosition);
 		m_staticObjectArr.push_back(obj);
 	}
 
@@ -82,12 +83,16 @@ constexpr glm::vec3 RayDir = glm::vec3{ 0.f,0.f,1.f };
 
 void Renderer::Update(float deltaTime) {
 	m_mainCamera->Update(deltaTime);
+	m_ar15->Update(deltaTime);
 	m_testTerrain->MoveHeightPosition(m_mainCamera->GetPosition(), 17.f);
+	
+	std::cout << "C: " << m_mainCamera->GetPosition().y << std::endl;
 	m_testSpotLight->SetPosition(m_mainCamera->GetPosition());
 	m_testSpotLight->SetDirection(m_mainCamera->GetViewPoint());
 
 	m_testDirLight->DayUpdate(deltaTime);
 	m_background->SetAmbient(m_testDirLight->GetDirLightColor());
+
 
 	for (auto& o : m_animatedObjectArr) {
 		o->Update(deltaTime);
@@ -115,9 +120,11 @@ void Renderer::Render() {
 	m_testLight->Render();
 	m_testDirLight->Render();
 	m_testSpotLight->Render();
+	m_ar15->Render();
 	for (auto& o : m_animatedObjectArr) {
 		o->Render();
 	}
+
 	SHADER->UnuseProgram();
 
 	SHADER->UseProgram(ShaderType::StaticShader);

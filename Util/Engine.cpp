@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Util/Engine.h"
 #include "Util/Input.h"
+#include "Sound.h"
+
+
 
 #include "Graphics/Renderer.h"
 #include "Graphics/Shader.h"
@@ -65,12 +68,19 @@ void Engine::Init() {
 	glfwSwapInterval(m_swapInterver);
 
 	Input::GetInstance()->Init(m_windowInfo.window);
+	Sound::GetInstance()->Init();
+
+
+	Sound::GetInstance()->NewSound(std::string("Gun"), std::string("Sound/gun.wav"),FMOD_DEFAULT);
+
 
 	SHADER->Initialize();
 
 	m_timer = std::make_unique<Timer>();
 	m_renderer = std::make_unique<Renderer>(m_windowInfo.window);
 
+	Sound::GetInstance()->Update();
+	Sound::GetInstance()->Play(std::string("Gun"));
 
 	std::cout << "\nThis Program Use This GPU : " << glGetString(GL_RENDERER) << std::endl;
 	std::cout << "======================================END INITIALIZATION======================================" << std::endl;
@@ -83,6 +93,7 @@ void Engine::Update() {
 	m_timer->Update();
 	glfwSetWindowTitle(m_windowInfo.window, std::string(m_windowInfo.windowTitle + std::to_string(m_timer->GetFps())).c_str());
 	Input::GetInstance()->Update();
+	Sound::GetInstance()->Update();
 
 	m_deltaTime = m_timer->GetDeltaTime();
 

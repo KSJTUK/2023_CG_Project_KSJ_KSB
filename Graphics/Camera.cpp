@@ -76,6 +76,9 @@ void FreeCamera::Update(float DeltaTime){
 		cameraRotate = glm::rotate(cameraRotate, glm::radians(-deltaMouse.y * MOUSE_SENSITIVE), m_basisX);
 		cameraRotate = glm::rotate(cameraRotate, glm::radians(-deltaMouse.x * MOUSE_SENSITIVE), m_basisY);
 
+		m_rotate = cameraRotate;
+
+
 		m_at = glm::normalize(glm::vec3(cameraRotate * glm::vec4(m_at, 1.f)));
 
 

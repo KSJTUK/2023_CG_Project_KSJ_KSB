@@ -34,6 +34,10 @@
 #include <assimp/anim.h>
 
 
+#include "Fmod/fmod.hpp"
+#include "Fmod/fmod_errors.h"
+
+
 
 
 
