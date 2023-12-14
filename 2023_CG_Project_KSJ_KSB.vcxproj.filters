@@ -31,6 +31,30 @@
     <Filter Include="헤더 파일\Graphics">
       <UniqueIdentifier>{8a901627-eeab-4f9e-bdc8-8559b78bb00a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\BackGround">
+      <UniqueIdentifier>{db2838c5-5015-4c60-924d-48d7e301e33d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Particle">
+      <UniqueIdentifier>{2f132e65-ba88-4381-af8b-6c567011527e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\StaticObject">
+      <UniqueIdentifier>{84f84dc5-3c0c-4663-82a2-68ed0565b0d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Terrain">
+      <UniqueIdentifier>{2ac6ed84-f94d-4671-897b-acd8ea32980a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\UI">
+      <UniqueIdentifier>{776532fd-ef57-448a-ad9c-782f21510b1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\AnimatedObject">
+      <UniqueIdentifier>{5d1fa712-8015-4f09-b05b-a1e0d4a78d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Object">
+      <UniqueIdentifier>{6c0be73c-bd36-4121-b57d-beeba5530a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object">
+      <UniqueIdentifier>{dde2f5c3-ca9d-4a43-b8c7-7f132a44f545}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Util\Engine.cpp">
@@ -72,35 +96,38 @@
     <ClCompile Include="Graphics\AnimatedModel.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\AR15.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Object.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Graphics\Lighting.cpp">
+      <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\SkyBox.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Model.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\StaticModel.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Lighting.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\PineTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Zombie.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\Math.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\AR15.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Model.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Object.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PineTree.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\StaticModel.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Zombie.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Math.cpp">
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,81 +164,88 @@
     <ClInclude Include="Graphics\Terrain.h">
       <Filter>헤더 파일\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
     <ClInclude Include="Graphics\AnimatedModel.h">
-      <Filter>헤더 파일\Graphics</Filter>
+      <Filter>헤더 파일\Object</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\AR15.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\SkyBox.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Object.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Model.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\StaticModel.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Object</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Lighting.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\PineTree.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Zombie.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Util\Math.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Object</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Graphics\Model.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Object.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\PineTree.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\StaticModel.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Zombie.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\SkyBox.h">
+      <Filter>헤더 파일\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\background_fragment_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\BackGround</Filter>
     </None>
     <None Include="Shader\background_vertex_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\BackGround</Filter>
     </None>
     <None Include="Shader\particle_fragment_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Particle</Filter>
     </None>
     <None Include="Shader\particle_geometry_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Particle</Filter>
     </None>
     <None Include="Shader\particle_vertex_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Particle</Filter>
     </None>
     <None Include="Shader\static_fragment_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\StaticObject</Filter>
     </None>
     <None Include="Shader\static_vertex_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\StaticObject</Filter>
     </None>
     <None Include="Shader\terrain_fragment_shader.glsl">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="Shader\terrain_tessel_control_shader.glsl">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="Shader\terrain_tessel_evaluation_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Terrain</Filter>
     </None>
     <None Include="Shader\terrain_vertex_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Terrain</Filter>
+    </None>
+    <None Include="Shader\terrain_tessel_control_shader.glsl">
+      <Filter>리소스 파일\Terrain</Filter>
+    </None>
+    <None Include="Shader\terrain_tessel_evaluation_shader.glsl">
+      <Filter>리소스 파일\Terrain</Filter>
     </None>
     <None Include="Shader\ui_fragment_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\UI</Filter>
+    </None>
+    <None Include="Shader\animated_fragment_shader.glsl">
+      <Filter>리소스 파일\AnimatedObject</Filter>
+    </None>
+    <None Include="Shader\animated_vertex_shader.glsl">
+      <Filter>리소스 파일\AnimatedObject</Filter>
     </None>
     <None Include="Shader\ui_vertex_shader.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\UI</Filter>
     </None>
-    <None Include="Shader\animated_fragment_shader.glsl" />
-    <None Include="Shader\animated_vertex_shader.glsl" />
   </ItemGroup>
 </Project>

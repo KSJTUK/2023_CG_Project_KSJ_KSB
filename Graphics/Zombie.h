@@ -29,6 +29,14 @@ namespace Animated {
 	};
 
 	class Wander final : public ZombieState {
+	private:
+		float m_minSpeed{ -5.f };
+		float m_maxSpeed{ 5.f };
+		glm::vec3 m_moveSpeed{ };
+		glm::vec3 m_prevDirection{ 0.f, 0.f, 1.f };
+		float m_randomMoveTime{ glm::linearRand(3.f, 10.f) };
+		float m_timeCount{ };
+
 	public:
 		virtual void Enter(Zombie& zombie) override;
 		virtual ZombieState* Update(float DeltaTime, Zombie& zombie) override;
