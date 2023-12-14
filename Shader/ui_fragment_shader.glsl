@@ -1,15 +1,19 @@
 #version 460 core
 
-layout (location = 0) in vec3 in_Position;
-layout (location = 1) in vec2 in_Texture;
-layout (location = 2) in vec3 in_Normal;
+out vec4 FragColor;
+in vec2 texCoords;
 
-out vec2 vs_out_tex;
+uniform sampler2D uiImage;
+uniform vec3 uiColor;
+uniform int noTexture;
 
-uniform mat4 transform;
+const int FALSE = 0;
 
 void main(void)
 {
-	vs_out_tex = in_Texture;
-	gl_Position = transform * vec4(in_Position, 1.0f);
+	if (noTexture != FALSE) {
+		FragColor = vec4(uiColor, 1.0f);
+	} else {
+		FragColor = vec4(vec3(texture(uiImage, texCoords)) * uiColor, 1.0f);
+	}
 }

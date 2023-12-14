@@ -171,6 +171,7 @@
     <ClCompile Include="Graphics\Zombie.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Util\Engine.cpp" />
     <ClCompile Include="Util\Input.cpp" />
     <ClCompile Include="Util\Math.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Graphics\Object.h" />
     <ClInclude Include="Graphics\Zombie.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Util\Engine.h" />
     <ClInclude Include="Util\Input.h" />
     <ClInclude Include="Util\Math.h" />

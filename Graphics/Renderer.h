@@ -21,6 +21,8 @@ private:
 	std::unique_ptr<class DirectionLight> m_testDirLight{ nullptr };
 	std::unique_ptr<class SpotLight> m_testSpotLight{ nullptr };
 
+	std::unique_ptr<class Reticle> m_testReticle{ nullptr };
+
 	std::shared_ptr<Animated::Model> ar15_model{ nullptr };
 	std::shared_ptr<Animated::Model> zombie_model{ nullptr };
 	std::shared_ptr<Static::Model> static_model{ nullptr };
