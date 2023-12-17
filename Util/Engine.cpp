@@ -72,6 +72,8 @@ void Engine::Init() {
 
 
 	Sound::GetInstance()->NewSound(std::string("Gun"), std::string("Sound/gun.wav"),FMOD_DEFAULT);
+	Sound::GetInstance()->NewSound(std::string("zombie_idle"), std::string("Sound/zombie_idle.wav"), FMOD_DEFAULT);
+	Sound::GetInstance()->NewSound(std::string("zombie_hit"), std::string("Sound/zombie_hit.wav"), FMOD_DEFAULT);
 
 
 	SHADER->Initialize();
@@ -80,12 +82,14 @@ void Engine::Init() {
 	m_renderer = std::make_unique<Renderer>(m_windowInfo.window);
 
 	Sound::GetInstance()->Update();
-	Sound::GetInstance()->Play(std::string("Gun"));
+
+
+	Sound::GetInstance()->Play(std::string("Gun"),0);
+
 
 	std::cout << "\nThis Program Use This GPU : " << glGetString(GL_RENDERER) << std::endl;
 	std::cout << "======================================END INITIALIZATION======================================" << std::endl;
 }
-
 
 
 void Engine::Update() {

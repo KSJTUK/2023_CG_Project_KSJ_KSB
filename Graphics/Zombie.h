@@ -45,7 +45,7 @@ namespace Animated {
 
 	};
 
-	class Chase final : public ZombieState {
+	class Hited final : public ZombieState {
 	public:
 		virtual void Enter(Zombie& zombie) override;
 		virtual ZombieState* Update(float DeltaTime, Zombie& zombie) override;
@@ -61,7 +61,7 @@ namespace Animated {
 
 		// State Friends 
 		friend Wander;
-		friend Chase;
+		friend Hited;
 
 	public:
 
@@ -86,6 +86,8 @@ namespace Animated {
 
 
 		bool nRayCasting();
+
+		bool m_damaged = false;
 
 
 	};

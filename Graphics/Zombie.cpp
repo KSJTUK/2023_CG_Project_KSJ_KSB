@@ -2,8 +2,11 @@
 #include "Zombie.h"
 
 #include "Graphics/AnimatedModel.h"
+#include "Graphics/Shader.h"
+#include "Util/Input.h"
 #include "Util/Math.h"
 
+#include "Sound.h"
 
 Animated::Zombie::Zombie(){
 }
@@ -29,12 +32,12 @@ void Animated::Zombie::Render(){
 void Animated::Zombie::Update(float DeltaTime){
 	ZombieState* state_ = m_curstate->Update(DeltaTime,*this);
 
-	//if (state_ != nullptr) {
-	//	m_curstate->Exit(*this);
-	//	delete m_curstate;
-	//	m_curstate = state_;
-	//	m_curstate->Enter(*this);
-	//}
+	if (state_ != nullptr) {
+		m_curstate->Exit(*this);
+		delete m_curstate;
+		m_curstate = state_;
+		m_curstate->Enter(*this);
+	}
 }
 
 
@@ -70,6 +73,7 @@ bool Animated::Zombie::nRayCasting(){
 // State : Wander =====================================================================
 void Animated::Wander::Enter(Zombie& zombie){
 	zombie.m_animationIndex = 2;
+	m_timeCount = m_randomMoveTime * 0.5f;
 }
 
 Animated::ZombieState* Animated::Wander::Update(float deltaTime, Zombie& zombie){
@@ -85,9 +89,21 @@ Animated::ZombieState* Animated::Wander::Update(float deltaTime, Zombie& zombie)
 		m_prevDirection = glm::normalize(m_moveSpeed);
 	}
 	
-	if (zombie.nRayCasting()) { 
-		return nullptr;
+	if (zombie.nRayCasting() and !INPUT->m_notfired) { 
+		zombie.m_damaged = true;
+
+		return new Hited();
 	}
+
+
+	if (glm::linearRand(0.f, 1.f) > 0.00001f) {
+		//Sound::GetInstance()->Play(std::string("zombie_idle"),1);
+	}
+
+
+
+
+	return nullptr;
 }
 
 void Animated::Wander::Render(Zombie& zombie){
@@ -105,15 +121,42 @@ void Animated::Wander::Exit(Zombie& zombie){
 
 // State : Chase =====================================================================
 
-void Animated::Chase::Enter(Zombie& zombie) {
+void Animated::Hited::Enter(Zombie& zombie) {
+
+	Sound::GetInstance()->Play(std::string("zombie_hit"),2);
+
 }
 
-Animated::ZombieState* Animated::Chase::Update(float DeltaTime, Zombie& zombie) {
+Animated::ZombieState* Animated::Hited::Update(float DeltaTime, Zombie& zombie) {
+	if (!zombie.m_damaged) {
+
+		return new Wander();
+	}
+
 	return nullptr;
 }
 
-void Animated::Chase::Render(Zombie& zombie){
+void Animated::Hited::Render(Zombie& zombie){
+
+	SHADER->UseProgram(ShaderType::AnimatedShader);
+	SHADER->GetActivatedShader()->SetUniformInt("damaged", 1);
+	
+
+	zombie.m_transform =
+		glm::translate(zombie.m_position) *
+		glm::yawPitchRoll(zombie.m_rotate.y, zombie.m_rotate.x, zombie.m_rotate.z) *
+		glm::scale(zombie.m_scale);
+
+	zombie.m_model->Render(zombie.m_transform, zombie.m_animationIndex, zombie.m_animationCounter);
+	zombie.m_damaged = false;
+
+
+
+	SHADER->GetActivatedShader()->SetUniformInt("damaged",0);
+	SHADER->UnuseProgram();
+
+
 }
 
-void Animated::Chase::Exit(Zombie& zombie){
+void Animated::Hited::Exit(Zombie& zombie){
 }

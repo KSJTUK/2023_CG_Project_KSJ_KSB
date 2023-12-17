@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Input.h"
+#include "Sound.h"
+
 
 Input* Input::m_instance = nullptr;
 
@@ -74,6 +76,22 @@ void Input::Update() {
 
 	m_prevMouse.x = static_cast<float>(tx);
 	m_prevMouse.y = static_cast<float>(ty);
+
+
+	
+	
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS and m_notfired) {
+		Sound::GetInstance()->Play(std::string("Gun"),0);
+		m_notfired = false;
+
+	}
+
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+		m_notfired = true;
+	}
+
+
+
 }
 
 const KEY_STATE Input::GetKey(int key) const {

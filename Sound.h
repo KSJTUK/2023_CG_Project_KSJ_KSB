@@ -11,7 +11,7 @@ public:
 	void Init();
 
 	void NewSound(const std::string& SoundName, const std::string path,FMOD_MODE mode);
-	void Play(const std::string& SoundName);
+	void Play(const std::string& SoundName, int channel);
 
 	void Update();
 
@@ -24,7 +24,7 @@ private:
 	
 	FMOD::System* m_system;
 	
-	FMOD::Channel* m_channel;
+	FMOD::Channel* m_channel[10];
 
 
 	std::unordered_map<std::string, FMOD::Sound*> m_soundDict{};

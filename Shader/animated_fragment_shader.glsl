@@ -54,6 +54,9 @@ uniform DirectionLight dirLight;
 uniform SpotLight spotLight;
 uniform vec3 viewPos;
 
+uniform int damaged;
+
+
 out vec4 FragColor;
 
 vec3 calcDirectionLighting(DirectionLight light, vec3 normal, vec3 viewDir, vec3 fragPos)
@@ -144,6 +147,10 @@ void main()
 	resultColor += calcSpotLight(spotLight, normal, viewDir, fragPos);
 
 	float texAlpha = texture(material.textureDiffuse, texCoords).a;
+
+	if(damaged == 1){
+		resultColor.r = clamp(resultColor.r + 0.3,0.0,1.0);
+	}
 
 	FragColor = vec4(resultColor, 1.f);
 }
