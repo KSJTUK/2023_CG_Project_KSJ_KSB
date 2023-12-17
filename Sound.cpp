@@ -25,7 +25,7 @@ void Sound::NewSound(const std::string& SoundName, const std::string path, FMOD_
 	m_soundDict.insert(std::make_pair(SoundName,nsound));
 }
 
-void Sound::Play(const std::string& SoundName){
+void Sound::Play(const std::string& SoundName,int channel){
 
 	auto iter = m_soundDict.find(SoundName);
 
@@ -37,7 +37,7 @@ void Sound::Play(const std::string& SoundName){
 
 
 
-	m_system->playSound(iter->second, nullptr, false, &m_channel);
+	m_system->playSound(iter->second, nullptr, false, &(m_channel[channel]));
 
 
 
@@ -51,7 +51,7 @@ void Sound::Update(){
 void Sound::Init(){
 
 	FMOD::System_Create(&m_system);
-	m_system->init(32, FMOD_INIT_NORMAL, NULL);
+	m_system->init(512, FMOD_INIT_NORMAL, NULL);
 
 }
 

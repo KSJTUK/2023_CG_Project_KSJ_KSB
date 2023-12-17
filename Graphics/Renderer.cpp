@@ -34,7 +34,7 @@ Renderer::Renderer(GLFWwindow* window) {
 	pineTree_model->LoadModel("Resources/pine_tree/scene.gltf");
 
 
-	for (auto i = 0; i < 30; ++i) {
+	for (auto i = 0; i < 20; ++i) {
 		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_mainCamera->GetViewPtr(),
 			m_mainCamera->GetProjectionPtr(), m_mainCamera->GetPositionPtr(), m_mainCamera->GetBasisZPtr());
 

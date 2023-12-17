@@ -2,7 +2,7 @@
 
 constexpr float DIRECTION_MINANGLE = 0.f;
 constexpr float DIRECTION_MAXANGLE = 180.f;
-constexpr float DAYTIME_SPEED = 0.001f;
+constexpr float DAYTIME_SPEED = 0.002f;
 constexpr float DAY_LIGHT_MAX_AMBIENT = 0.5f;
 constexpr glm::vec3 ROTATE_AXIS_Z = { 0.f, 0.f, 1.f };
 
