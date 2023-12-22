@@ -4,9 +4,7 @@
 #include <assimp/scene.h>
 #include <assimp/anim.h>
 
-
 namespace Static {
-
 	struct Vertex {
 		glm::vec3 position{};
 		glm::vec3 normal{};
@@ -19,7 +17,6 @@ namespace Static {
 		aiString path{};
 	};
 
-
 	class Mesh {
 	public:
 		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture> textures);
@@ -29,20 +26,16 @@ namespace Static {
 		void Draw();
 
 	private:
-
 		std::vector<Vertex> m_vertices{};
 		std::vector<UINT> m_indices{};
 		std::vector<Texture> m_textures{};
-		
 
 		UINT m_vao{};
 		UINT m_vbo{};
 		UINT m_ebo{};
 
-
 		void SetupMesh();
 	};
-
 
 	class Model {
 	public:
@@ -62,18 +55,12 @@ namespace Static {
 		std::string m_filepath{};
 		std::string m_directory{};
 
-
 	private:
-
 		void ShowNodeName(const aiNode* node);
 
 		void ProcessNode(aiNode* node);
 		Mesh ProcessMesh(aiMesh* mesh);
 
-
 		std::vector<Texture> LoadMaterial(aiMaterial* material, aiTextureType type, std::string Typename);
 	};
-
-
-
 }

@@ -3,56 +3,40 @@
 
 Sound* Sound::m_instance = nullptr;
 
+Sound::Sound() { }
+Sound::~Sound() { }
 
-Sound* Sound::GetInstance(){
-
+Sound* Sound::GetInstance() {
 	if (m_instance == nullptr) {
 		m_instance = new Sound();
 	}
-
-
 	return m_instance;
 }
 
-void Sound::NewSound(const std::string& SoundName, const std::string path, FMOD_MODE mode){
-
+void Sound::NewSound(const std::string& SoundName, const std::string path, FMOD_MODE mode) {
 	FMOD::Sound* nsound{};
 
 	m_system->createSound(path.c_str(), mode, 0, &nsound);
-
-
-
 	m_soundDict.insert(std::make_pair(SoundName,nsound));
 }
 
-void Sound::Play(const std::string& SoundName,int channel){
-
+void Sound::Play(const std::string& SoundName,int channel) {
 	auto iter = m_soundDict.find(SoundName);
-
 
 	if (iter == m_soundDict.end()) {
 		return;
 	}
 
-
-
-
 	m_system->playSound(iter->second, nullptr, false, &(m_channel[channel]));
-
-
-
-
 }
 
-void Sound::Update(){
+void Sound::Update() {
 	m_system->update();
 }
 
-void Sound::Init(){
-
+void Sound::Init() {
 	FMOD::System_Create(&m_system);
 	m_system->init(512, FMOD_INIT_NORMAL, NULL);
-
 }
 
 

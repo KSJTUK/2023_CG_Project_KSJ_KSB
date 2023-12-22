@@ -53,9 +53,6 @@ public:
 	void Update();
 
 	bool m_notfired = true;
-private:
-
-
 };
 
 #define INPUT Input::GetInstance()

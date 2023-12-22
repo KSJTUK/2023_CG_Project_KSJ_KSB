@@ -1,12 +1,8 @@
 #pragma once
 
-
-
 namespace Animated {
 	constexpr auto MAX_BONES_PER_VERTEX = 4;
 	constexpr UINT MAX_BONES = 100;
-
-
 
 	struct Vertex {
 		glm::vec3 position{};
@@ -20,12 +16,10 @@ namespace Animated {
 		aiString path{};
 	};
 
-
 	struct BoneMatrix {
 		aiMatrix4x4 offsetMatrix{};
 		aiMatrix4x4 finalWorldTranform{};
 	};
-
 
 	struct VertexBoneData {
 		UINT ids[MAX_BONES_PER_VERTEX];
@@ -34,7 +28,6 @@ namespace Animated {
 			ZeroMemory(ids, sizeof(ids));
 			ZeroMemory(weights, sizeof(weights));
 		}
-
 
 		void addBoneData(UINT bondID, float weight);
 	};
@@ -45,8 +38,6 @@ namespace Animated {
 		glm::vec3 scale{ 1.f,1.f,1.f };
 	};
 
-
-
 	class Mesh {
 	public:
 		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture> textures, std::vector<VertexBoneData> boneIDWieghts);
@@ -56,12 +47,12 @@ namespace Animated {
 		void Draw();
 
 		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World, const std::vector<aiMatrix4x4>& BoneMat) const;
-	private:
 
+	private:
 		std::vector<Vertex> m_vertices{};
 		std::vector<UINT> m_indices{};
 		std::vector<Texture> m_textures{};
-		std::vector<VertexBoneData> m_bonesID_Weights_eachVertex{};
+		std::vector<VertexBoneData> m_bonesIDWeightsEachVertex{};
 
 		glm::vec3* m_vertexarray{ nullptr };
 		VertexBoneData* m_boneDataArray{ nullptr };
@@ -72,14 +63,8 @@ namespace Animated {
 		UINT m_vboBones{};
 		UINT m_ebo{};
 
-		
 		void SetupMesh();
-
-
 	};
-
-
-
 
 	class Model {
 	public:
@@ -87,22 +72,12 @@ namespace Animated {
 		Model(std::string& fp);
 		~Model();
 
-
-
 		void LoadModel(const std::string& path);
-		
-
 		void Render(const glm::mat4& matrix,int animationindex,float animationcounter);
-
-		
 		void ChangeAnimation(int index);
-
-
 		bool RayCasting(const glm::vec3& RayOrigin, const glm::vec3& RayDirection,const glm::mat4& World) const;
 
 	private:
-
-
 		Assimp::Importer m_importer;
 		const aiScene* m_scene;
 
@@ -118,25 +93,15 @@ namespace Animated {
 		std::vector<BoneMatrix> m_boneMatrices{};
 
 		aiMatrix4x4 m_globalInverseTransfrom{};
-
-
-
 		float m_ticksPerSecond = 0.f;
 		int m_currentAnimationID = 0;
 		
 		std::vector<aiMatrix4x4> m_transformBuffer{};
 
-
-
-
 	private:
-
 		void ShowNodeName(const aiNode* node);
-
 		void ProcessNode(aiNode* node);
 		Mesh ProcessMesh(aiMesh* mesh);
-
-
 
 		std::vector<Texture> LoadMaterial(aiMaterial* material, aiTextureType type, std::string Typename);
 
@@ -145,17 +110,12 @@ namespace Animated {
 		UINT FindScaling(float AnimationTime, const aiNodeAnim* animnode);
 		const aiNodeAnim* FindNodeAnimation(const aiAnimation* animation, const std::string& nodename);
 
-
 		aiVector3D CalculatePolatedPosition(float AnimationTime, const aiNodeAnim* animnode);
 		aiQuaternion CalculatePolatedRotation(float AnimationTime, const aiNodeAnim* animnode);
 		aiVector3D CalculatePolatedScailing(float AnimationTime, const aiNodeAnim* animnode);
 
 		void ReadNodeHierarchy(float Animationtime, const aiNode* node ,const aiMatrix4x4& ParentTransform);
 		void UpdateBoneTransform(double Elapsed, std::vector<aiMatrix4x4>& Transforms);
-
 	};
-
-
-
 }
 

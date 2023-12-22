@@ -2,7 +2,6 @@
 	
 constexpr unsigned int INVALID = 0xFFFFFFFF;
 
-
 class ShaderComponent {
 public:
 	ShaderComponent() = default;

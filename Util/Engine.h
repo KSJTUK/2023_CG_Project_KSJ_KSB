@@ -1,7 +1,6 @@
 #pragma once
 #include "Util/Timer.h"
 
-
 class Engine {
 public:
 	Engine();

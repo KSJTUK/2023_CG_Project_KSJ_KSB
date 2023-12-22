@@ -46,6 +46,8 @@ void UI::ResizedWindow() {
 	m_scale = { 1.f / static_cast<float>(w), 1.f / static_cast<float>(h), 0.f };
 }
 
+void UI::Update(float deltaTime) { }
+
 void UI::Render() {
 	m_texture->BindingTextures();
 
@@ -93,6 +95,8 @@ void Reticle::ResizedWindow() {
 	glfwGetFramebufferSize(m_windowPtr, &w, &h);
 	m_scale = { 1.f / static_cast<float>(w), 1.f / static_cast<float>(h), 0.f };
 }
+
+void Reticle::Update(float deltaTime) { }
 
 void Reticle::Render() {
 	glm::mat4 transform{ 1.f };

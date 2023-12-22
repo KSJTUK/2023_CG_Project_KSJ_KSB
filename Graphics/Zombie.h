@@ -3,29 +3,14 @@
 
 
 namespace Animated {
-	/*
-	StateMachine 
-
-	From 2D Game Programming...
-
-	enter = Constructor of each state 
-	exit = Desstructor of each state 
-
-	Update = do 
-	Render = draw 
-	
-	
-	*/
 	class Zombie;
-
 
 	class ZombieState {
 	public:
 		virtual void Enter(Zombie& zombie) = 0;
-		virtual ZombieState* Update(float DeltaTime, Zombie& zombie) = 0;
+		virtual ZombieState* Update(float deltaTime, Zombie& zombie) = 0;
 		virtual void Render(Zombie& zombie) = 0;
 		virtual void Exit(Zombie& zombie) = 0;
-		
 	};
 
 	class Wander final : public ZombieState {
@@ -39,7 +24,7 @@ namespace Animated {
 
 	public:
 		virtual void Enter(Zombie& zombie) override;
-		virtual ZombieState* Update(float DeltaTime, Zombie& zombie) override;
+		virtual ZombieState* Update(float deltaTime, Zombie& zombie) override;
 		virtual void Render(Zombie& zombie) override;
 		virtual void Exit(Zombie& zombie) override;
 
@@ -48,35 +33,25 @@ namespace Animated {
 	class Hited final : public ZombieState {
 	public:
 		virtual void Enter(Zombie& zombie) override;
-		virtual ZombieState* Update(float DeltaTime, Zombie& zombie) override;
+		virtual ZombieState* Update(float deltaTime, Zombie& zombie) override;
 		virtual void Render(Zombie& zombie) override;
 		virtual void Exit(Zombie& zombie) override;
 	};
-	
-
-
-
 
 	class Zombie final : public Object {
-
 		// State Friends 
 		friend Wander;
 		friend Hited;
 
 	public:
-
 		Zombie();
-		Zombie(std::shared_ptr<Model> model,const glm::mat4* ViewPointer,const glm::mat4* PerspectivePointer,const glm::vec3* CameraPositionPointer, const glm::vec3* CameraBasisZ);
+		Zombie(std::shared_ptr<Model> model,const glm::mat4* viewPointer,const glm::mat4* perspectivePointer,const glm::vec3* cameraPositionPointer, const glm::vec3* cameraBasisZ);
+
 	public:
-
 		virtual void Render() override;
-		virtual void Update(float DeltaTime) override;
+		virtual void Update(float deltaTime) override;
 	
-
-
-
 	private:
-
 		ZombieState* m_curstate{ nullptr };
 
 		const glm::mat4* m_viewptr{ nullptr };
@@ -84,22 +59,7 @@ namespace Animated {
 		const glm::vec3* m_cameraPosition{ nullptr };
 		const glm::vec3* m_cameraBasisz{ nullptr };
 
-
 		bool nRayCasting();
-
 		bool m_damaged = false;
-
-
 	};
-	
-
-
-
-
 }
-
-/*
-a->b 
-b-a 
-
-*/

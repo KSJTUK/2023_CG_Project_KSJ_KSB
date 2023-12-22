@@ -18,7 +18,6 @@
 
 Renderer::Renderer() { }
 
-
 Renderer::Renderer(GLFWwindow* window) {
 	m_mainCamera = std::make_unique<FreeCamera>(window, glm::vec3{ 0.f,0.f,0.f }, glm::vec3{ -1.f,0.f,0.f });
 	m_background = std::make_unique<SkyBox>();
@@ -33,7 +32,6 @@ Renderer::Renderer(GLFWwindow* window) {
 	pineTree_model = std::make_shared<Static::Model>();
 	pineTree_model->LoadModel("Resources/pine_tree/scene.gltf");
 
-
 	for (auto i = 0; i < 20; ++i) {
 		std::shared_ptr<Animated::Zombie> obj = std::make_shared<Animated::Zombie>(zombie_model, m_mainCamera->GetViewPtr(),
 			m_mainCamera->GetProjectionPtr(), m_mainCamera->GetPositionPtr(), m_mainCamera->GetBasisZPtr());
@@ -43,7 +41,6 @@ Renderer::Renderer(GLFWwindow* window) {
 		});
 		m_animatedObjectArr.push_back(obj);
 	}
-
 
 	for (auto i = 0; i < 1000; ++i) {
 		glm::vec3 randPosition{ glm::linearRand(-1000.f,1000.f),0.f,glm::linearRand(-1000.f,1000.f) };

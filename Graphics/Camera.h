@@ -43,7 +43,7 @@ protected:
 
 public:
 	virtual void Render() = 0;
-	virtual void Update(float DeltaTime) = 0;
+	virtual void Update(float deltaTime) = 0;
 
 	const glm::mat4* GetViewPtr() { return &m_view; };
 	const glm::mat4* GetProjectionPtr() { return &m_projection; };
@@ -56,8 +56,6 @@ public:
 	glm::vec3 GetViewPoint() const { return m_at; }
 	glm::vec3& GetPosition() { return m_eye; }
 };
-
-
 
 class FreeCamera : public Camera {
 public:
@@ -77,5 +75,5 @@ public:
 
 public:
 	virtual void Render();
-	virtual void Update(float DeltaTime);
+	virtual void Update(float deltaTime);
 };

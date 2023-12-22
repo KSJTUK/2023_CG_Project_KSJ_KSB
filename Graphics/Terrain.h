@@ -42,5 +42,4 @@ public:
 	void Init();
 	void Update(float deltaTime);
 	void Render();
-
 };

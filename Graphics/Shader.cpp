@@ -1,10 +1,8 @@
 #include "pch.h"
 #include "Shader.h"
 
-
 const std::string shaderDir{ "./Shader/" };
 const std::string EMPTYSTRING{ };
-
 
 const std::vector<std::string> static_shader{
 	"static_vertex_shader.glsl",
@@ -64,7 +62,7 @@ const std::vector<std::string> ui_shader{
 
 Shader* Shader::m_instance = nullptr;
 
-void Shader::Initialize(){
+void Shader::Initialize() {
 
 	m_shaderList[static_cast<int>(ShaderType::StaticShader)] = std::make_shared<ShaderComponent>(static_shader);
 	m_shaderList[static_cast<int>(ShaderType::TerrainShader)] = std::make_shared<ShaderComponent>(terrain_shader);
@@ -73,10 +71,7 @@ void Shader::Initialize(){
 	m_shaderList[static_cast<int>(ShaderType::UIShader)] = std::make_shared<ShaderComponent>(ui_shader);
 }
 
-
-
-
-Shader* Shader::GetInstance(){
+Shader* Shader::GetInstance() {
 	if (m_instance == nullptr) {
 		m_instance = new Shader{};
 	}
@@ -89,8 +84,7 @@ std::shared_ptr<ShaderComponent> Shader::GetActivatedShader() const{
 	return m_activatedShader;
 }
 
-
-void Shader::UseProgram(ShaderType type){
+void Shader::UseProgram(ShaderType type) {
 	m_shaderList[static_cast<int>(type)]->UseProgram();
 	m_activatedShader = m_shaderList[static_cast<int>(type)];
 }
@@ -99,12 +93,8 @@ void Shader::UnuseProgram() {
 	glUseProgram(INVALID);
 }
 
-
-
 int ShaderComponent::GetUniformLocation(const std::string& valueName) {
-	 
 	auto result = m_uniformLocationDict.find(valueName);
-
 	int location{};
 
 	if (result == m_uniformLocationDict.end()) {
@@ -125,12 +115,9 @@ int ShaderComponent::GetUniformLocation(const std::string& valueName) {
 	}
 }
 
-UINT ShaderComponent::CreateVertexShader(const std::string& path){
-
-	UINT id{};
-	
+UINT ShaderComponent::CreateVertexShader(const std::string& path) {
+	UINT id{};	
 	GLchar errorlog[512]{};
-
 
 	std::ifstream file = std::ifstream((shaderDir +  path).c_str(), std::ios::in);
 	std::stringstream ss = std::stringstream{};
@@ -145,13 +132,11 @@ UINT ShaderComponent::CreateVertexShader(const std::string& path){
 		exit(EXIT_FAILURE);
 	}
 
-
 	const char* source_cstr = source.c_str();
 
 	id = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(id, 1, &source_cstr, NULL);
 	glCompileShader(id);
-
 
 	GLint result{};
 	ZeroMemory(errorlog, 512);
@@ -167,18 +152,12 @@ UINT ShaderComponent::CreateVertexShader(const std::string& path){
 		std::cerr << "VERTEX SHADER SUCESSFULLY COMPILED!" << std::endl;
 	}
 
-
-
-
 	return id;
 }
 
-UINT ShaderComponent::CreateGeometryShader(const std::string& path){
-
+UINT ShaderComponent::CreateGeometryShader(const std::string& path) {
 	UINT id{};
-
 	GLchar errorlog[512]{};
-
 
 	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
 	std::stringstream ss = std::stringstream{};
@@ -193,13 +172,11 @@ UINT ShaderComponent::CreateGeometryShader(const std::string& path){
 		exit(EXIT_FAILURE);
 	}
 
-
 	const char* source_cstr = source.c_str();
 
 	id = glCreateShader(GL_GEOMETRY_SHADER);
 	glShaderSource(id, 1, &source_cstr, NULL);
 	glCompileShader(id);
-
 
 	GLint result{};
 	ZeroMemory(errorlog, 512);
@@ -215,17 +192,12 @@ UINT ShaderComponent::CreateGeometryShader(const std::string& path){
 		std::cerr << "GEOMETRY SHADER SUCESSFULLY COMPILED!" << std::endl;
 	}
 
-
-
-
 	return id;
 }
 
-UINT ShaderComponent::CreateTesselationControlShader(const std::string& path){
+UINT ShaderComponent::CreateTesselationControlShader(const std::string& path) {
 	UINT id{};
-
 	GLchar errorlog[512]{};
-
 
 	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
 	std::stringstream ss = std::stringstream{};
@@ -240,13 +212,11 @@ UINT ShaderComponent::CreateTesselationControlShader(const std::string& path){
 		exit(EXIT_FAILURE);
 	}
 
-
 	const char* source_cstr = source.c_str();
 
 	id = glCreateShader(GL_TESS_CONTROL_SHADER);
 	glShaderSource(id, 1, &source_cstr, NULL);
 	glCompileShader(id);
-
 
 	GLint result{};
 	ZeroMemory(errorlog, 512);
@@ -262,19 +232,12 @@ UINT ShaderComponent::CreateTesselationControlShader(const std::string& path){
 		std::cerr << "TESSELATION CONTROL SHADER SUCESSFULLY COMPILED!" << std::endl;
 	}
 
-
-
-
 	return id;
-
-
 }
 
-UINT ShaderComponent::CreateTesselationEvaluationShader(const std::string& path){
+UINT ShaderComponent::CreateTesselationEvaluationShader(const std::string& path) {
 	UINT id{};
-
 	GLchar errorlog[512]{};
-
 
 	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
 	std::stringstream ss = std::stringstream{};
@@ -289,13 +252,11 @@ UINT ShaderComponent::CreateTesselationEvaluationShader(const std::string& path)
 		exit(EXIT_FAILURE);
 	}
 
-
 	const char* source_cstr = source.c_str();
 
 	id = glCreateShader(GL_TESS_EVALUATION_SHADER);
 	glShaderSource(id, 1, &source_cstr, NULL);
 	glCompileShader(id);
-
 
 	GLint result{};
 	ZeroMemory(errorlog, 512);
@@ -311,20 +272,13 @@ UINT ShaderComponent::CreateTesselationEvaluationShader(const std::string& path)
 		std::cerr << "TESSELATION EVALUATION SHADER SUCESSFULLY COMPILED!" << std::endl;
 	}
 
-
-
-
 	return id;
-
-
 }
 
-UINT ShaderComponent::CreateFragmentShader(const std::string& path){
-
+UINT ShaderComponent::CreateFragmentShader(const std::string& path) {
 	UINT id{};
 
 	GLchar errorlog[512]{};
-
 
 	std::ifstream file = std::ifstream((shaderDir + path).c_str(), std::ios::in);
 	std::stringstream ss = std::stringstream{};
@@ -339,13 +293,11 @@ UINT ShaderComponent::CreateFragmentShader(const std::string& path){
 		exit(EXIT_FAILURE);
 	}
 
-
 	const char* source_cstr = source.c_str();
 
 	id = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(id, 1, &source_cstr, NULL);
 	glCompileShader(id);
-
 
 	GLint result{};
 	ZeroMemory(errorlog, 512);
@@ -361,22 +313,15 @@ UINT ShaderComponent::CreateFragmentShader(const std::string& path){
 		std::cerr << "FRAGMENT SHADER SUCESSFULLY COMPILED!" << std::endl;
 	}
 
-
-
-
 	return id;
 }
 
-
 ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
-
-	UINT VertexProgramID{INVALID};
-	UINT GeometrtyProgramID{ INVALID };
-	UINT TesselationControlProgramID{ INVALID };
-	UINT TesselationEvaluationProgramID{ INVALID };
-	UINT FragmentProgramID{ INVALID };
-
-
+	UINT vertexProgramID{INVALID};
+	UINT geometrtyProgramID{ INVALID };
+	UINT tesselationControlProgramID{ INVALID };
+	UINT tesselationEvaluationProgramID{ INVALID };
+	UINT fragmentProgramID{ INVALID };
 
 	m_id = glCreateProgram();
 	
@@ -384,26 +329,26 @@ ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 
 	for (auto i = 0; i < files.size(); ++i) {
 		if (files[i] == EMPTYSTRING) continue;
-		switch (i){
+		switch (i) {
 		case 0:
-			VertexProgramID = CreateVertexShader(files[i]);
-			glAttachShader(m_id, VertexProgramID);
+			vertexProgramID = CreateVertexShader(files[i]);
+			glAttachShader(m_id, vertexProgramID);
 			break;
 		case 1:
-			GeometrtyProgramID = CreateGeometryShader(files[i]);
-			glAttachShader(m_id, GeometrtyProgramID);
+			geometrtyProgramID = CreateGeometryShader(files[i]);
+			glAttachShader(m_id, geometrtyProgramID);
 			break;
 		case 2:
-			TesselationControlProgramID = CreateTesselationControlShader(files[i]);
-			glAttachShader(m_id, TesselationControlProgramID);
+			tesselationControlProgramID = CreateTesselationControlShader(files[i]);
+			glAttachShader(m_id, tesselationControlProgramID);
 			break;
 		case 3:
-			TesselationEvaluationProgramID = CreateTesselationEvaluationShader(files[i]);
-			glAttachShader(m_id, TesselationEvaluationProgramID);
+			tesselationEvaluationProgramID = CreateTesselationEvaluationShader(files[i]);
+			glAttachShader(m_id, tesselationEvaluationProgramID);
 			break;
 		case 4:
-			FragmentProgramID = CreateFragmentShader(files[i]);
-			glAttachShader(m_id, FragmentProgramID);
+			fragmentProgramID = CreateFragmentShader(files[i]);
+			glAttachShader(m_id, fragmentProgramID);
 			break;
 		default:
 			break;
@@ -414,15 +359,11 @@ ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 
 	glLinkProgram(m_id);
 
-
-
-	if (VertexProgramID != INVALID) glDeleteProgram(VertexProgramID);
-	if (GeometrtyProgramID != INVALID) glDeleteProgram(GeometrtyProgramID);
-	if (TesselationControlProgramID != INVALID) glDeleteProgram(TesselationControlProgramID);
-	if (TesselationEvaluationProgramID != INVALID) glDeleteProgram(TesselationEvaluationProgramID);
-	if (FragmentProgramID != INVALID) glDeleteProgram(FragmentProgramID);
-
-
+	if (vertexProgramID != INVALID) glDeleteProgram(vertexProgramID);
+	if (geometrtyProgramID != INVALID) glDeleteProgram(geometrtyProgramID);
+	if (tesselationControlProgramID != INVALID) glDeleteProgram(tesselationControlProgramID);
+	if (tesselationEvaluationProgramID != INVALID) glDeleteProgram(tesselationEvaluationProgramID);
+	if (fragmentProgramID != INVALID) glDeleteProgram(fragmentProgramID);
 
 	GLchar errorlog[512]{};
 	
@@ -441,43 +382,37 @@ ShaderComponent::ShaderComponent(const std::vector<std::string>& files) {
 	}
 }
 
-
-
-void ShaderComponent::SetUniformMat4(const std::string& valueName, GLenum transpose, const float* val){
+void ShaderComponent::SetUniformMat4(const std::string& valueName, GLenum transpose, const float* val) {
 	glUniformMatrix4fv(GetUniformLocation(valueName), 1, transpose, val);
 }
 
-void ShaderComponent::SetUniformMat3(const std::string& valueName, GLenum transpose, const float* val){
+void ShaderComponent::SetUniformMat3(const std::string& valueName, GLenum transpose, const float* val) {
 	int Loc = GetUniformLocation(valueName);
 	glUniformMatrix3fv(Loc, 1, transpose, val);
 	m_uniformLocationDict.insert(std::make_pair(valueName, Loc));
 }
 
-void ShaderComponent::SetUniformVec4(const std::string& valueName, const float* val){
+void ShaderComponent::SetUniformVec4(const std::string& valueName, const float* val) {
 	int Loc = GetUniformLocation(valueName);
 	glUniform4fv(Loc, 1, val);
 }
-
 
 void ShaderComponent::SetUniformVec3(const std::string& valueName, const float* val) {
 	int Loc = GetUniformLocation(valueName);
 	glUniform3fv(Loc, 1, val);
 }
 
-
 void ShaderComponent::SetUniformVec2(const std::string& valueName, const float* val) {
 	int Loc = GetUniformLocation(valueName);
 	glUniform2fv(Loc, 1, val);
 }
 
-
-
-void ShaderComponent::SetUniformFloat(const std::string& valueName, const float value){
+void ShaderComponent::SetUniformFloat(const std::string& valueName, const float value) {
 	int Loc = GetUniformLocation(valueName);
 	glUniform1f(Loc, value);
 }
 	
-void ShaderComponent::SetUniformInt(const std::string& valueName, const int value){
+void ShaderComponent::SetUniformInt(const std::string& valueName, const int value) {
 	int Loc = GetUniformLocation(valueName);
 	glUniform1i(Loc, value);
 }
