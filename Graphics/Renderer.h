@@ -1,7 +1,7 @@
 #pragma once
+
 namespace Animated { class Object; class Model; class AR15; class Zombie; }
 namespace Static { class Object;  class Model; }
-
 
 class Renderer {
 public:
@@ -31,7 +31,6 @@ private:
 
 	void CollisionTerrain(class Animated::Object& obj, float offset);
 	void CollisionTerrain(class Static::Object& obj, float offset);
-
 
 	std::vector<std::shared_ptr<Animated::Object>> m_animatedObjectArr{};
 	std::vector<std::shared_ptr<Static::Object>> m_staticObjectArr{};

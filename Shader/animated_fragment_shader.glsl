@@ -148,7 +148,7 @@ void main()
 
 	float texAlpha = texture(material.textureDiffuse, texCoords).a;
 
-	if(damaged == 1){
+	if(damaged == 1) {
 		resultColor.r = clamp(resultColor.r + 0.3,0.0,1.0);
 	}
 

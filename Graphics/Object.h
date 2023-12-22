@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace Animated {
 	class Model;
 
@@ -18,7 +17,7 @@ namespace Animated {
 		glm::vec3 m_scale{ 1.f };
 		glm::vec3 m_rotate{ 0.f };
 
-		glm::mat4 m_transform{1.f};
+		glm::mat4 m_transform{ 1.f };
 		std::pair<glm::vec3, glm::vec3> m_boundingBox{ };
 
 	public:
@@ -33,11 +32,9 @@ namespace Animated {
 
 	public:
 		virtual void Render() = 0;
-		virtual void Update(float DeltaTime) = 0;
+		virtual void Update(float deltaTime) = 0;
 	};
-
 }
-
 
 namespace Static {
 	class Model;
@@ -66,6 +63,6 @@ namespace Static {
 
 	public:
 		virtual void Render() = 0;
-		virtual void Update(float DeltaTime) = 0;
+		virtual void Update(float deltaTime) = 0;
 	};
 }

@@ -69,13 +69,13 @@ bool FreeCamera::CollisionObject(Static::Object& obj) {
 	return true;
 }
 
-void FreeCamera::Render(){
+void FreeCamera::Render() {
 	SHADER->GetActivatedShader()->SetUniformMat4("projection", GL_FALSE, &m_projection[0][0]);
 	SHADER->GetActivatedShader()->SetUniformMat4("view", GL_FALSE, &m_view[0][0]);
 	SHADER->GetActivatedShader()->SetUniformMat4("VP", GL_FALSE, &(m_projection * m_view)[0][0]);
 }
 
-void FreeCamera::Update(float deltaTime){
+void FreeCamera::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	int width, height;
 	glfwGetFramebufferSize(m_window, &width, &height);

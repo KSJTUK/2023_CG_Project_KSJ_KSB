@@ -9,8 +9,6 @@ public:
 
 	~Timer() = default;
 
-
-
 	void Update();
 
 	float GetDeltaTime() { return m_deltaTime; };

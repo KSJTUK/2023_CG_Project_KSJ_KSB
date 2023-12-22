@@ -14,8 +14,6 @@ Timer::Timer()
 
 }
 
-
-
 void Timer::Update() {
 	int64 curr;
 
@@ -24,11 +22,7 @@ void Timer::Update() {
 	m_deltaTime = (curr - m_prev) / static_cast<float>(m_frequency);
 
 	m_elapsed += m_deltaTime;
-
-
 	m_frameCount++;
-
-
 
 	if (m_elapsed >= 1.f) {
 		m_fps = m_frameCount;
@@ -37,5 +31,4 @@ void Timer::Update() {
 	}
 
 	m_prev = curr;
-
 }
