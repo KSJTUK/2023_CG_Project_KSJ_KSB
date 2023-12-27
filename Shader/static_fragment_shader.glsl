@@ -1,5 +1,7 @@
 #version 460 core
 
+#include "terrain_fragment_shader.glsl"
+
 in vec2 texCoords;
 in vec3 fragPos;
 in vec3 normal;

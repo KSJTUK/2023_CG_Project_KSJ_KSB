@@ -24,7 +24,6 @@ private:
 
 	int m_fps{};
 	int m_frameCount{};
-
 };
 
 
